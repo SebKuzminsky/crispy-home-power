@@ -2,6 +2,20 @@ manufacturer: American Battery Solutions
 product line: Alliance
 model: E48-2.0
 
+
+# Wire harness
+
+Net      | Harness pin | Wire color
+-------- | ----------- | ----------
+Ign Low  | 2           | Blue
+CAN+ In  | 10          | Orange
+CAN- In  | 9           | Black
+CAN- Out | 7           | Purple
+CAN+ Out | 6           | Gray
+
+
+# Misc
+
 Short the `IGN Low` pin to `BATT-` i think, and if the pack has
 enough charge to boot the internal bms it'll energize `BATT+`.
 
