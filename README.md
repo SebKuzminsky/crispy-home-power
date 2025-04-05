@@ -14,6 +14,21 @@ CAN- Out | 7           | Purple
 CAN+ Out | 6           | Gray
 
 
+# CAN
+
+Lots of good info in the Alliance User Manual.
+
+CAN ID 0x502: `HOST_BatteryRequest`
+    Payload: `HOST_stateRequest`, 1 byte
+        0x00: None
+        0x01: Drive/Discharge (power output)
+        0x02: Charge (power input)
+        0x03: Sleep
+    Send this packet at 1 Hz
+
+`$ while true; do cansend can0 '502#02'; sleep 1; done`
+
+
 # Misc
 
 Short the `IGN Low` pin to `BATT-` i think, and if the pack has
