@@ -65,3 +65,10 @@ Matt Quick
     Wait for packNumModsOnHvBus = 10
     This will depend on any modules that are out of balance.
     Once the low modules charge to meet the high modules all 10 will come online.
+
+
+# Charger
+
+Delta-Q
+    - Model: ICL 1500-058v
+    - Part number: 943-0016
