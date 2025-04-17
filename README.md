@@ -20,6 +20,8 @@ manufacturer: American Battery Solutions
 product line: Alliance
 model: E48-2.0
 
+Cell connections: 14S 8P
+
 
 ## Wire harness
 
