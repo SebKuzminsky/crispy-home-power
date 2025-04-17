@@ -4,7 +4,10 @@ Project goals:
 - When the PV system generates more energy than my house uses, store excess in batteries.
 - When the house needs more energy that the PV system generates, supply from batteries.
 
-Storing into batteries is easy, use a current-controlled charger to charge the battery bank.
+This wants an "AC Coupled storage system".
+
+Storing into batteries is easy, use an AC powered battery charger with
+current control to charge the battery bank off the regular house AC.
 
 How to supply from batteries?
 - Large current-controlled micro-inverter?
@@ -136,26 +139,52 @@ how does the enphase battery connect to the microgrid?  Does it go into the Comb
 
 ## Inverter Options
 
-The internet thinks "Enphase uses microinverters on their battery systems. They just stack them together."
+The internet thinks:
+- "Enphase uses microinverters on their battery systems. They just stack them together."
+- "With AC PV, the best options to power the entire main panel are EG4 18kPV, Midnite The One, or the Sol-Ark 15k. If you need more inverter, then parallel a 2nd or 3rd ..." <https://diysolarforum.com/threads/add-batteries-to-existing-solar-array-with-enphase-microinverters-and-iq-combiner.91153/post-1210119>
 
-Enphase M215/M250: <https://enphase.com/store/microinverters/legacy/m250-microinverter-kit>
-
-Enphase IQ8X-BATT
-- <https://enphase.com/download/iq8x-bat-microinverter-data-sheet>
-- Needs 52.5 VDC to start?
-
-Enphase IQ8+
-- runs on 16–58 V DC input
-
+Inverters:
+- Enphase M215/M250
+    - <https://enphase.com/store/microinverters/legacy/m250-microinverter-kit>
+- Enphase IQ8X-BATT
+    - <https://enphase.com/download/iq8x-bat-microinverter-data-sheet>
+    - Needs 52.5 VDC to start?
+- Enphase IQ8+
+    - runs on 16–58 V DC input
+- Schneider Conext XW+ 6848
+    - discontinuesd
 - SunnyBoy
+- Northern Electric BDM-600X
+    - <https://northernep.com/downloads/technical-sheet/BDM-600X-Microinverter.pdf>
 
-- Northern Electric BDM-600X: <https://northernep.com/downloads/technical-sheet/BDM-600X-Microinverter.pdf>
+
 
 
 # Links & info
 
+## Enphase Sunlight Backup
+
+This is an Enphase design that keeps "limited loads" running when the
+grid goes down, without battery storage.
+
+- solar panels
+- IQ8 micro-inverters with IQ8 cabling (this works with or without the grid when the needed additional equipment is present)
+- IQ Combiner (includes IQ Gateway, solar production CT, 2 consumption CTs, enphase wireless comm kit)
+- IQ System Controller (disconnects from the grid during outage)
+- System shutdown switch
+- Load center/subpanel (this is a subpanel that stays powered during outage)
+
+
+## Misc
+
+Probably do this: <https://university.enphase.com/?ccode=US&lang=en>
+
 DIY Solar folks brainstorming a system very similar to what i want:
 <https://diysolarforum.com/threads/adding-an-ess-to-enphase-enlighten-system.42737/>
+
+<https://diysolarforum.com/threads/adding-diy-batteries-to-enphase-grid-tie-system.39487/>
+
+<https://diysolarforum.com/threads/do-you-need-a-subscription-or-gateway-to-view-enphase-micro-inverter-data.92441/>
 
 <https://diysolarforum.com/threads/using-solar-micro-inverters-with-batteries-instead-of-panels.8353/>
 
