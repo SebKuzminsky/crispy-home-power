@@ -16,9 +16,11 @@ How to supply from batteries?
 
 # Batteries
 
-manufacturer: American Battery Solutions
-product line: Alliance
-model: E48-2.0
+Manufacturer: American Battery Solutions
+
+Product line: Alliance
+
+Model: E48-2.0
 
 Cell connections: 14S 8P
 
@@ -38,6 +40,7 @@ CAN+ Out | 6           | Gray
 
 Lots of good info in the Alliance User Manual.
 
+```
 CAN ID 0x502: `HOST_BatteryRequest`
     Payload: `HOST_stateRequest`, 1 byte
         0x00: None
@@ -45,8 +48,14 @@ CAN ID 0x502: `HOST_BatteryRequest`
         0x02: Charge (power input)
         0x03: Sleep
     Send this packet at 1 Hz
+```
 
-`$ while true; do cansend can0 '502#02'; sleep 1; done`
+To ignite the battery from Linux over CAN:
+```
+$ sudo ip link set can0 down
+$ sudo ip link set can0 up type can bitrate 500000
+$ while true; do cansend can0 '502#02'; sleep 1; done
+```
 
 
 ## Misc
@@ -90,14 +99,18 @@ Matt Quick
 # Charger
 
 Delta-Q
-    - Model: ICL 1500-058v
-    - Part number: 943-0016
+- Model: ICL 1500-058v
+- Part number: 943-0016
 
 The one i got from Scythe runs CAN at 500 kbps and uses different CAN
 packets than what's in the docs, but luckily there's a DBC in the Scythe
 firmware repo that works.
 
-`$ while : ; do cansend can0 '30a#00.00.00.02.00.32.80.01'; cansend can0 '20a#00.31.01.00.32.20.00.01' ; sleep 1 ; done`
+```
+$ sudo ip link set can0 down
+$ sudo ip link set can0 up type can bitrate 500000
+$ while : ; do cansend can0 '30a#00.00.00.02.00.32.80.01'; cansend can0 '20a#00.31.01.00.32.20.00.01' ; sleep 1 ; done
+```
 
 
 # Inverters
