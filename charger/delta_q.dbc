@@ -41,7 +41,7 @@ VAL_TABLE_ Charger_Derating_Status 1 "Charger is derating output" 0 "Charger is 
 VAL_TABLE_ AC_Connection_Status 1 "AC Detected" 0 "No AC Detected" ;
 VAL_TABLE_ Charger_Status 1 "Enabled" 0 "Disabled" ;
 VAL_TABLE_ Override_Status 1 "Enabled" 0 "Disabled" ;
-VAL_TABLE_ Charge_Indication 7 "Power Supply Mode" 6 "Equalize" 5 "Resting" 4 "Complete" 3 "Finishing" 2 "> 80%" 1 "< 80%" 0 "Inactive" ;
+VAL_TABLE_ Charge_Indication 7 "Power Supply Mode" 6 "Equalize" 5 "Resting" 4 "Complete" 3 "Finishing" 2 "More than 80%" 1 "Less than 80%" 0 "Inactive" ;
 VAL_TABLE_ Batt_Charge_Cycle_Type 2 "Maintenance" 1 "Charge" 0 "No Active Cycle" ;
 VAL_TABLE_ NMT_Command 1 "Start" ;
 VAL_TABLE_ Heartbeat_Response 127 "Pre-operational" 5 "Operational" ;
@@ -86,7 +86,7 @@ BO_ 0 NMT_Start: 2 Battery
  SG_ NMT_Command : 0|8@1+ (1,0) [0|255] ""  Charger
 
 BO_ 138 Fault_Register: 8 Charger
- SG_ Fault_Register : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  Battery
+ SG_ Fault_Register : 0|64@1+ (1,0) [0|0] ""  Battery
 
 BO_ 1793 Heartbeat_Response: 1 Battery
  SG_ Heartbeat_Response : 0|8@1+ (1,0) [0|255] ""  Charger
@@ -105,7 +105,7 @@ VAL_ 394 Override_Status 1 "Enabled" 0 "Disabled" ;
 VAL_ 394 Charger_Status 1 "Enabled" 0 "Disabled" ;
 VAL_ 394 Charger_Hardware_Shutdown_Status 1 "Charger hardware has shut down" 0 "Charger is running normally" ;
 VAL_ 394 Charger_Derating_Status 1 "Charger is derating output" 0 "Charger is not derating" ;
-VAL_ 394 Charge_Indication 7 "Power Supply Mode" 6 "Equalize" 5 "Resting" 4 "Complete" 3 "Finishing" 2 "> 80%" 1 "< 80%" 0 "Inactive" ;
+VAL_ 394 Charge_Indication 7 "Power Supply Mode" 6 "Equalize" 5 "Resting" 4 "Complete" 3 "Finishing" 2 "More than  80%" 1 "Less than 80%" 0 "Inactive" ;
 VAL_ 394 Charge_Cycle_Type 2 "Description for the value '0x2'" 1 "Charge" 0 "No Active Cycle" ;
 VAL_ 394 AC_Connection_Status 1 "AC Detected" 0 "No AC Detected" ;
 VAL_ 0 NMT_Command 1 "Start" ;
