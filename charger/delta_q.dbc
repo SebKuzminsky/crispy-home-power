@@ -1,0 +1,114 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Charger Battery
+VAL_TABLE_ Error_Codes 394301440 "E-0-2-3 High AC voltage error ( >270VAC ) 9000h External error – generic" 411045888 "E-0-2-4 Charger failed to initialize 1000h Generic error" 427855872 "E-0-2-5 Low AC voltage oscillation error 9000h External error – generic" 444596224 "E-0-2-6 USB Script Error 0000h error" 461373440 "E-0-2-7 USB Over Current 0000h error" 478154752 "E-0-2-8 Incompatible algorithm error 1000h Generic error" 494964736 "E-0-2-9 Communication CAN-bus error 9000h External error – generic" 511738160 "E-0-3-0 Communication battery module error 8130h Monitoring – Comms – Heartbeat Error" 528486400 "E-0-3-1 Reference out of range error 1000h Generic error" 545292592 "E-0-3-2 Communication heartbeat lost error 8130h Monitoring – Comms – Heartbeat Error" 562040832 "E-0-3-3 Target voltage configuration too high 1000h Generic error" 578818048 "E-0-3-4 Battery capacity configuration not set 1000h Generic error" 595595264 "E-0-3-5 Target voltage configuration too low 1000h Generic error" 612405248 "E-0-3-6 Battery temperature sensor not installed 9000h External error – generic" 629170176 "E-0-3-7 CAN Download Failed 6000h SW Generic error" 645959680 "E-0-3-8 Fan error 9000h External error – generic" 662704128 "E-0-3-9 Button stuck down 1000h Generic error" 679481344 "E-0-4-0 Fan Supply Voltage Low 1000h Generic error" 696279040 "E-0-4-1 Software Internal Error 6000h SW Generic error" 713056256 "E-0-4-2 CAN Configuration Error 6000h SW Generic error" 729845760 "E-0-4-3 PDO CRC Error 9000h External error – generic" 746622976 "E-0-4-4 PDO Sequence Count Error 9000h External error – generic" 763400192 "E-0-4-5 Battery Disconnected Alarm 9000h External error - generic" 780173840 "E-0-4-6 Invalid PDO Length 8210h Monitoring – Protocol – PDO Length Error" 29380608 "F-0-0-1 Output Stage Error 5000h CANopen Device Hardware" 46157824 "F-0-0-2 Input Stage Error 5000h CANopen Device Hardware" 62935040 "F-0-0-3 Input Stage Error 5000h CANopen Device Hardware" 79712256 "F-0-0-4 Current Measurement Error 5000h CANopen Device Hardware" 96489472 "F-0-0-5 DC Output Relay Test Error (High voltage across closed relay) 5000h CANopen Device Hardware" 1342179008 "F-0-0-6 Output Current Error 5000h CANopen Device Hardware" ;
+VAL_TABLE_ Battery_Status 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ Charger_Hardware_Shutdown_Status 1 "Charger hardware has shut down" 0 "Charger is running normally" ;
+VAL_TABLE_ Charger_Derating_Status 1 "Charger is derating output" 0 "Charger is not derating" ;
+VAL_TABLE_ AC_Connection_Status 1 "AC Detected" 0 "No AC Detected" ;
+VAL_TABLE_ Charger_Status 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ Override_Status 1 "Enabled" 0 "Disabled" ;
+VAL_TABLE_ Charge_Indication 7 "Power Supply Mode" 6 "Equalize" 5 "Resting" 4 "Complete" 3 "Finishing" 2 "> 80%" 1 "< 80%" 0 "Inactive" ;
+VAL_TABLE_ Batt_Charge_Cycle_Type 2 "Maintenance" 1 "Charge" 0 "No Active Cycle" ;
+VAL_TABLE_ NMT_Command 1 "Start" ;
+VAL_TABLE_ Heartbeat_Response 127 "Pre-operational" 5 "Operational" ;
+VAL_TABLE_ Heartbeat 127 "Pre-operational" 5 "Operational" ;
+
+
+BO_ 778 DeltaQ_RPDO2_0x30a: 8 Battery
+ SG_ Batt_Charging_Current : 16|16@1+ (0.00390625,0) [0|255.99609375] "A"  Charger
+ SG_ Batt_Battery_Voltage : 32|16@1+ (0.00390625,0) [0|255.99609375] "V"  Charger
+ SG_ Batt_Temperature : 48|16@1- (0.125,-40) [-40|85] "C"  Charger
+
+BO_ 522 DeltaQ_RPDO1_0x20a: 8 Battery
+ SG_ Battery_SOC : 8|8@1+ (1,0) [0|100] "%"  Charger
+ SG_ Batt_Charge_Cycle_Type : 16|8@1+ (1,0) [0|255] ""  Charger
+ SG_ Voltage_Request : 24|16@1+ (0.00390625,0) [0|255.99609375] "V"  Charger
+ SG_ Charge_Current_Request : 40|16@1+ (0.0625,0) [0|4095.9375] "A"  Charger
+ SG_ Battery_Status : 56|8@1+ (1,0) [0|255] ""  Charger
+
+BO_ 906 DeltaQ_TPDO3_0x38a: 8 Charger
+ SG_ Current_Error : 0|32@1+ (1,0) [0|4294967295] "" Battery
+ SG_ Charger_SOC : 48|8@1+ (1,0) [0|100] "%" Battery
+ SG_ AC_Voltage : 32|16@1+ (0.0625,0) [0|4095.9375] "VAC" Battery
+
+BO_ 650 DeltaQ_TPDO2_0x28a: 8 Charger
+ SG_ Wh_Returned : 48|16@1+ (0.0625,0) [0|4095.9375] "Wh" Battery
+ SG_ Elapsed_Time : 0|16@1+ (10,0) [0|655350] "s" Battery
+ SG_ Ah_Returned : 16|32@1+ (0.125,0) [0|536870911.875] "Ah" Battery
+
+BO_ 394 DeltaQ_TPDO1_0x18a: 8 Charger
+ SG_ Override_Status : 38|2@1+ (1,0) [0|3] ""  Battery
+ SG_ Charging_Current : 0|16@1+ (0.00390625,0) [0|255.99609375] "A"  Battery
+ SG_ Charger_Status : 37|1@1+ (1,0) [0|1] ""  Battery
+ SG_ Charger_Hardware_Shutdown_Status : 34|1@1+ (1,0) [0|1] ""  Battery
+ SG_ Charger_Derating_Status : 35|1@1+ (1,0) [0|1] ""  Battery
+ SG_ Charge_Indication : 40|4@1+ (1,0) [0|15] ""  Battery
+ SG_ Charge_Cycle_Type : 44|4@1+ (1,0) [0|15] ""  Battery
+ SG_ Battery_Voltage : 16|16@1+ (0.00390625,0) [0|255.99609375] "V"  Battery
+ SG_ AC_Connection_Status : 36|1@1+ (1,0) [0|1] ""  Battery
+
+BO_ 0 NMT_Start: 2 Battery
+ SG_ NMT_Node : 8|8@1+ (1,0) [0|255] ""  Charger
+ SG_ NMT_Command : 0|8@1+ (1,0) [0|255] ""  Charger
+
+BO_ 138 Fault_Register: 8 Charger
+ SG_ Fault_Register : 0|64@1+ (1,0) [0|1.84467440737096E+019] ""  Battery
+
+BO_ 1793 Heartbeat_Response: 1 Battery
+ SG_ Heartbeat_Response : 0|8@1+ (1,0) [0|255] ""  Charger
+
+BO_ 1802 DeltaQ_Heartbeat_0x70a: 1 Charger
+ SG_ Heartbeat : 0|8@1+ (1,0) [0|255] ""  Battery
+
+
+
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BusType" "";
+VAL_ 522 Batt_Charge_Cycle_Type 2 "Description for the value '0x2'" 1 "Charge" 0 "No Active Cycle" ;
+VAL_ 522 Battery_Status 1 "Enabled" 0 "Disabled" ;
+VAL_ 906 Current_Error 394301440 "E-0-2-3 High AC voltage error ( >270VAC ) 9000h External error – generic" 411045888 "E-0-2-4 Charger failed to initialize 1000h Generic error" 427855872 "E-0-2-5 Low AC voltage oscillation error 9000h External error – generic" 444596224 "E-0-2-6 USB Script Error 0000h error" 461373440 "E-0-2-7 USB Over Current 0000h error" 478154752 "E-0-2-8 Incompatible algorithm error 1000h Generic error" 494964736 "E-0-2-9 Communication CAN-bus error 9000h External error – generic" 511738160 "E-0-3-0 Communication battery module error 8130h Monitoring – Comms – Heartbeat Error" 528486400 "E-0-3-1 Reference out of range error 1000h Generic error" 545292592 "E-0-3-2 Communication heartbeat lost error 8130h Monitoring – Comms – Heartbeat Error" 562040832 "E-0-3-3 Target voltage configuration too high 1000h Generic error" 578818048 "E-0-3-4 Battery capacity configuration not set 1000h Generic error" 595595264 "E-0-3-5 Target voltage configuration too low 1000h Generic error" 612405248 "E-0-3-6 Battery temperature sensor not installed 9000h External error – generic" 629170176 "E-0-3-7 CAN Download Failed 6000h SW Generic error" 645959680 "E-0-3-8 Fan error 9000h External error – generic" 662704128 "E-0-3-9 Button stuck down 1000h Generic error" 679481344 "E-0-4-0 Fan Supply Voltage Low 1000h Generic error" 696279040 "E-0-4-1 Software Internal Error 6000h SW Generic error" 713056256 "E-0-4-2 CAN Configuration Error 6000h SW Generic error" 729845760 "E-0-4-3 PDO CRC Error 9000h External error – generic" 746622976 "E-0-4-4 PDO Sequence Count Error 9000h External error – generic" 763400192 "E-0-4-5 Battery Disconnected Alarm 9000h External error - generic" 780173840 "E-0-4-6 Invalid PDO Length 8210h Monitoring – Protocol – PDO Length Error" 29380608 "F-0-0-1 Output Stage Error 5000h CANopen Device Hardware" 46157824 "F-0-0-2 Input Stage Error 5000h CANopen Device Hardware" 62935040 "F-0-0-3 Input Stage Error 5000h CANopen Device Hardware" 79712256 "F-0-0-4 Current Measurement Error 5000h CANopen Device Hardware" 96489472 "F-0-0-5 DC Output Relay Test Error (High voltage across closed relay) 5000h CANopen Device Hardware" 1342179008 "F-0-0-6 Output Current Error 5000h CANopen Device Hardware" ;
+VAL_ 394 Override_Status 1 "Enabled" 0 "Disabled" ;
+VAL_ 394 Charger_Status 1 "Enabled" 0 "Disabled" ;
+VAL_ 394 Charger_Hardware_Shutdown_Status 1 "Charger hardware has shut down" 0 "Charger is running normally" ;
+VAL_ 394 Charger_Derating_Status 1 "Charger is derating output" 0 "Charger is not derating" ;
+VAL_ 394 Charge_Indication 7 "Power Supply Mode" 6 "Equalize" 5 "Resting" 4 "Complete" 3 "Finishing" 2 "> 80%" 1 "< 80%" 0 "Inactive" ;
+VAL_ 394 Charge_Cycle_Type 2 "Description for the value '0x2'" 1 "Charge" 0 "No Active Cycle" ;
+VAL_ 394 AC_Connection_Status 1 "AC Detected" 0 "No AC Detected" ;
+VAL_ 0 NMT_Command 1 "Start" ;
+VAL_ 1793 Heartbeat_Response 127 "Pre-operational" 5 "Operational" ;
+VAL_ 1802 Heartbeat 127 "Pre-operational" 5 "Operational" ;
+

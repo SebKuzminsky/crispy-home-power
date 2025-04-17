@@ -1,0 +1,21 @@
+[package]
+name = "charger"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = [ "std" ]
+std = []
+
+[build-dependencies]
+anyhow = "1.0"
+dbc-codegen = { git = "https://github.com/technocreatives/dbc-codegen.git" }
+
+[dependencies]
+bitvec = "1.0.1"
+clap = { version = "4.5.36", features = ["derive"] }
+embedded-can = "0.4.1"
+eyre = "0.6.12"
+futures-util = { version = "0.3.31", features = ["tokio-io"] }
+tokio = { version = "1.44.2", features = ["macros", "rt", "rt-multi-thread", "time"] }
+tokio-socketcan = "0.3.1"
