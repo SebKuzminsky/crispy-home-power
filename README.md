@@ -25,7 +25,7 @@ model: E48-2.0
 
 Net      | Harness pin | Wire color
 -------- | ----------- | ----------
-Ign Low  | 2           | Blue
+Ign Low  | 2           | Blue (short to BAT- to ignite the battery)
 CAN+ In  | 10          | Orange
 CAN- In  | 9           | Black
 CAN- Out | 7           | Purple
@@ -90,6 +90,12 @@ Matt Quick
 Delta-Q
     - Model: ICL 1500-058v
     - Part number: 943-0016
+
+The one i got from Scythe runs CAN at 500 kbps and uses different CAN
+packets than what's in the docs, but luckily there's a DBC in the Scythe
+firmware repo that works.
+
+`$ while : ; do cansend can0 '30a#00.00.00.02.00.32.80.01'; cansend can0 '20a#00.31.01.00.32.20.00.01' ; sleep 1 ; done`
 
 
 # Inverters
