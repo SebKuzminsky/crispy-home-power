@@ -68,6 +68,7 @@ an ignition signal, which is the main reason I no longer want to use
 the pack BMS.
 
 Matt Quick
+```
 > @Wrench Monkey
 > Here's the battery testing instructions:
 > Connect modules with the short jumper cables
@@ -94,6 +95,7 @@ Matt Quick
 > Wait for packNumModsOnHvBus = 10
 > This will depend on any modules that are out of balance.
 > Once the low modules charge to meet the high modules all 10 will come online.
+```
 
 
 # Charger
