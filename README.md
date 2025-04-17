@@ -94,6 +94,11 @@ Delta-Q
 
 # Inverters
 
+I want a programmable inverter so I can tell it how much power to push
+from the batteries to the home grid
+
+48V in, 240V split phase out
+
 
 ## Grid-forming
 
