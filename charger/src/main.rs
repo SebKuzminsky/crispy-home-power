@@ -15,6 +15,12 @@ struct Args {
     #[arg(long, short = 'a')]
     amps: f32,
 
+    #[arg(long, short = 't', default_value_t = 20.0)]
+    temperature: f32,
+
+    #[arg(long, short = 's', default_value_t = 50)]
+    soc: u8,
+
     #[arg(long, short = 'c', default_value_t = String::from("can0"))]
     can_interface: String,
 }
@@ -43,7 +49,8 @@ async fn send_command(
     can_socket_tx: &tokio_socketcan::CANSocket,
     args: &Args,
 ) -> Result<(), eyre::Report> {
-    let frame = delta_q_can_messages::DeltaQRpdo20x30a::new(args.amps, args.volts, 0.0)?;
+    let frame =
+        delta_q_can_messages::DeltaQRpdo20x30a::new(args.amps, args.volts, args.temperature)?;
     let id: u32 = match frame.id() {
         embedded_can::Id::Standard(standard_id) => standard_id.as_raw() as u32,
         embedded_can::Id::Extended(extended_id) => extended_id.as_raw(),
@@ -53,7 +60,7 @@ async fn send_command(
 
     // cansend can0 '20a#00.31.01.00.32.20.00.01' ; sleep 1 ; done`
     let frame = delta_q_can_messages::DeltaQRpdo10x20a::new(
-        50,
+        args.soc,
         delta_q_can_messages::DeltaQRpdo10x20aBattChargeCycleType::Charge.into(),
         args.volts,
         args.amps,
