@@ -50,11 +50,17 @@ CAN ID 0x502: `HOST_BatteryRequest`
     Send this packet at 1 Hz
 ```
 
-To ignite the battery from Linux over CAN:
+To ignite the battery from Linux over CAN and put it into Drive mode:
 ```
 $ sudo ip link set can0 down
 $ sudo ip link set can0 up type can bitrate 500000
-$ while true; do cansend can0 '502#02'; sleep 1; done
+$ while true; do cansend can0 '502#01.00'; sleep 1; done
+```
+
+To ignite the battery and nd put it into Charge mode, which makes it
+request charge from the DeltaQ charger if it sees its CAN heartbeat:
+```
+$ while true; do cansend can0 '502#02.00'; sleep 1; done
 ```
 
 
