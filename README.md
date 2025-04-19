@@ -57,8 +57,8 @@ $ sudo ip link set can0 up type can bitrate 500000
 $ while true; do cansend can0 '502#01.00'; sleep 1; done
 ```
 
-To ignite the battery and nd put it into Charge mode, which makes it
-request charge from the DeltaQ charger if it sees its CAN heartbeat:
+To ignite the battery and put it into Charge mode, which makes it request
+charge from the DeltaQ charger if it sees its CAN heartbeat:
 ```
 $ while true; do cansend can0 '502#02.00'; sleep 1; done
 ```
