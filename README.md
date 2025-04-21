@@ -63,6 +63,19 @@ charge from the DeltaQ charger if it sees its CAN heartbeat:
 $ while true; do cansend can0 '502#02.00'; sleep 1; done
 ```
 
+To capture a CAN packet log:
+```
+$ candump -t a -l -f battery.candump can0
+```
+
+To replay a captured candump packet log:
+```
+$ sudo modprobe vcan
+$ sudo ip link add dev vcan0 type vcan
+$ sudo ip link set vcan0 up
+$ canplayer -I battery.candump vcan0=can0
+```
+
 
 ## Misc
 
