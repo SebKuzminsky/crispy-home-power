@@ -103,6 +103,8 @@ $ sudo ip link set can0 up type can bitrate 500000
 $ while : ; do cansend can0 '30a#00.00.00.02.00.32.80.01'; cansend can0 '20a#00.31.01.00.32.20.00.01' ; sleep 1 ; done
 ```
 
+The charger gets hot after a few minutes at 10 A, why doesn't the fan come on?
+
 
 # Inverters
 
