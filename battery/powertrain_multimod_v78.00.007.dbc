@@ -3545,49 +3545,49 @@ BO_ 2642411527 BATT_taskStackDiag_7: 8 Battery
 BO_ 2642935808 BATT_diagnosticCan_0: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_0 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_0 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_0 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_0 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_0 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935809 BATT_diagnosticCan_1: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_1 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_1 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_1 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_1 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_1 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935810 BATT_diagnosticCan_2: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_2 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_2 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_2 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_2 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_2 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935811 BATT_diagnosticCan_3: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_3 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_3 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_3 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_3 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_3 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935812 BATT_diagnosticCan_4: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_4 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_4 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_4 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_4 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_4 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935813 BATT_diagnosticCan_5: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_5 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_5 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_5 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_5 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_5 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935814 BATT_diagnosticCan_6: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_6 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_6 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_6 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_6 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_6 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2642935815 BATT_diagnosticCan_7: 4 Battery
  SG_ BATT_canTXFifoSizeUsed_7 : 24|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoSizeUsed_7 : 8|8@1+ (1,0) [0|255] "" Host
- SG_ BATT_canTXFifoWaterMark_7 : 16|8@1+ (1,0) [0|65535] "" Host
+ SG_ BATT_canTXFifoWaterMark_7 : 16|8@1+ (1,0) [0|255] "" Host
  SG_ BATT_canRXFifoWaterMark_7 : 0|8@1+ (1,0) [0|255] "" Host
 
 BO_ 2643001344 BATT_diagnosticDeltaQ: 8 Battery
