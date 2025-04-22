@@ -58,7 +58,6 @@ async fn send_command(
     let raw_frame = tokio_socketcan::CANFrame::new(id, frame.raw(), false, false)?;
     can_socket_tx.write_frame(raw_frame)?.await?;
 
-    // cansend can0 '20a#00.31.01.00.32.20.00.01' ; sleep 1 ; done`
     let frame = delta_q_can_messages::DeltaQRpdo10x20a::new(
         args.soc,
         delta_q_can_messages::DeltaQRpdo10x20aBattChargeCycleType::Charge.into(),
