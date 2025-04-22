@@ -98,8 +98,21 @@ async fn main() -> Result<(), eyre::Report> {
     let timeout = tokio::time::sleep(tokio::time::Duration::from_secs(1));
     tokio::pin!(timeout);
 
+    let (ctrlc_tx, mut ctrlc_rx) = tokio::sync::mpsc::channel::<()>(1);
+    ctrlc::set_handler(move || {
+        let _ = ctrlc_tx.try_send(());
+    })?;
+
     loop {
         tokio::select! {
+            _ = ctrlc_rx.recv() => {
+                println!();
+                println!("Goodbye!");
+                // Shut down the charger.
+                let _ = send_command(&can_socket_tx, 0.0, 0.0, args.temperature, args.soc).await;
+                break;
+            }
+
             maybe_frame = can_socket_rx.next() => {
                 match maybe_frame {
                     Some(Ok(_frame)) => {
@@ -114,4 +127,6 @@ async fn main() -> Result<(), eyre::Report> {
             }
         }
     }
+
+    Ok(())
 }
