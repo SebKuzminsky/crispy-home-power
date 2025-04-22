@@ -1,4 +1,3 @@
-use embedded_can::Frame;
 use futures_util::stream::StreamExt;
 
 use clap::Parser;
