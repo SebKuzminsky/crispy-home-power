@@ -47,10 +47,12 @@ fn handle_can_frame(frame: tokio_socketcan::CANFrame) -> Result<(), eyre::Report
 
 async fn send_command(
     can_socket_tx: &tokio_socketcan::CANSocket,
-    args: &Args,
+    volts: f32,
+    amps: f32,
+    temperature: f32,
+    soc: u8,
 ) -> Result<(), eyre::Report> {
-    let frame =
-        delta_q_can_messages::DeltaQRpdo20x30a::new(args.amps, args.volts, args.temperature)?;
+    let frame = delta_q_can_messages::DeltaQRpdo20x30a::new(amps, volts, temperature)?;
     let id: u32 = match frame.id() {
         embedded_can::Id::Standard(standard_id) => standard_id.as_raw() as u32,
         embedded_can::Id::Extended(extended_id) => extended_id.as_raw(),
@@ -58,12 +60,22 @@ async fn send_command(
     let raw_frame = tokio_socketcan::CANFrame::new(id, frame.raw(), false, false)?;
     can_socket_tx.write_frame(raw_frame)?.await?;
 
+    let batt_charge_cycle_time = match amps {
+        0.0 => delta_q_can_messages::DeltaQRpdo10x20aBattChargeCycleType::NoActiveCycle,
+        _ => delta_q_can_messages::DeltaQRpdo10x20aBattChargeCycleType::Charge,
+    };
+
+    let battery_status = match amps {
+        0.0 => delta_q_can_messages::DeltaQRpdo10x20aBatteryStatus::Disabled,
+        _ => delta_q_can_messages::DeltaQRpdo10x20aBatteryStatus::Enabled,
+    };
+
     let frame = delta_q_can_messages::DeltaQRpdo10x20a::new(
-        args.soc,
-        delta_q_can_messages::DeltaQRpdo10x20aBattChargeCycleType::Charge.into(),
-        args.volts,
-        args.amps,
-        delta_q_can_messages::DeltaQRpdo10x20aBatteryStatus::Enabled.into(),
+        soc,
+        batt_charge_cycle_time.into(),
+        volts,
+        amps,
+        battery_status.into(),
     )?;
     let id: u32 = match frame.id() {
         embedded_can::Id::Standard(standard_id) => standard_id.as_raw() as u32,
@@ -97,7 +109,7 @@ async fn main() -> Result<(), eyre::Report> {
                 }
             }
             _ = &mut timeout => {
-                let _ = send_command(&can_socket_tx, &args).await;
+                let _ = send_command(&can_socket_tx, args.volts, args.amps, args.temperature, args.soc).await;
                 timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)));
             }
         }
