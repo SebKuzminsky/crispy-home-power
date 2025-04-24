@@ -93,10 +93,16 @@ Delta-Q
 - Model: ICL 1500-058v
 - Part number: 943-0016
 
-The one i got from runs CAN at 500 kbps and uses different CAN
-packets than what's in the docs.
 
-This makes the charger charge at 50 V, 2 A:
+## CAN
+
+The one i have runs CAN at 500 kbps and uses different CAN packets than
+what's in the docs.
+
+CAN-H is blue
+CAN-L is yellow
+
+This makes it charge at 50 V, 2 A:
 ```
 $ sudo ip link set can0 down
 $ sudo ip link set can0 up type can bitrate 500000
