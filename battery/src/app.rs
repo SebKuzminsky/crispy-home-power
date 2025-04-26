@@ -1195,7 +1195,19 @@ impl ratatui::widgets::Widget for &BatteryPack {
 impl ratatui::widgets::Widget for &App {
     fn render(self, area: ratatui::layout::Rect, buf: &mut ratatui::buffer::Buffer) {
         let title = ratatui::text::Line::from(" ABS Alliance Battery Monitor ".bold());
-        let title_bottom = ratatui::text::Line::from(vec![" Quit".into(), " <q> ".blue().bold()]);
+        let title_bottom = ratatui::text::Line::from(vec![
+            " ".into(),
+            "Q".blue().bold(),
+            "uit ".into(),
+            "S".blue().bold(),
+            "leep ".into(),
+            "C".blue().bold(),
+            "harge ".into(),
+            "D".blue().bold(),
+            "rive ".into(),
+            "N".blue().bold(),
+            "one ".into(),
+        ]);
 
         let block = ratatui::widgets::Block::bordered()
             .title(title.centered())
