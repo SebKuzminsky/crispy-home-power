@@ -120,6 +120,7 @@ struct BatteryModule {
     last_seen: Option<std::time::Instant>,
 }
 
+#[allow(dead_code)]
 #[derive(Clone, Copy, Debug)]
 struct ChargeRequest {
     voltage: f32,
@@ -1080,9 +1081,7 @@ impl App {
         match self.can_socket_tx.write_frame(raw_frame) {
             Ok(can_write_fut) => match can_write_fut.await {
                 Ok(_) => return Ok(()),
-                Err(e) => {
-                    return Ok(());
-                }
+                Err(_e) => return Ok(()),
             },
             Err(e) => {
                 return Err(e.into());
