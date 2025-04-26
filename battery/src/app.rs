@@ -252,6 +252,7 @@ impl App {
                                 }
                                 _ => (),
                             }
+                            need_redraw.notify_one();
                         }
                         Some(Ok(_)) => (),
                         Some(Err(e)) => break Err(eyre::eyre!("event error: {:?}", e)),
