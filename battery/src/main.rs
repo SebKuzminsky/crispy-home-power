@@ -16,6 +16,9 @@ async fn main() -> Result<(), eyre::Report> {
     let args = Args::parse();
     println!("config: {args:#?}");
 
+    cli_log::init_cli_log!();
+    cli_log::info!("starting");
+
     let mut app = app::App::new(&args.can_interface)?;
     let terminal = tui::init()?;
 

@@ -214,6 +214,7 @@ impl App {
         let need_redraw = tokio::sync::Notify::new();
 
         loop {
+            cli_log::info!("top of loop");
             tokio::select! {
                 biased;
 
@@ -223,6 +224,7 @@ impl App {
                             let _ = self.handle_can_frame(frame);
                             need_redraw.notify_one();
                             if timeout.is_terminated() {
+                                cli_log::info!("wake on packet");
                                 timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse());
                             }
                         }
@@ -283,6 +285,8 @@ impl App {
                 }
 
                 _ = &mut timeout => {
+                    cli_log::info!("timeout!");
+
                     let _ = self.send_mode_command().await?;
 
                     let now = std::time::Instant::now();
@@ -319,6 +323,7 @@ impl App {
                     // our internal timer when we're in Sleep mode
                     // and everything has timed out, so we don't have
                     // anything to do.
+                    cli_log::info!("need_to_stay_awake: {need_to_stay_awake}");
                     match need_to_stay_awake {
                         true => timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse()),
                         false => timeout.set(futures::future::Fuse::terminated()),
@@ -1123,6 +1128,7 @@ impl App {
             false,
             mode.into(),
         )?;
+        cli_log::info!("sending mode command: {:#?}", frame);
 
         let id: u32 = match frame.id() {
             embedded_can::Id::Standard(standard_id) => standard_id.as_raw() as u32,
@@ -1133,9 +1139,13 @@ impl App {
         match self.can_socket_tx.write_frame(raw_frame) {
             Ok(can_write_fut) => match can_write_fut.await {
                 Ok(_) => return Ok(()),
-                Err(_e) => return Ok(()),
+                Err(e) => {
+                    cli_log::info!("failed to queue CAN frame: {:?}", e);
+                    return Ok(());
+                }
             },
             Err(e) => {
+                cli_log::info!("failed to queue CAN frame");
                 return Err(e.into());
             }
         }
