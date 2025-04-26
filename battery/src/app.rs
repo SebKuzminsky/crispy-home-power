@@ -241,11 +241,14 @@ impl App {
                                 crossterm::event::KeyCode::Char('s') => {
                                     self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep;
                                 }
+                                crossterm::event::KeyCode::Char('c') => {
+                                    self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Charge;
+                                }
                                 crossterm::event::KeyCode::Char('d') => {
                                     self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive;
                                 }
-                                crossterm::event::KeyCode::Char('c') => {
-                                    self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Charge;
+                                crossterm::event::KeyCode::Char('n') => {
+                                    self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::None;
                                 }
                                 _ => (),
                             }
@@ -1094,23 +1097,33 @@ impl ratatui::widgets::Widget for &BatteryPack {
     fn render(self, area: ratatui::layout::Rect, buf: &mut ratatui::buffer::Buffer) {
         let mut text = vec![];
 
-        let (sleep_style, drive_style, charge_style) = match self.mode {
+        let (sleep_style, charge_style, drive_style, none_style) = match self.mode {
             abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep => (
+                ratatui::style::Style::default().bg(ratatui::style::Color::Green),
+                ratatui::style::Style::default(),
+                ratatui::style::Style::default(),
+                ratatui::style::Style::default(),
+            ),
+            abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Charge => (
+                ratatui::style::Style::default(),
                 ratatui::style::Style::default().bg(ratatui::style::Color::Green),
                 ratatui::style::Style::default(),
                 ratatui::style::Style::default(),
             ),
             abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive => (
                 ratatui::style::Style::default(),
+                ratatui::style::Style::default(),
                 ratatui::style::Style::default().bg(ratatui::style::Color::Green),
                 ratatui::style::Style::default(),
             ),
-            abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Charge => (
+            abs_alliance_can_messages::HostBatteryRequestHostStateRequest::None => (
+                ratatui::style::Style::default(),
                 ratatui::style::Style::default(),
                 ratatui::style::Style::default(),
                 ratatui::style::Style::default().bg(ratatui::style::Color::Green),
             ),
             _ => (
+                ratatui::style::Style::default(),
                 ratatui::style::Style::default(),
                 ratatui::style::Style::default(),
                 ratatui::style::Style::default(),
@@ -1121,9 +1134,11 @@ impl ratatui::widgets::Widget for &BatteryPack {
             ratatui::text::Span::styled("Mode: ", ratatui::style::Style::default()),
             ratatui::text::Span::styled("Sleep", sleep_style),
             ratatui::text::Span::styled(" ", ratatui::style::Style::default()),
+            ratatui::text::Span::styled("Charge", charge_style),
+            ratatui::text::Span::styled(" ", ratatui::style::Style::default()),
             ratatui::text::Span::styled("Drive", drive_style),
             ratatui::text::Span::styled(" ", ratatui::style::Style::default()),
-            ratatui::text::Span::styled("Charge", charge_style),
+            ratatui::text::Span::styled("None", none_style),
         ]));
 
         text.push(ratatui::text::Line::from(vec![
