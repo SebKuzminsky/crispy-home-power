@@ -40,6 +40,22 @@ CAN+ Out | 6           | Gray
 
 Lots of good info in the Alliance User Manual.
 
+There's an app in the `battery/` directory that controls the mode
+and reports telemetry.
+
+The modules collaborate over CAN to charge the low modules and discharge
+the high modules in the expected way.  The following scope trace shows the
+terminal voltage of two modules connected via CAN but not connected via
+their high-voltage terminals.  The module on probe 1 is charged to ~50V,
+the module on probe 2 is charged to ~48V.  The pack starts out in Sleep
+mode, where no modules are connected to the HV bus.  First i command the
+pack to Drive/Discharge mode; the 50V module turns on its HV terminals
+and the 48V module remains disconnected.  Then i command the pack to
+Charge mode; the high-voltage module disconnects from the HV bus and
+about a half second later the low-voltage module connects to the HV bus.
+
+![](battery/charge-discharge.png)
+
 ```
 CAN ID 0x502: `HOST_BatteryRequest`
     Payload: `HOST_stateRequest`, 1 byte
