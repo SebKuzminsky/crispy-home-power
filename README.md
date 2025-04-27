@@ -44,17 +44,25 @@ There's an app in the `battery/` directory that controls the mode
 and reports telemetry.
 
 The modules collaborate over CAN to charge the low modules and discharge
-the high modules in the expected way.  The following scope trace shows the
-terminal voltage of two modules connected via CAN but not connected via
-their high-voltage terminals.  The module on probe 1 is charged to ~50V,
-the module on probe 2 is charged to ~48V.  The pack starts out in Sleep
-mode, where no modules are connected to the HV bus.  First i command the
-pack to Drive/Discharge mode; the 50V module turns on its HV terminals
-and the 48V module remains disconnected.  Then i command the pack to
-Charge mode; the high-voltage module disconnects from the HV bus and
-about a half second later the low-voltage module connects to the HV bus.
+the high modules in the expected way.  The following scope trace shows
+the terminal voltage of three modules connected via CAN but not connected
+via their high-voltage terminals.
 
 ![](battery/charge-discharge.png)
+
+- module on probe 1: ~51V
+- module on probe 2: ~50V
+- module on probe 3: ~48V
+
+1. The pack starts out in "None" mode, where no modules are connected to the HV bus
+2. I command the pack to Charge mode; the lowest-voltage module (on probe 3) enables its FET and connects to its HV terminals to receive charge.  The higher-voltage modules leave their FETs disabled and remain disconnected from the HV bus.
+3. I command the pack to Drive/Discharge mode; the low module that was charging disconnects, and a second or so later the highest-voltage module (on probe 1) enables its FET and connects to the HV bus to discharge.
+4. Switching back to Charge mode disables the high module and re-enables the low module.
+
+Note that the middle module (50V, on probe 2) was never enabled in this
+test.  If the low module had charged up to ~50V it would have enabled
+during Charge mode, and if the high module had discharged down to ~50V
+it would have enabled during Discharge/Drive mode.
 
 ```
 CAN ID 0x502: `HOST_BatteryRequest`
