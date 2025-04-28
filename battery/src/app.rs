@@ -166,7 +166,7 @@ struct BatteryPack {
 impl Default for BatteryPack {
     fn default() -> Self {
         BatteryPack {
-            mode: abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep,
+            mode: abs_alliance_can_messages::HostBatteryRequestHostStateRequest::None,
             modules: [BatteryModule::default(); 10],
             charge_request: None,
             pack_diagnostic_connect: PackDiagnosticConnect::default(),
