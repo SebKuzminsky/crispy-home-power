@@ -17,9 +17,13 @@ async fn main() -> Result<(), eyre::Report> {
     println!("config: {args:#?}");
 
     let mut app = app::App::new(&args.can_interface)?;
-
     let terminal = tui::init()?;
+
     let result = app.run(terminal).await;
+
+    // Put the battery to sleep on exit, then restore the terminal.
+    let _ = app.sleep().await;
     let _ = tui::restore();
+
     result
 }
