@@ -1,4 +1,6 @@
 use embedded_can::Frame;
+use futures::future::FusedFuture;
+use futures::FutureExt;
 use futures_util::stream::StreamExt;
 
 use ratatui::style::Stylize;
@@ -204,7 +206,7 @@ impl App {
         terminal.draw(|frame| self.render_frame(frame))?;
         let _ = self.send_mode_command().await?;
 
-        let timeout = tokio::time::sleep(tokio::time::Duration::from_secs(1));
+        let timeout = tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse();
         tokio::pin!(timeout);
 
         let mut event_reader = crossterm::event::EventStream::new();
@@ -220,6 +222,9 @@ impl App {
                         Some(Ok(frame)) => {
                             let _ = self.handle_can_frame(frame);
                             need_redraw.notify_one();
+                            if timeout.is_terminated() {
+                                timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse());
+                            }
                         }
                         _ => ()
                     }
@@ -234,6 +239,12 @@ impl App {
                                 }
                                 crossterm::event::KeyCode::Char('s') => {
                                     self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep;
+                                    // The Sleep mode is special.  We need
+                                    // to send the Sleep command once and
+                                    // then not again, or the subsequent
+                                    // Sleep commands will wake the pack
+                                    // up briefly to respond to the Sleep.
+                                    let _ = self.sleep().await?;
                                 }
                                 crossterm::event::KeyCode::Char('c') => {
                                     self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Charge;
@@ -245,6 +256,19 @@ impl App {
                                     self.battery_pack.mode = abs_alliance_can_messages::HostBatteryRequestHostStateRequest::None;
                                 }
                                 _ => (),
+                            }
+                            // Send the new mode command right away
+                            // (don't wait for the next timeout).
+                            // This makes it more responsive to user
+                            // input.  `send_mode_command()` does *not*
+                            // send a packet if we're in Sleep mode.
+                            let _ = self.send_mode_command().await?;
+
+                            // If we had put the pack to Sleep and turned
+                            // timeouts ticks off, restart the timout
+                            // future now.
+                            if timeout.is_terminated() {
+                                timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse());
                             }
                             need_redraw.notify_one();
                         }
@@ -263,10 +287,17 @@ impl App {
 
                     let now = std::time::Instant::now();
 
+                    // This keeps us awake if we still have things on
+                    // the screen that might need to be timed out.
+                    let mut need_to_stay_awake = false;
+
                     // Time out battery modules.
                     for battery_module in &mut self.battery_pack.modules {
                         if let Some(last_seen) = battery_module.last_seen {
-                            if (now - last_seen) > std::time::Duration::from_secs(2) {
+                            if (now - last_seen) < std::time::Duration::from_secs(2) {
+                                // This module is still there, check again next tick.
+                                need_to_stay_awake = true;
+                            } else {
                                 battery_module.last_seen = None;
                                 need_redraw.notify_one();
                             }
@@ -275,14 +306,23 @@ impl App {
 
                     // Time out the pack charge request.
                     if let Some(charge_request) = self.battery_pack.charge_request {
-                        if (now - charge_request.last_seen) > std::time::Duration::from_secs(2) {
+                        if (now - charge_request.last_seen) < std::time::Duration::from_secs(2) {
+                            // The Charge Request is still there, check again next tick.
+                            need_to_stay_awake = true;
+                        } else {
                             self.battery_pack.charge_request = None;
                             need_redraw.notify_one();
                         }
                     }
 
-                    // Set the next timeout.
-                    timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)));
+                    // Set the next tick timeout, if needed.  We disable
+                    // our internal timer when we're in Sleep mode
+                    // and everything has timed out, so we don't have
+                    // anything to do.
+                    match need_to_stay_awake {
+                        true => timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse()),
+                        false => timeout.set(futures::future::Fuse::terminated()),
+                    }
                 }
             }
         }
