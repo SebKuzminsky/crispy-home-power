@@ -192,6 +192,13 @@ impl App {
         })
     }
 
+    pub async fn sleep(&mut self) -> Result<(), eyre::Report> {
+        self.send_mode_command_raw(
+            abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep,
+        )
+        .await
+    }
+
     pub async fn run(&mut self, mut terminal: tui::Tui) -> Result<(), eyre::Report> {
         // Initial setup so it's snappy on startup.
         terminal.draw(|frame| self.render_frame(frame))?;
@@ -1054,13 +1061,27 @@ impl App {
     }
 
     async fn send_mode_command(&mut self) -> Result<(), eyre::Report> {
+        if self.battery_pack.mode
+            == abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep
+        {
+            // Don't send any CAN packets while the battery is in sleep
+            // mode, we'd wake it up.
+            return Ok(());
+        }
+        self.send_mode_command_raw(self.battery_pack.mode).await
+    }
+
+    async fn send_mode_command_raw(
+        &mut self,
+        mode: abs_alliance_can_messages::HostBatteryRequestHostStateRequest,
+    ) -> Result<(), eyre::Report> {
         let frame = abs_alliance_can_messages::HostBatteryRequest::new(
             false,
             false,
             false,
             false,
             false,
-            self.battery_pack.mode.into(),
+            mode.into(),
         )?;
 
         let id: u32 = match frame.id() {
