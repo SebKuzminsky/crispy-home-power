@@ -193,7 +193,9 @@ impl App {
     }
 
     pub async fn run(&mut self, mut terminal: tui::Tui) -> Result<(), eyre::Report> {
+        // Initial setup so it's snappy on startup.
         terminal.draw(|frame| self.render_frame(frame))?;
+        let _ = self.send_mode_command().await?;
 
         let timeout = tokio::time::sleep(tokio::time::Duration::from_secs(1));
         tokio::pin!(timeout);
