@@ -3,21 +3,6 @@ use futures_util::stream::StreamExt;
 
 use ratatui::style::Stylize;
 
-// use ratatui::layout::Constraint;
-// use ratatui::layout::Layout;
-// use ratatui::prelude::Direction;
-// use ratatui::widgets::Widget;
-// use ratatui::{
-//     buffer::Buffer,
-//     crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind},
-//     layout::Rect,
-//     style::Stylize,
-//     symbols::border,
-//     text::{Line, Text},
-//     widgets::{Block, Borders, Paragraph},
-//     Frame,
-// };
-
 use battery::abs_alliance_can_messages;
 use battery::tui;
 
