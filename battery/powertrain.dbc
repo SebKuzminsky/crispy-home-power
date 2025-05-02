@@ -1,0 +1,2075 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Inverter Battery Charger Host
+VAL_TABLE_ Wake_Reason 3 "RTC" 2 "IGN_HI" 1 "IGN_LO" 0 "CAN" ;
+VAL_TABLE_ Battery_States 4 "Drive" 3 "Charge" 2 "Opening FETs" 1 "Closing FETs" 0 "Standby" ;
+VAL_TABLE_ Device_Chemistry 7 "LiP" 6 "ZnAr" 5 "RAM" 4 "NiZn" 3 "NiMH" 2 "NiCd" 1 "LION" 0 "PbAc" ;
+VAL_TABLE_ Error_Codes 7 "UnknownError" 6 "BadSize" 5 "Overflow/Underflow" 4 "AccessDenied" 3 "UnsupportedCommand" 2 "ReservedCommand" 1 "Busy" 0 "OK" ;
+
+
+BO_ 294 BATT_packHvStatus_2: 8 Battery
+ SG_ BATT_iPackFiltered_2 : 48|16@1- (0.02,0) [-480|240] "A" Vector__XXX
+ SG_ BATT_vPack_2 : 32|16@1+ (0.01,0) [0|70] "V" Vector__XXX
+ SG_ BATT_iPack_2 : 16|16@1- (0.02,0) [-480|240] "" Vector__XXX
+ SG_ BATT_vPackLoad_2 : 0|16@1+ (0.01,0) [0|70] "V" Vector__XXX
+
+BO_ 2176909312 BATT_diagnosticModBusStatus: 2 Battery
+ SG_ BATT_timeBusQuietStandby : 0|10@1+ (1,0) [0|1023] "seconds"  Host
+ SG_ BATT_timeBusQuietSleep : 10|6@1+ (1,0) [0|63] "seconds"  Host
+
+BO_ 2626813952 BATT_diagnosticHrnsImpDleta_0: 8 Battery
+ SG_ BATT_HrnsImpDelta_3 : 48|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_2 : 32|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_1 : 16|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_0 : 0|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+
+BO_ 2626826240 BATT_diagnosticHrnsImpDleta_3: 6 Battery
+ SG_ BATT_HrnsImpDelta_14 : 32|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_13 : 16|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_12 : 0|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+
+BO_ 2626818048 BATT_diagnosticHrnsImpDleta_1: 8 Battery
+ SG_ BATT_HrnsImpDelta_7 : 48|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_6 : 32|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_5 : 16|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_4 : 0|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+
+BO_ 2626822144 BATT_diagnosticHrnsImpDleta_2: 8 Battery
+ SG_ BATT_HrnsImpDelta_11 : 48|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_10 : 32|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_9 : 16|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+ SG_ BATT_HrnsImpDelta_8 : 0|16@1- (0.001,0) [-32.768|32.767] "mV"  Host
+
+BO_ 2626748416 BATT_diagnosticHarnessImpedance: 2 Battery
+ SG_ BATT_HarnessImpedance_14 : 14|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_13 : 13|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_12 : 12|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_11 : 11|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_10 : 10|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_9 : 9|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_8 : 8|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_7 : 7|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_6 : 6|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_5 : 5|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_4 : 4|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_3 : 3|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_2 : 2|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_1 : 1|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_HarnessImpedance_0 : 0|1@1+ (1,0) [0|1] "mOhms"  Host
+
+BO_ 1830 CHG_HeartBeat: 8 Battery
+ SG_ Chg_Hearbeat_State : 0|8@1+ (1,0) [0|255] ""  Charger
+
+BO_ 1446 CHG_Response: 5 Battery
+ SG_ Chg_Response_Stat : 32|8@1+ (1,0) [0|255] ""  Charger
+ SG_ Chg_Response_D : 0|32@1+ (1,0) [0|4294967295] ""  Charger
+
+BO_ 1574 CHG_Request: 5 Charger
+ SG_ Chg_Request_Stat : 32|8@1+ (1,0) [0|255] ""  Battery
+ SG_ Chg_Request_D : 0|32@1+ (1,0) [0|4294967295] ""  Battery
+
+BO_ 2147549184 BATT_modRequest: 6 Battery
+ SG_ BATT_isIgnLo_Requested : 46|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_modReqCntr : 0|8@1+ (1,0) [0|255] ""  Battery,Host
+ SG_ BATT_nodeIdSerialNumber : 8|34@1+ (1,0) [0|17179869183] ""  Battery,Host
+ SG_ BATT_startNodeId : 45|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_stateRequest : 42|3@1+ (1,0) [0|7] ""  Battery,Host
+
+BO_ 2642411520 BATT_taskStackDiag: 8 Battery
+ SG_ BATT_canTaskStack : 48|8@1+ (1,0) [0|100] "%"  Host
+ SG_ BATT_afeTaskStack : 40|8@1+ (1,0) [0|100] "%"  Host
+ SG_ BATT_nvmTaskStack : 32|8@1+ (1,0) [0|100] "%"  Host
+ SG_ BATT_10hzTaskStack : 16|8@1+ (1,0) [0|100] "%"  Host
+ SG_ BATT_100hzTaskStack : 8|8@1+ (1,0) [0|100] "%"  Host
+ SG_ BATT_1000hzTaskStack : 0|8@1+ (1,0) [0|100] "%"  Host
+
+BO_ 2625634304 BATT_taskRunTimeDiag: 8 Battery
+ SG_ BATT_canTaskRunTime : 50|10@1+ (1,0) [0|1023] "ms"  Host
+ SG_ BATT_afeTaskRunTime : 40|10@1+ (1,0) [0|1023] "ms"  Host
+ SG_ BATT_nvmTaskRunTime : 30|10@1+ (1,0) [0|1023] "ms"  Host
+ SG_ BATT_10hzTaskRunTime : 20|10@1+ (1,0) [0|1023] "ms"  Host
+ SG_ BATT_100hzTaskRunTime : 10|10@1+ (1,0) [0|1023] "ms"  Host
+ SG_ BATT_1000hzTaskRunTime : 0|10@1+ (1,0) [0|1023] "ms"  Host
+
+BO_ 1809 BATT_packDiagnosticConnectedBus: 6 Battery
+ SG_ BATT_vPackConnBusBrickMin : 16|12@1+ (0.002,0) [0|4.98066] "V"  Host
+ SG_ BATT_vPackConnBusBrickMax : 32|12@1+ (0.002,0) [0|4.98066] "V"  Host
+ SG_ BATT_packConnBusSOC : 0|16@1+ (0.1,0) [0|102.3] "%"  Host
+
+BO_ 2147516416 HOST_nodeRequest: 8 Host
+ SG_ HOST_securityKey : 16|48@1+ (1,0) [0|281474976710655] ""  Battery
+ SG_ HOST_startNodeId : 0|1@1+ (1,0) [0|1] ""  Battery
+
+BO_ 2147500032 NODE_ID_CLAIM: 8 Battery
+ SG_ NODE_ID_CLAIM_RND : 34|30@1+ (1,0) [0|4294967295] ""  Battery,Host
+ SG_ NODE_ID_CLAIM_SN : 0|34@1+ (1,0) [0|4294967295] ""  Battery,Host
+
+BO_ 2643001344 BATT_diagnosticDeltaQ: 8 Battery
+ SG_ BATT_deltaQTaskOsTimeDelta : 16|12@1+ (1,0) [0|4095] ""  Host
+ SG_ BATT_deltaQTaskOsTime : 32|32@1+ (1,0) [0|4294967295] ""  Host
+ SG_ BATT_deltaQFifoWaterMark : 12|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_deltaQFifoSizeUsed : 8|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_deltaQEvent : 28|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_deltaQError : 3|3@1+ (1,0) [0|3] ""  Host
+ SG_ BATT_deltaQState : 0|3@1+ (1,0) [0|3] ""  Host
+
+BO_ 2642935808 BATT_diagnosticCan: 4 Battery
+ SG_ BATT_canTXFifoSizeUsed : 24|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_canRXFifoSizeUsed : 8|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_canTXFifoWaterMark : 16|8@1+ (1,0) [0|65535] ""  Host
+ SG_ BATT_canRXFifoWaterMark : 0|8@1+ (1,0) [0|255] ""  Host
+
+BO_ 1808 BATT_packDiagnosticConnect: 8 Battery
+ SG_ BATT_packModDrvStandbyConnOK_M : 48|12@1+ (1,0) [0|4095] ""  Host
+ SG_ BATT_packModChgStandbyConnOK_M : 32|12@1+ (1,0) [0|4095] ""  Host
+ SG_ BATT_packModDrvEntryConnOK_M : 16|12@1+ (1,0) [0|4095] ""  Host
+ SG_ BATT_packModChgEntryConnOK_M : 0|12@1+ (1,0) [0|4095] ""  Host
+
+BO_ 2572156928 BATT_eventMatrix_B: 2 Battery
+ SG_ BATT_harnessImpedanceFault : 10|1@1+ (1,0) [0|1] "mOhms"  Host
+ SG_ BATT_packLevelArbitrationFault : 7|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_multiIgnLoFault : 6|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_modThermistorShorted : 9|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_modThermistorOpenWire : 8|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_chargeNotNeeded : 2|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModTempImbalance : 1|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModCurrImbalance : 0|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_flashBootCRCError : 5|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_flashAppCRCError : 4|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_cellOpenWire : 3|1@1+ (1,0) [0|1] ""  Host
+
+BO_ 260 BATT_packCapacity: 4 Battery
+ SG_ BATT_packRemainingCap_Ah : 16|16@1+ (0.005,0) [0|327.675] "Ah"  Host
+ SG_ BATT_packFullChargeCap_Ah : 0|16@1+ (0.005,0) [0|327.675] "Ah"  Host
+
+BO_ 2618556416 BATT_diagnosticChgFet: 8 Battery
+ SG_ BATT_fetChgDiagState : 8|3@1+ (1,0) [0|7] ""  Host
+ SG_ BATT_fetChgDiagIMeas : 48|14@1- (0.025,0) [-204.8|204.775] "A"  Host
+ SG_ BATT_fetChgDiagVMeasPrime : 32|16@1- (0.005,0) [-163.84|163.835] "V"  Host
+ SG_ BATT_fetChgDiagVMeas : 16|16@1- (0.005,0) [-163.84|163.835] "V"  Host
+ SG_ BATT_fetChgDiagOpenResult : 3|3@1+ (1,0) [0|7] ""  Host
+ SG_ BATT_fetChgDiagClosedResult : 0|3@1+ (1,0) [0|7] ""  Host
+
+BO_ 422 BATT_MTR_1_RPDO_1: 1 Inverter
+ SG_ MTR_BDI_SOC : 0|8@1+ (0.5,0) [0|100] "%"  Battery
+
+BO_ 0 NMT_CANopen: 2 Host
+ SG_ NMT_Node : 8|8@1+ (1,0) [0|255] ""  Battery
+ SG_ NMT_Command : 0|8@1+ (1,0) [0|255] ""  Battery
+
+BO_ 1318 BATT_MTR_1_TPDO_2: 4 Battery
+ SG_ BATT_MTR_1_PACK_V : 16|16@1+ (0.1,0) [0|6553.5] "V"  Inverter
+ SG_ BATT_MTR_1_CURR : 0|16@1- (0.1,0) [-3276.8|3276.7] "A"  Inverter
+
+BO_ 1062 BATT_MTR_1_TPDO_1: 7 Battery
+ SG_ BATT_MTR_1_SOC : 32|8@1+ (1,0) [0|255] "%"  Inverter
+ SG_ BATT_MTR_1_REGEN_CURR : 16|16@1+ (0.1,0) [0|6553.5] "A"  Inverter
+ SG_ BATT_MTR_1_FLT_UVP_WAR : 43|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_UVP_MOD : 42|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_OVP_WAR : 41|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_OVP_MOD : 40|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_OTP_SEV : 45|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_OTP_MOD : 46|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_OCP : 44|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_FLT_HW : 47|1@1+ (1,0) [0|1] ""  Inverter
+ SG_ BATT_MTR_1_DRV_CURR : 0|16@1+ (0.1,0) [0|6553.5] "A"  Inverter
+ SG_ BATT_MTR_1_CON_MOD : 51|4@1+ (1,0) [0|15] ""  Inverter
+ SG_ BATT_MTR_1_CHG_STAT : 49|2@1+ (1,0) [0|3] ""  Inverter
+ SG_ BATT_MTR_1_BATT_STAT : 48|1@1+ (1,0) [0|1] ""  Inverter
+
+BO_ 2618818560 BATT_diagnosticDsgFet: 8 Battery
+ SG_ BATT_fetDsgDiagState : 8|3@1+ (1,0) [0|7] ""  Host
+ SG_ BATT_fetDsgDiagIMeas : 48|14@1- (0.025,0) [-204.8|204.775] "A"  Host
+ SG_ BATT_fetDsgDiagVMeas : 32|16@1- (0.005,0) [-163.84|163.835] "V"  Host
+ SG_ BATT_fetDsgDiagVMeasPrime : 16|16@1- (0.005,0) [-163.84|163.835] "V"  Host
+ SG_ BATT_fetDsgDiagOpenResult : 3|3@1+ (1,0) [0|7] ""  Host
+ SG_ BATT_fetDsgDiagClosedResult : 0|3@1+ (1,0) [0|7] ""  Host
+
+BO_ 261 BATT_packSOC: 4 Battery
+ SG_ BATT_packUserSOC : 0|16@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_packSOC : 16|16@1+ (0.1,0) [0|102.3] "%"  Host
+
+BO_ 2508193792 BATT_bootUp: 6 Battery
+ SG_ BATT_bootloaderRevision_bootup : 40|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_bootloaderMinor_bootup : 32|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_bootloaderMajor_bootup : 24|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_appRevision_bootup : 16|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_appMinor_bootup : 8|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_appMajor_bootup : 0|8@1+ (1,0) [0|255] ""  Host
+
+BO_ 276 BATT_packPwrAvailable: 6 Battery
+ SG_ BATT_iPackDchLimit30s : 32|16@1- (0.03,0) [-1600|4] "A"  Inverter,Host
+ SG_ BATT_pwrPackDchLimit : 16|16@1+ (0.02,0) [0|1200] "kW"  Inverter,Host
+ SG_ BATT_pwrPackChgLimit : 0|16@1+ (0.02,0) [0|1200] "kW"  Inverter,Host
+
+BO_ 2219835392 BATT_modPwrAvailable: 6 Battery
+ SG_ BATT_iModDchLimit30s : 32|16@1- (0.01,0) [-200|1] "A"  Battery
+ SG_ BATT_pwrModDchLimit : 16|16@1+ (0.01,0) [0|655.35] "kW"  Host,Battery
+ SG_ BATT_pwrModChgLimit : 0|16@1+ (0.01,0) [0|655.35] "kW"  Host,Battery
+
+BO_ 1968 HOST_dbgSox: 8 Host
+ SG_ dbg_soxOverrideEnable : 56|1@1+ (1,0) [0|1] ""  Battery
+ SG_ dbg_sohcBrick14 : 52|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick13 : 48|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick12 : 44|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick11 : 40|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick10 : 36|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick09 : 32|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick08 : 28|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick07 : 24|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick06 : 20|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick05 : 16|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick04 : 12|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick03 : 8|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick02 : 4|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+ SG_ dbg_sohcBrick01 : 0|4@1+ (0.015,0.775) [0.775|1] ""  Battery
+
+BO_ 1632 BATT_BOOT_INFO_MSG: 8 Battery
+
+BO_ 1600 UDS_REQUEST_0: 8 Vector__XXX
+
+BO_ 1616 UDS_RESONSE_0: 8 Vector__XXX
+
+BO_ 275 BATT_packDchLimits: 8 Battery
+ SG_ BATT_vBusMin : 48|16@1+ (0.005,0) [0|70] "V"  Inverter,Host
+ SG_ BATT_iPackDchLimitInst : 16|16@1- (0.03,0) [-1600|4] "A"  Inverter,Host
+ SG_ BATT_iPackDchLimit_User_Def : 0|16@1- (0.03,0) [-1600|4] "A"  Inverter,Host
+ SG_ BATT_iPackDchLimitCont : 32|16@1- (0.03,0) [-1600|4] "A"  Inverter,Host
+
+BO_ 274 BATT_packChgLimits: 8 Battery
+ SG_ BATT_vBusMax : 48|16@1+ (0.005,0) [0|70] "V"  Inverter,Host
+ SG_ BATT_iPackChgLimitInst : 16|16@1+ (0.01,0) [0|650] "A"  Inverter,Host
+ SG_ BATT_iPackChgLimit_User_Def : 0|16@1+ (0.01,0) [0|650] "A"  Inverter,Host
+ SG_ BATT_iPackChgLimitCont : 32|16@1+ (0.01,0) [0|650] "A"  Inverter,Host
+
+BO_ 2219573248 BATT_modDchLimits: 8 Battery
+ SG_ BATT_vModDchLimit : 48|16@1+ (0.005,0) [0|70] "V"  Host,Battery
+ SG_ BATT_iModDchLimitInst : 32|16@1- (0.01,0) [-200|1] "A"  Host,Battery
+ SG_ BATT_iModDchLimit_User_Def : 16|16@1- (0.01,0) [-200|1] "A"  Host,Battery
+ SG_ BATT_iModDchLimitCont : 0|16@1- (0.01,0) [-120|1] "A"  Host,Battery
+
+BO_ 259 BATT_packStatus: 8 Battery
+ SG_ BATT_packAliveCntr : 48|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_packSpeakerInstanceID : 40|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_packNumModsDataValid : 28|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_packNumModsOnNetwork : 8|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_packModComStatusOK_M : 16|12@1+ (1,0) [0|4095] ""  Host
+ SG_ BATT_fetPackDsgWelded : 33|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetPackChgWelded : 32|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packNumModsConfigured : 12|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_packNumModsOnHvBus : 4|4@1+ (1,0) [0|15] ""  Host
+ SG_ BATT_packState : 0|4@1+ (1,0) [0|15] ""  Host
+
+BO_ 293 BATT_packMinMax: 8 Battery
+ SG_ BATT_vPackModuleMinID : 60|4@1+ (1,0) [0|10] ""  Host
+ SG_ BATT_vPackBrickMin : 48|12@1+ (0.002,0) [0|4.98066] "V"  Host
+ SG_ BATT_vPackModuleMaxID : 44|4@1+ (1,0) [0|10] ""  Host
+ SG_ BATT_vPackBrickMax : 32|12@1+ (0.002,0) [0|4.98066] "V"  Host
+ SG_ BATT_tPackModuleMinID : 28|4@1+ (1,0) [0|10] ""  Host
+ SG_ BATT_tPackModuleMin : 16|12@1- (0.1,0) [-40|125] "deg C"  Host
+ SG_ BATT_tPackModuleMaxID : 12|4@1+ (1,0) [0|10] ""  Host
+ SG_ BATT_tPackModuleMax : 0|12@1- (0.1,0) [-40|125] "deg C"  Host
+
+BO_ 292 BATT_packHvStatus: 8 Battery
+ SG_ BATT_iPackFiltered : 48|16@1- (0.02,0) [-480|240] "A"  Host
+ SG_ BATT_vPack : 32|16@1+ (0.01,0) [0|70] "V"  Host
+ SG_ BATT_vPackLoad : 0|16@1+ (0.01,0) [0|70] "V"  Host
+ SG_ BATT_iPack : 16|16@1- (0.02,0) [-480|240] ""  Host
+
+BO_ 1904 BATT_debugAlert: 8 Battery
+ SG_ BATT_debugValue : 32|32@1+ (1,0) [0|4294967295] ""  Host
+ SG_ BATT_debugSeverity : 8|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_debugLineNumber : 16|16@1+ (1,0) [0|65535] ""  Host
+ SG_ BATT_debugModuleId : 0|8@1+ (1,0) [0|255] ""  Host
+
+BO_ 2629828608 BATT_diagnosticAhTotal: 8 Battery
+ SG_ BATT_ahDchTotal : 32|32@1+ (0.1,0) [0|500000] "Ah"  Host
+ SG_ BATT_ahChgTotal : 0|32@1+ (0.1,0) [0|500000] "Ah"  Host
+
+BO_ 1953 HOST_dbgChargeCtrl: 8 Host
+ SG_ dbg_chargeCtrl_vTarget : 16|16@1+ (7.6E-005,0) [0|4.98066] "V"  Battery
+ SG_ dbg_chargeCtrl_iChgLimit : 0|16@1+ (0.01,0) [0|16] "A"  Battery
+
+BO_ 2224291840 BATT_modMinMax: 8 Battery
+ SG_ BATT_tModuleMaxID : 60|4@1+ (1,0) [0|14] ""  Battery,Host
+ SG_ BATT_tModuleMinID : 44|4@1+ (1,0) [0|14] ""  Battery,Host
+ SG_ BATT_vBrickMaxID : 28|4@1+ (1,0) [0|14] ""  Battery,Host
+ SG_ BATT_vBrickMinID : 12|4@1+ (1,0) [0|14] ""  Battery,Host
+ SG_ BATT_tModuleMax : 48|12@1- (0.1,0) [-40|125] "deg C"  Battery,Host
+ SG_ BATT_tModuleMin : 32|12@1- (0.1,0) [-40|125] "deg C"  Battery,Host
+ SG_ BATT_vBrickMin : 0|12@1+ (0.002,0) [0|4.98066] "V"  Battery,Host
+ SG_ BATT_vBrickMax : 16|12@1+ (0.002,0) [0|4.98066] "V"  Battery,Host
+
+BO_ 1952 HOST_dbgChargePID: 8 Host
+ SG_ dbg_iPID_ki : 48|16@1+ (0.01,0) [0|10] ""  Battery
+ SG_ dbg_iPID_kp : 32|16@1+ (0.01,0) [0|10] ""  Battery
+ SG_ dbg_vPID_ki : 16|16@1+ (0.01,0) [0|10] ""  Battery
+ SG_ dbg_vPID_kp : 0|16@1+ (0.01,0) [0|10] ""  Battery
+
+BO_ 2626945024 BATT_diagnosticBalStatusBrick: 2 Battery
+ SG_ BATT_balStatusBrick14 : 13|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick13 : 12|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick12 : 11|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick11 : 10|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick10 : 9|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick09 : 8|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick08 : 7|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick07 : 6|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick06 : 5|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick05 : 4|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick04 : 3|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick03 : 2|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick02 : 1|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_balStatusBrick01 : 0|1@1+ (1,0) [0|1] ""  Host
+
+BO_ 2551447552 BATT_rtcTimeDate: 8 Battery
+ SG_ BATT_rtcSeconds : 48|8@1+ (1,0) [0|59] ""  Host
+ SG_ BATT_rtcMinutes : 40|8@1+ (1,0) [0|59] ""  Host
+ SG_ BATT_rtcHour : 32|8@1+ (1,0) [0|23] ""  Host
+ SG_ BATT_rtcDay : 24|8@1+ (1,0) [1|31] ""  Host
+ SG_ BATT_rtcMonth : 16|8@1+ (1,0) [1|12] ""  Host
+ SG_ BATT_rtcYear : 0|16@1+ (1,0) [2016|2099] ""  Host
+
+BO_ 2620915712 BATT_diagnosticSleepWake: 8 Battery
+ SG_ BATT_timeSleepCycle : 32|32@1+ (1,0) [0|4294967295] "seconds"  Host
+ SG_ BATT_timeWakeCycle : 0|32@1+ (1,0) [0|4294967295] "seconds"  Host
+
+BO_ 2620653568 BATT_sleepWake: 1 Battery
+ SG_ BATT_wakeReason : 4|4@1+ (1,0) [0|15] ""  Host
+
+BO_ 1824 BATT_chargingPID: 8 Battery
+ SG_ dbg_vPID_out : 48|16@1+ (0.01,0) [0|100] ""  Host
+ SG_ dbg_vPID_ierror : 32|16@1+ (0.1,0) [0|2000] ""  Host
+ SG_ dbg_iPID_out : 16|16@1+ (0.01,0) [0|100] ""  Host
+ SG_ dbg_iPID_ierror : 0|16@1+ (0.1,0) [0|2000] ""  Host
+
+BO_ 2487484416 BATT_boardIO: 1 Battery
+ SG_ BATT_boardIO_DIS_OC_FLT_LA : 5|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_boardIO_L9963_FAULT : 3|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_boardIO_IL_WAKE_LATCH : 2|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_boardIO_IH_WAKE_LATCH : 1|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_boardIO_CAN_WAKE_LATCH : 0|1@1+ (1,0) [0|1] ""  Host
+
+BO_ 2672295936 BATT_boardADC_3: 6 Battery
+ SG_ BATT_boardADC_SHUNT_TEMP : 16|16@1- (0.01,0) [0|100] "V"  Host
+ SG_ BATT_boardADC_FET_TEMP : 0|16@1- (0.01,0) [0|100] "V"  Host
+ SG_ BATT_boardADC_AMB_TEMP : 32|16@1- (0.01,0) [0|100] "V"  Host
+
+BO_ 2672033792 BATT_boardADC_2: 6 Battery
+ SG_ BATT_boardADC_12V : 16|16@1- (0.01,0) [0|100] "V"  Host
+ SG_ BATT_boardADC_5V : 0|16@1- (0.01,0) [0|100] "V"  Host
+ SG_ BATT_boardADC_3V3 : 32|16@1- (0.01,0) [0|100] "V"  Host
+
+BO_ 2671771648 BATT_boardADC_1: 6 Battery
+ SG_ BATT_boardADC_LOAD : 32|16@1- (0.01,0) [0|100] "V"  Host
+ SG_ BATT_boardADC_COMMON_DRAIN : 16|16@1- (0.01,0) [0|100] "V"  Host
+ SG_ BATT_boardADC_PACK : 0|16@1- (0.01,0) [0|100] "V"  Host
+
+BO_ 1296 HOST_boardIO: 4 Host
+ SG_ HOST_boardIO_PROTECTION_CHECK : 11|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL14 : 29|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL13 : 28|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL12 : 27|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL11 : 26|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL10 : 25|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL09 : 24|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL08 : 23|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL07 : 22|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL06 : 21|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL05 : 20|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL04 : 19|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL03 : 18|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL02 : 17|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_BAL01 : 16|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_LED4 : 8|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_LED3 : 6|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_LED2 : 2|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_LED1 : 0|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_PCHG : 7|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_nFLT_CLR : 5|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_DSG_EN : 4|1@1+ (1,0) [0|0] ""  Battery
+ SG_ HOST_boardIO_CHG_EN : 1|1@1+ (1,0) [0|0] ""  Battery
+
+BO_ 2626682880 BATT_diagnosticVBricksD: 4 Battery
+ SG_ BATT_vBrick14 : 16|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick13 : 0|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+
+BO_ 2630877184 BATT_diagnosticSOCBricksD: 8 Battery
+ SG_ BATT_socState : 26|3@1+ (1,0) [0|7] ""  Host
+ SG_ BATT_socLoLimit : 48|14@1+ (1,0) [0|16383] ""  Host
+ SG_ BATT_socHiLimit : 32|14@1+ (1,0) [0|16383] ""  Host
+ SG_ BATT_socBrick14 : 16|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick13 : 0|10@1+ (0.1,0) [0|102.3] "%"  Host
+
+BO_ 2621440000 BATT_diagnosticResBricksD: 4 Battery
+ SG_ BATT_resBrick14 : 16|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick13 : 0|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+
+BO_ 2622488576 BATT_diagnosticCapBricksD: 8 Battery
+ SG_ BATT_sohcUpdated : 48|14@1+ (1,0) [0|16383] ""  Host
+ SG_ BATT_sohcPrimed : 32|14@1+ (1,0) [0|16383] ""  Host
+ SG_ BATT_capBrick14 : 16|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick13 : 0|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+
+BO_ 2236874752 BATT_hardwareVersion: 8 Battery
+ SG_ BATT_hardwareVersion : 0|32@1+ (1,0) [0|4294967295] ""  Host
+
+BO_ 2571108352 BATT_eventMatrix_A: 8 Battery
+ SG_ BATT_packModIdFault : 8|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModExitedFromBus : 16|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packFetChgWelded : 35|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packFetDsgWelded : 36|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetDsgShortedAux : 63|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetChgShortedAux : 25|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_prechargeFetFail : 39|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_abnormalResetReason : 31|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_prechargeTooSlow : 49|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_prechargeTooFast : 50|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_prechargeTimeout : 51|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetChgShorted : 23|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetChgFailToClose : 22|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModSelectFault : 21|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModConnectFault : 20|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModMIA : 19|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packModImbalance : 18|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_afeFault : 17|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_chargerMIA : 60|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_chargerError : 59|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickUnderWar : 58|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickUnderSev : 57|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickUnderMod : 56|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickOverWar : 55|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickOverSev : 54|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickOverMod : 53|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_vBrickImbalance : 52|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_loggerAlmostFull : 61|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempModuleUnderWar : 48|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempModuleUnderSev : 47|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempModuleUnderMod : 46|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempModuleOverWar : 45|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempModuleOverSev : 44|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempModuleOverMod : 43|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempBrickImbalance : 42|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_taskLockupError : 41|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempAmbientOverWar : 40|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempAmbientOverSev : 38|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_tempAmbientOverMod : 37|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_sensePackVoltError : 34|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_senseLoadVoltError : 33|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_loggerFull : 62|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_senseCurrentError : 32|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_senseBrickTempError : 30|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_resPackHigh : 29|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_ramOverUtilError : 28|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_powerPackInsufficient : 27|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_packCellSoftShort : 26|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_iOverHardware : 24|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetOverTemp : 15|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_iOverDischarge : 14|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_iOverCharge : 13|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_inverterDriveMIA : 12|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_iUnderCharge : 11|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_hostMIA : 10|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetDsgShorted : 7|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_fetDsgFailToClose : 6|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_capLow : 5|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_brickOverDischarge : 4|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_brickOverCharge : 3|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_bmsProcessorError : 2|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_bmsMemoryError : 1|1@1+ (1,0) [0|1] ""  Host
+ SG_ BATT_afeError : 0|1@1+ (1,0) [0|1] ""  Host
+
+BO_ 2630615040 BATT_diagnosticSOCBricksC: 8 Battery
+ SG_ BATT_socBrick12 : 48|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick11 : 32|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick09 : 0|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick10 : 16|10@1+ (0.1,0) [0|102.3] "%"  Host
+
+BO_ 2630352896 BATT_diagnosticSOCBricksB: 8 Battery
+ SG_ BATT_socBrick08 : 48|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick07 : 32|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick06 : 16|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick05 : 0|10@1+ (0.1,0) [0|102.3] "%"  Host
+
+BO_ 2630090752 BATT_diagnosticSOCBricksA: 8 Battery
+ SG_ BATT_socBrick04 : 48|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick03 : 32|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick02 : 16|10@1+ (0.1,0) [0|102.3] "%"  Host
+ SG_ BATT_socBrick01 : 0|10@1+ (0.1,0) [0|102.3] "%"  Host
+
+BO_ 2622226432 BATT_diagnosticCapBricksC: 8 Battery
+ SG_ BATT_capBrick12 : 48|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick11 : 32|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick09 : 0|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick10 : 16|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+
+BO_ 2621964288 BATT_diagnosticCapBricksB: 8 Battery
+ SG_ BATT_capBrick08 : 48|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick07 : 32|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick06 : 16|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick05 : 0|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+
+BO_ 2621702144 BATT_diagnosticCapBricksA: 8 Battery
+ SG_ BATT_capBrick04 : 48|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick03 : 32|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick02 : 16|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+ SG_ BATT_capBrick01 : 0|16@1+ (0.00075,0) [0|49.15125] "Ah"  Host
+
+BO_ 2619604992 BATT_diagnosticResBricksC: 8 Battery
+ SG_ BATT_resBrick12 : 48|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick11 : 32|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick09 : 0|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick10 : 16|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+
+BO_ 2619342848 BATT_diagnosticResBricksB: 8 Battery
+ SG_ BATT_resBrick08 : 48|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick07 : 32|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick06 : 16|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick05 : 0|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+
+BO_ 2619080704 BATT_diagnosticResBricksA: 8 Battery
+ SG_ BATT_resBrick04 : 48|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick03 : 32|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick02 : 16|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_resBrick01 : 0|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+
+BO_ 2232680448 BATT_swVersion: 8 Battery
+ SG_ BATT_bootTotalFaultCnt : 56|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_bootFaultCnt : 48|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_bootloaderRevision : 40|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_bootloaderMinor : 32|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_bootloaderMajor : 24|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_appRevision : 16|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_appMinor : 8|8@1+ (1,0) [0|255] ""  Host
+ SG_ BATT_appMajor : 0|8@1+ (1,0) [0|255] ""  Host
+
+BO_ 277 INV_power: 4 Inverter
+ SG_ INV_voltage : 0|16@1+ (0.00076,0) [0|49.8066] "V"  Battery
+ SG_ INV_current : 16|12@1+ (0.01,0) [0|40.95] "A"  Battery
+
+BO_ 2224029696 BATT_modLoadStatus: 6 Battery
+ SG_ BATT_resMod : 32|16@1+ (0.01,0) [0|655.35] "mOhms"  Host
+ SG_ BATT_voirMod : 16|16@1+ (0.01,0) [0|70] "V"  Host
+ SG_ BATT_vModLoad : 0|16@1+ (0.01,0) [0|70] "V"  Battery,Host
+
+BO_ 2617245696 BATT_diagnosticRunTime: 6 Battery
+ SG_ BATT_totalRunTime : 0|16@1+ (10,0) [0|655350] "10min"  Host
+
+BO_ 1282 HOST_batteryRequest: 2 Host
+ SG_ HOST_standbyModConnectRequest : 4|1@1+ (1,0) [0|1] ""  Battery
+ SG_ HOST_dbgInhibitContDrivePower : 14|1@1+ (1,0) [0|1] ""  Battery
+ SG_ HOST_dbgInhibitRegen : 13|1@1+ (1,0) [0|1] ""  Battery
+ SG_ HOST_dbgInhibitFullPower : 12|1@1+ (1,0) [0|1] ""  Battery
+ SG_ HOST_dbgResetEep : 8|1@1+ (1,0) [0|1] ""  Battery
+ SG_ HOST_stateRequest : 0|3@1+ (1,0) [0|4] ""  Battery
+
+BO_ 2483290112 BATT_modStatus: 8 Battery
+ SG_ BATT_modNumModsDataValid : 60|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_modNumModsOnNetwork : 52|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_modNumModsOnHvBus : 56|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_modNumModsConfigured : 48|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_ArbitrationComplete : 15|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_modStateRequested : 46|2@1+ (1,0) [0|3] ""  Battery,Host
+ SG_ BATT_modDataValid : 7|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_prechargeState : 43|3@1+ (1,0) [0|7] ""  Battery,Host
+ SG_ BATT_fetPchgCommand : 42|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_fetDsgCommand : 40|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_fetChgCommand : 41|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_fetDsgStatus : 36|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_fetChgStatus : 32|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_timeRampdown : 24|6@1+ (1,0) [0|63] "seconds"  Battery,Host
+ SG_ BATT_inhRegen : 31|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_inhFullPower : 23|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_inhDriveEntry : 22|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_inhDrive : 21|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_inhContPower : 30|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_inhChargeEntry : 19|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_inhCharge : 20|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_modPackState : 8|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_modPchgChargeID : 12|3@1+ (1,0) [0|7] ""  Battery,Host
+ SG_ BATT_modChildState : 3|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_modPchgDriveID : 16|3@1+ (1,0) [0|7] ""  Battery,Host
+ SG_ BATT_modParentState : 0|3@1+ (1,0) [0|4] ""  Battery,Host
+
+BO_ 2219376640 BATT_modChgLimits: 8 Battery
+ SG_ BATT_vModChgLimit : 48|16@1+ (0.005,0) [0|70] "V"  Host,Battery
+ SG_ BATT_iModChgLimitInst : 32|16@1+ (0.01,0) [0|75] "A"  Host,Battery
+ SG_ BATT_iModChgLimit_User_Def : 0|16@1+ (0.01,0) [0|75] "A"  Host,Battery
+ SG_ BATT_iModChgLimitCont : 16|16@1+ (0.01,0) [0|60] "A"  Battery,Host
+
+BO_ 273 CHRG_chargingControl: 4 Charger
+ SG_ CHRG_chargerEnabled : 12|1@1+ (1,0) [0|1] ""  Battery
+ SG_ CHRG_chargingVoltage : 16|16@1+ (0.001,0) [0|65.535] "V"  Battery
+ SG_ CHRG_chargingCurrent : 0|12@1+ (0.01,0) [0|40.95] "A"  Battery
+
+BO_ 2626420736 BATT_diagnosticVBricksC: 8 Battery
+ SG_ BATT_vBrick12 : 48|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick11 : 32|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick10 : 16|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick09 : 0|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+
+BO_ 2626158592 BATT_diagnosticVBricksB: 8 Battery
+ SG_ BATT_vBrick06 : 16|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick07 : 32|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick05 : 0|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick08 : 48|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+
+BO_ 2625896448 BATT_diagnosticVBricksA: 8 Battery
+ SG_ BATT_vBrick02 : 16|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick03 : 32|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick01 : 0|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+ SG_ BATT_vBrick04 : 48|16@1+ (7.6E-005,0) [0|4.98066] "V"  Host
+
+BO_ 2221146112 BATT_modTemperaturesA: 8 Battery
+ SG_ BATT_tModule2 : 32|16@1- (0.1,0) [-40|125] "deg C"  Host
+ SG_ BATT_tModule1 : 16|16@1- (0.1,0) [-40|125] "deg C"  Host
+ SG_ BATT_tAmbient : 0|16@1- (0.1,0) [-40|125] "deg C"  Host
+
+BO_ 2215903232 BATT_modSOC: 7 Battery
+ SG_ BATT_sohcMod : 0|16@1+ (0.01,0) [0|100] "%"  Battery,Host
+ SG_ BATT_socMod : 16|16@1+ (0.01,0) [0|102.3] "%"  Battery,Host
+ SG_ BATT_socLimiting : 32|16@1+ (0.01,0) [0|102.3] "%"  Battery,Host
+ SG_ BATT_idSOCLimiting : 48|4@1+ (1,0) [0|14] ""  Battery,Host
+
+BO_ 2222981120 BATT_modTemperaturesB: 8 Battery
+ SG_ BATT_tShunt : 48|16@1- (0.1,0) [-40|125] "deg C"  Host
+ SG_ BATT_tFET : 32|16@1- (0.1,0) [-40|125] "deg C"  Host
+
+BO_ 2215378944 BATT_modHvStatus: 8 Battery
+ SG_ BATT_vMod : 32|16@1+ (0.01,0) [0|70] "V"  Battery,Host
+ SG_ BATT_vModSumOfCells : 48|16@1+ (0.01,0) [0|70] "V"  Battery,Host
+ SG_ BATT_iMod : 16|16@1- (0.005,0) [-120|60] "A"  Battery,Host
+ SG_ BATT_iModFiltered : 0|16@1- (0.005,0) [-120|60] "A"  Battery,Host
+
+BO_ 2550661120 BATT_deviceInfo: 8 Battery
+ SG_ BATT_IGNLO_Status : 13|2@1+ (1,0) [0|3] ""  Battery,Host
+ SG_ BATT_serialNumber : 16|48@1+ (1,0) [0|281474976710655] ""  Battery,Host
+ SG_ BATT_expectedModule : 8|4@1+ (1,0) [0|15] ""  Battery,Host
+ SG_ BATT_deviceChemistry : 0|8@1+ (1,0) [0|255] ""  Battery,Host
+
+BO_ 2215116800 BATT_modCapacity: 8 Battery
+ SG_ BATT_modFullChargeCap_Ah : 16|16@1+ (0.005,0) [0|327.675] "Ah"  Battery,Host
+ SG_ BATT_modRemainingCap_Ah : 0|16@1+ (0.005,0) [0|327.675] "Ah"  Battery,Host
+
+BO_ 2550398976 BATT_manufacturingInfo: 8 Battery
+ SG_ BATT_manufacturerName : 16|8@1+ (1,0) [0|255] "STRING"  Host
+ SG_ BATT_manufacturerAccess : 0|16@1+ (1,0) [0|65535] ""  Host
+ SG_ BATT_manufactureYear : 24|7@1+ (1,0) [0|127] ""  Host
+ SG_ BATT_manufactureMonth : 32|4@1+ (1,0) [1|12] ""  Host
+ SG_ BATT_manufactureDay : 40|5@1+ (1,0) [1|31] ""  Host
+
+BO_ 257 BATT_chargerControl: 6 Battery
+ SG_ BATT_chargeError : 39|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_chargerMode : 40|2@1+ (1,0) [0|3] ""  Host
+ SG_ BATT_chargerConnected : 38|1@1+ (1,0) [0|1] ""  Battery,Host
+ SG_ BATT_chargeMode : 36|2@1+ (1,0) [0|3] ""  Host
+ SG_ BATT_chargeStatus : 33|3@1+ (1,0) [0|4] ""  Charger,Host
+ SG_ BATT_chargeEnable : 32|1@1+ (1,0) [0|1] ""  Charger,Host
+ SG_ BATT_chargingVoltage : 16|16@1+ (0.005,0) [0|70] "V"  Charger,Host
+ SG_ BATT_chargingCurrent : 0|16@1+ (0.01,0) [0|40.95] "A"  Charger,Host
+
+
+
+CM_ "Version 0.2.0";
+CM_ SG_ 294 BATT_iPackFiltered_2 "Filtered charge/discharge rate in ampere - positive for charge, negative for discharge.";
+CM_ SG_ 294 BATT_vPack_2 "Voltage of the pack";
+CM_ SG_ 294 BATT_iPack_2 "Pack current - combined current of all modules";
+CM_ SG_ 294 BATT_vPackLoad_2 "Voltage measured across load";
+CM_ BO_ 2176909312 "Balancing status";
+CM_ SG_ 2176909312 BATT_timeBusQuietStandby "Bus quiet standby time";
+CM_ SG_ 2176909312 BATT_timeBusQuietSleep "Bus quiet sleep time";
+CM_ BO_ 2626813952 "Harness impedance Delta ";
+CM_ SG_ 2626813952 BATT_HrnsImpDelta_3 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626813952 BATT_HrnsImpDelta_2 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626813952 BATT_HrnsImpDelta_1 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626813952 BATT_HrnsImpDelta_0 "Delat value of Harness Impedance
+";
+CM_ BO_ 2626826240 "Harness impedance Delta ";
+CM_ SG_ 2626826240 BATT_HrnsImpDelta_14 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626826240 BATT_HrnsImpDelta_13 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626826240 BATT_HrnsImpDelta_12 "Delat value of Harness Impedance
+";
+CM_ BO_ 2626818048 "Harness impedance Delta ";
+CM_ SG_ 2626818048 BATT_HrnsImpDelta_7 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626818048 BATT_HrnsImpDelta_6 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626818048 BATT_HrnsImpDelta_5 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626818048 BATT_HrnsImpDelta_4 "Delat value of Harness Impedance
+";
+CM_ BO_ 2626822144 "Harness impedance Delta ";
+CM_ SG_ 2626822144 BATT_HrnsImpDelta_11 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626822144 BATT_HrnsImpDelta_10 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626822144 BATT_HrnsImpDelta_9 "Delat value of Harness Impedance
+";
+CM_ SG_ 2626822144 BATT_HrnsImpDelta_8 "Delat value of Harness Impedance
+";
+CM_ BO_ 2626748416 "Harness Impedance";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_14 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_13 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_12 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_11 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_10 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_9 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_8 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_7 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_6 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_5 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_4 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_3 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_2 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_1 "Impedance of Harness
+";
+CM_ SG_ 2626748416 BATT_HarnessImpedance_0 "Impedance of Harness
+";
+CM_ BO_ 2147549184 "BATT battery request";
+CM_ SG_ 2147549184 BATT_isIgnLo_Requested "0 if IGN_LO pin is NOT triggered
+1 if IGN_LO pin is triggered ";
+CM_ SG_ 2147549184 BATT_modReqCntr "BATT_modRequest msg counter";
+CM_ SG_ 2147549184 BATT_nodeIdSerialNumber "Unique serial number";
+CM_ SG_ 2147549184 BATT_startNodeId "Start node ID claim flag from BATT";
+CM_ SG_ 2147549184 BATT_stateRequest "State to be requested from battery module";
+CM_ BO_ 1809 "Pack connected data diagnostic";
+CM_ SG_ 1809 BATT_vPackConnBusBrickMin "Minimum brick voltage (connected modules only)";
+CM_ SG_ 1809 BATT_vPackConnBusBrickMax "Maximum brick voltage (connected modules only)";
+CM_ SG_ 1809 BATT_packConnBusSOC "State of Charge for the battery pack (connected modules only)";
+CM_ BO_ 2147516416 "HOST node request";
+CM_ SG_ 2147516416 HOST_securityKey "Security Key";
+CM_ SG_ 2147516416 HOST_startNodeId "Start node ID claim flag";
+CM_ SG_ 2147500032 NODE_ID_CLAIM_RND "Node ID Claim Number RND";
+CM_ SG_ 2147500032 NODE_ID_CLAIM_SN "Node ID Claim Number SN";
+CM_ SG_ 2643001344 BATT_deltaQTaskOsTimeDelta "Delta Q Charger Task OS Time Delta";
+CM_ SG_ 2643001344 BATT_deltaQTaskOsTime "Delta Q Charger Task OS Time";
+CM_ SG_ 2643001344 BATT_deltaQFifoWaterMark "Delta Q Charger Event Queue Water Mark";
+CM_ SG_ 2643001344 BATT_deltaQFifoSizeUsed "Delta Q Charger Event Queue Size Used";
+CM_ SG_ 2643001344 BATT_deltaQEvent "Delta Q Charger Event";
+CM_ SG_ 2643001344 BATT_deltaQError "Delta Q Charger Error";
+CM_ SG_ 2643001344 BATT_deltaQState "Delta Q Charger State";
+CM_ BO_ 1808 "Pack diagnostic status";
+CM_ SG_ 1808 BATT_packModDrvStandbyConnOK_M "Bit mask for modules permitted to enter drive from standby during drive (1 = permit drive)";
+CM_ SG_ 1808 BATT_packModChgStandbyConnOK_M "Bit mask for modules permitted to enter charge from standby during charge (1 = permit charge)";
+CM_ SG_ 1808 BATT_packModDrvEntryConnOK_M "Bit mask for modules permitted to enter drive (1 = permit drive)";
+CM_ SG_ 1808 BATT_packModChgEntryConnOK_M "Bit mask for modules permitted to enter charge (1 = permit charge)";
+CM_ BO_ 2572156928 "Message with flags from event matrix";
+CM_ SG_ 2572156928 BATT_harnessImpedanceFault "Harness Impedance fault
+";
+CM_ SG_ 2572156928 BATT_packLevelArbitrationFault "0 - Pack Level Arbitration fault clear (default)
+1 - Pack Level Arbitration fault";
+CM_ SG_ 2572156928 BATT_multiIgnLoFault "0 - Single module has IGN_LO connection (default)
+1 - Multimodule have IGN_LO connections";
+CM_ SG_ 2572156928 BATT_modThermistorShorted "0 - module thermistor okay (default)
+1 - module thermistor shorted";
+CM_ SG_ 2572156928 BATT_modThermistorOpenWire "0 - module thermistor okay (default)
+1 - module thermistor open wire";
+CM_ SG_ 2572156928 BATT_chargeNotNeeded "0 - Local module charge needed (default)
+1 - Local module charge not needed";
+CM_ SG_ 2572156928 BATT_packModTempImbalance "0 - Battery pack module temperatures okay (default)
+1 - Battery pack module temperature imblance present";
+CM_ SG_ 2572156928 BATT_packModCurrImbalance "0 - Battery pack module curent okay (default)
+1 - Battery pack module current imblance present";
+CM_ SG_ 2572156928 BATT_flashBootCRCError "0 - No flash bootloader CRC error (default)
+1 - Flash bootloader CRC error";
+CM_ SG_ 2572156928 BATT_flashAppCRCError "0 - No flash app CRC error (default)
+1 -  Flash App CRC error";
+CM_ SG_ 2572156928 BATT_cellOpenWire "0 - Reset reason okay (default)
+1 - Abnormal reset reason";
+CM_ BO_ 260 "Pack capacity";
+CM_ SG_ 260 BATT_packRemainingCap_Ah "Remaining charge";
+CM_ SG_ 260 BATT_packFullChargeCap_Ah "Estimated full charge capacity";
+CM_ BO_ 2618556416 "Diagnostic CHG FET";
+CM_ SG_ 2618556416 BATT_fetChgDiagState "CHG FETs diagnostic state";
+CM_ SG_ 2618556416 BATT_fetChgDiagIMeas "CHG FETs diagnostic current measurement";
+CM_ SG_ 2618556416 BATT_fetChgDiagVMeasPrime "CHG FETs diagnostic voltage prime measurement";
+CM_ SG_ 2618556416 BATT_fetChgDiagVMeas "CHG FETs diagnostic voltage measurement";
+CM_ SG_ 2618556416 BATT_fetChgDiagOpenResult "CHG FETs diagnostic open check result";
+CM_ SG_ 2618556416 BATT_fetChgDiagClosedResult "CHG FETs diagnostic closed check result";
+CM_ BO_ 422 "CAN OPEN PDO From HMI";
+CM_ SG_ 1318 BATT_MTR_1_PACK_V "Battery ACTUAL PACK Voltage";
+CM_ SG_ 1318 BATT_MTR_1_CURR "Battery ACTUAL Current";
+CM_ SG_ 1062 BATT_MTR_1_SOC "State of Charge for the battery pack";
+CM_ SG_ 1062 BATT_MTR_1_REGEN_CURR "Battery Recharge Charge Limit";
+CM_ SG_ 1062 BATT_MTR_1_FLT_UVP_WAR "UNDER Voltage Warning Protection";
+CM_ SG_ 1062 BATT_MTR_1_FLT_UVP_MOD "UNDER Voltage Moderate Protection";
+CM_ SG_ 1062 BATT_MTR_1_FLT_OVP_WAR "OVER Voltage Warning Protection";
+CM_ SG_ 1062 BATT_MTR_1_FLT_OVP_MOD "OVER Voltage Moderate Protection";
+CM_ SG_ 1062 BATT_MTR_1_FLT_OTP_SEV "OVER Temperature Severe Protection";
+CM_ SG_ 1062 BATT_MTR_1_FLT_OTP_MOD "OVER Temperature Moderate Protection";
+CM_ SG_ 1062 BATT_MTR_1_FLT_OCP "Over Current Fault";
+CM_ SG_ 1062 BATT_MTR_1_FLT_HW "HW level Fault";
+CM_ SG_ 1062 BATT_MTR_1_DRV_CURR "Battery Discharge Limit";
+CM_ SG_ 1062 BATT_MTR_1_CON_MOD "Number of Connected Modules";
+CM_ SG_ 1062 BATT_MTR_1_CHG_STAT "Battery Charger Stat";
+CM_ SG_ 1062 BATT_MTR_1_BATT_STAT "BATTERY Status";
+CM_ BO_ 2618818560 "Diagnostic DSG FET";
+CM_ SG_ 2618818560 BATT_fetDsgDiagState "DSG FETs diagnostic state";
+CM_ SG_ 2618818560 BATT_fetDsgDiagVMeas "DSG FETs diagnostic voltage measurement";
+CM_ SG_ 2618818560 BATT_fetDsgDiagVMeasPrime "DSG FETs diagnostic voltage prime measurement";
+CM_ SG_ 2618818560 BATT_fetDsgDiagOpenResult "DSG FETs diagnostic open check result";
+CM_ SG_ 2618818560 BATT_fetDsgDiagClosedResult "DSG FETs diagnostic closed check result";
+CM_ SG_ 261 BATT_packUserSOC "User state of charge for the battery pack";
+CM_ SG_ 261 BATT_packSOC "State of Charge for the battery pack";
+CM_ BO_ 2508193792 "Bootloader and BMS application firmware versions";
+CM_ SG_ 2508193792 BATT_bootloaderRevision_bootup "Revision bootloader version for BMS";
+CM_ SG_ 2508193792 BATT_bootloaderMinor_bootup "Minor bootloader version for BMS";
+CM_ SG_ 2508193792 BATT_bootloaderMajor_bootup "Major bootloader version for BMS";
+CM_ SG_ 2508193792 BATT_appRevision_bootup "Revision app version for BMS";
+CM_ SG_ 2508193792 BATT_appMinor_bootup "Minor app version for BMS";
+CM_ SG_ 2508193792 BATT_appMajor_bootup "Major app version for BMS";
+CM_ BO_ 276 "Pack power available";
+CM_ SG_ 276 BATT_iPackDchLimit30s "Current discharge limit in A";
+CM_ SG_ 276 BATT_pwrPackDchLimit "Pack discharge power available in kW";
+CM_ SG_ 276 BATT_pwrPackChgLimit "Pack charge power available in kW";
+CM_ BO_ 2219835392 "Module power available";
+CM_ SG_ 2219835392 BATT_iModDchLimit30s "Current discharge limit in A";
+CM_ SG_ 2219835392 BATT_pwrModDchLimit "Module discharge power available in kW";
+CM_ SG_ 2219835392 BATT_pwrModChgLimit "Module charge power available in kW";
+CM_ BO_ 275 "Battery limits";
+CM_ SG_ 275 BATT_vBusMin "Minimum voltage limit sent to inverter";
+CM_ SG_ 275 BATT_iPackDchLimitInst "Current discharge limit in A";
+CM_ SG_ 275 BATT_iPackDchLimit_User_Def "Current discharge limit in A";
+CM_ SG_ 275 BATT_iPackDchLimitCont "Current discharge limit in A";
+CM_ BO_ 274 "Battery limits";
+CM_ SG_ 274 BATT_vBusMax "Maximum voltage limit sent to inverter";
+CM_ SG_ 274 BATT_iPackChgLimitInst "Current recharge limit in A";
+CM_ SG_ 274 BATT_iPackChgLimit_User_Def "Current recharge limit in A";
+CM_ SG_ 274 BATT_iPackChgLimitCont "Current recharge limit in A";
+CM_ BO_ 2219573248 "Battery limits";
+CM_ SG_ 2219573248 BATT_vModDchLimit "Voltage discharge limit sent to inverter";
+CM_ SG_ 2219573248 BATT_iModDchLimitInst "Current discharge limit in A";
+CM_ SG_ 2219573248 BATT_iModDchLimit_User_Def "Current discharge limit in A";
+CM_ SG_ 2219573248 BATT_iModDchLimitCont "Current discharge limit in A";
+CM_ SG_ 259 BATT_packAliveCntr "Battery Pack Alive Counter";
+CM_ SG_ 259 BATT_packSpeakerInstanceID "Battery Pack Master Module Instance ID";
+CM_ SG_ 259 BATT_packNumModsDataValid "Number of parallel modules with valid data";
+CM_ SG_ 259 BATT_packNumModsOnNetwork "Number of modules on the network";
+CM_ SG_ 259 BATT_packModComStatusOK_M "Bit mask for module communications status (1 = OK)";
+CM_ SG_ 259 BATT_fetPackDsgWelded "Pack DSG FETs welded status";
+CM_ SG_ 259 BATT_fetPackChgWelded "Pack CHG FETs welded status";
+CM_ SG_ 259 BATT_packNumModsConfigured "Number of parallel modules configured for the pack";
+CM_ SG_ 259 BATT_packNumModsOnHvBus "Number of modules on the HV bus";
+CM_ SG_ 259 BATT_packState "Reports the current state of the battery";
+CM_ BO_ 293 "Battery min-max data";
+CM_ SG_ 293 BATT_vPackModuleMinID "ID of minimum brick voltage ";
+CM_ SG_ 293 BATT_vPackBrickMin "Minimum brick voltage ";
+CM_ SG_ 293 BATT_vPackModuleMaxID "ID of maximum brick voltage ";
+CM_ SG_ 293 BATT_vPackBrickMax "Maximum brick voltage ";
+CM_ SG_ 293 BATT_tPackModuleMinID "ID of minimum Battery temperature ";
+CM_ SG_ 293 BATT_tPackModuleMin "Minimum Battery temperature";
+CM_ SG_ 293 BATT_tPackModuleMaxID "ID of maximum Battery temperature ";
+CM_ SG_ 293 BATT_tPackModuleMax "Maximum Battery temperature";
+CM_ SG_ 292 BATT_iPackFiltered "Filtered charge/discharge rate in ampere - positive for charge, negative for discharge.";
+CM_ SG_ 292 BATT_vPack "Voltage of the pack";
+CM_ SG_ 292 BATT_vPackLoad "Voltage measured across load";
+CM_ SG_ 292 BATT_iPack "Pack current - combined current of all modules";
+CM_ BO_ 1904 "Debug Alert msg";
+CM_ BO_ 2629828608 "Total Ah charged and discharged counters";
+CM_ SG_ 2629828608 BATT_ahDchTotal "Total Ah discharged";
+CM_ SG_ 2629828608 BATT_ahChgTotal "Total Ah charged";
+CM_ BO_ 2224291840 "Battery min-max data";
+CM_ SG_ 2224291840 BATT_tModuleMaxID "ID of maximum Battery temperature ";
+CM_ SG_ 2224291840 BATT_tModuleMinID "ID of minimum Battery temperature ";
+CM_ SG_ 2224291840 BATT_vBrickMaxID "ID of maximum brick voltage ";
+CM_ SG_ 2224291840 BATT_vBrickMinID "ID of minimum brick voltage ";
+CM_ SG_ 2224291840 BATT_tModuleMax "Maximum Battery temperature";
+CM_ SG_ 2224291840 BATT_tModuleMin "Minimum Battery temperature";
+CM_ SG_ 2224291840 BATT_vBrickMin "Minimum brick voltage ";
+CM_ SG_ 2224291840 BATT_vBrickMax "Maximum brick voltage ";
+CM_ BO_ 2626945024 "Balancing status";
+CM_ SG_ 2487484416 BATT_boardIO_DIS_OC_FLT_LA "DIS_OC_FLT_LA input signal status";
+CM_ SG_ 2487484416 BATT_boardIO_L9963_FAULT "L9963_FAULT input signal status";
+CM_ SG_ 2487484416 BATT_boardIO_IL_WAKE_LATCH "IL_WAKE_LATCH input signal status";
+CM_ SG_ 2487484416 BATT_boardIO_IH_WAKE_LATCH "IH_WAKE_LATCH input signal status";
+CM_ SG_ 2487484416 BATT_boardIO_CAN_WAKE_LATCH "CAN_WAKE_LATCH input signal status";
+CM_ BO_ 2672295936 "ADC 1 message just for inhouse testing";
+CM_ BO_ 2672033792 "ADC 1 message just for inhouse testing";
+CM_ BO_ 2671771648 "ADC 1 message just for inhouse testing";
+CM_ SG_ 1296 HOST_boardIO_PROTECTION_CHECK "PROTECTION_CHECK output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL14 "BAL14 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL13 "BAL13 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL12 "BAL12 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL11 "BAL11 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL10 "BAL10 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL09 "BAL08 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL08 "BAL08 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL07 "BAL07 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL06 "BAL06 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL05 "BAL05 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL04 "BAL04 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL03 "BAL03 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL02 "BAL02 output control state";
+CM_ SG_ 1296 HOST_boardIO_BAL01 "BAL01 output control state";
+CM_ SG_ 1296 HOST_boardIO_LED4 "LED4 output control state";
+CM_ SG_ 1296 HOST_boardIO_LED3 "LED3 output control state";
+CM_ SG_ 1296 HOST_boardIO_LED2 "LED2 output control state";
+CM_ SG_ 1296 HOST_boardIO_LED1 "LED1 output control state";
+CM_ SG_ 1296 HOST_boardIO_PCHG "PCHG output control state";
+CM_ SG_ 1296 HOST_boardIO_nFLT_CLR "nFLT_CLR output control state";
+CM_ SG_ 1296 HOST_boardIO_DSG_EN "DSG_EN output control state";
+CM_ SG_ 1296 HOST_boardIO_CHG_EN "CHG_EN output control state";
+CM_ BO_ 2626682880 "Voltages of bricks 13-14";
+CM_ SG_ 2626682880 BATT_vBrick14 "Voltage of brick 14";
+CM_ SG_ 2626682880 BATT_vBrick13 "Voltage of brick 13";
+CM_ BO_ 2630877184 "State of charge of bricks 13-14";
+CM_ SG_ 2630877184 BATT_socState "SOC State";
+CM_ SG_ 2630877184 BATT_socLoLimit "SOC Low Limit Mask";
+CM_ SG_ 2630877184 BATT_socHiLimit "SOC Low Limit Mask";
+CM_ SG_ 2630877184 BATT_socBrick14 "State of charge of brick 14";
+CM_ SG_ 2630877184 BATT_socBrick13 "State of charge of brick 13";
+CM_ BO_ 2621440000 "Impedance of bricks 13-14";
+CM_ SG_ 2621440000 BATT_resBrick14 "Impedance of brick 14";
+CM_ SG_ 2621440000 BATT_resBrick13 "Impedance of brick 13";
+CM_ BO_ 2622488576 "Capacity of bricks 13-14";
+CM_ SG_ 2622488576 BATT_sohcUpdated "SOHC Updated Mask";
+CM_ SG_ 2622488576 BATT_sohcPrimed "SOHC Primed Mask";
+CM_ SG_ 2622488576 BATT_capBrick14 "Capacity of brick 14";
+CM_ SG_ 2622488576 BATT_capBrick13 "Capacity of brick 13";
+CM_ SG_ 2236874752 BATT_hardwareVersion "Hardware version for BMS";
+CM_ BO_ 2571108352 "Message with flags from event matrix";
+CM_ SG_ 2571108352 BATT_packModIdFault "0 - Battery pack module ID okay (default)
+1 - Battery pack module ID fault";
+CM_ SG_ 2571108352 BATT_packModExitedFromBus "0 - Battery pack modules OK (default)
+1 - Battery pack module(s) exited from the bus during charge or drive";
+CM_ SG_ 2571108352 BATT_packFetChgWelded "0 - Battery pack module CHG FETs not welded (default)
+1 - Battery pack module CHG FETs welded ";
+CM_ SG_ 2571108352 BATT_packFetDsgWelded "0 - Battery pack module DSG FETs not welded (default)
+1 - Battery pack module DSG FETs welded ";
+CM_ SG_ 2571108352 BATT_fetDsgShortedAux "0 - FETs are operational (default)
+1 - FET is shorted detected by auxiliary diagnostic";
+CM_ SG_ 2571108352 BATT_fetChgShortedAux "0 - FETs are operational (default)
+1 - FET is shorted detected by auxiliary diagnostic";
+CM_ SG_ 2571108352 BATT_prechargeFetFail "0 - Precharge FET okay (default)
+1 - Precharge FET failed";
+CM_ SG_ 2571108352 BATT_abnormalResetReason "0 - Reset reason okay (default)
+1 - Abnormal reset reason";
+CM_ SG_ 2571108352 BATT_prechargeTooSlow "0 - Precharge okay (default)
+1 - Precharge too slow";
+CM_ SG_ 2571108352 BATT_prechargeTooFast "0 - Precharge okay (default)
+1 - Precharge too fast";
+CM_ SG_ 2571108352 BATT_prechargeTimeout "0 - Precharge okay (default)
+1 - Precharge timeout";
+CM_ SG_ 2571108352 BATT_fetChgShorted "0 - FETs are operational (default)
+1 - FET is shorted";
+CM_ SG_ 2571108352 BATT_fetChgFailToClose "0 - FETs are operational (default)
+1 -  FET fail to close";
+CM_ SG_ 2571108352 BATT_packModSelectFault "0 - Battery pack module selection okay (default)
+1 - Battery pack module selection fault";
+CM_ SG_ 2571108352 BATT_packModConnectFault "0 - Battery pack module connection okay (default)
+1 - Battery pack module connection fault";
+CM_ SG_ 2571108352 BATT_packModMIA "0 - Battery pack modules not MIA (default)
+1 - Battery pack module MIA";
+CM_ SG_ 2571108352 BATT_packModImbalance "0 - Battery pack modules balanced (default)
+1 - Battery pack module imblance present";
+CM_ SG_ 2571108352 BATT_afeFault "0 - BMS AFE okay (default)
+1 - BMS AFE fault";
+CM_ SG_ 2571108352 BATT_chargerMIA "0 - Charger communications okay (default)
+1 - Charger MIA";
+CM_ SG_ 2571108352 BATT_chargerError "0 - Charger working as intended (default)
+1 - Charger error";
+CM_ SG_ 2571108352 BATT_vBrickUnderWar "0 - Brick voltage okay (default)
+1 - Brick undervoltage warning";
+CM_ SG_ 2571108352 BATT_vBrickUnderSev "0 - Brick voltage okay (default)
+1 - Brick undervoltage severe";
+CM_ SG_ 2571108352 BATT_vBrickUnderMod "0 - Brick voltage okay (default)
+1 - Brick undervoltage moderate";
+CM_ SG_ 2571108352 BATT_vBrickOverWar "0 - Brick voltage okay (default)
+1 - Brick overvoltage warning";
+CM_ SG_ 2571108352 BATT_vBrickOverSev "0 - Brick voltage okay (default)
+1 - Brick overvoltage severe";
+CM_ SG_ 2571108352 BATT_vBrickOverMod "0 - Brick voltage okay (default)
+1 - Brick overvoltage moderate";
+CM_ SG_ 2571108352 BATT_vBrickImbalance "0 - Battery brick voltage okay (default)
+1 - Battery brick voltage imbalance";
+CM_ SG_ 2571108352 BATT_loggerAlmostFull "0 - Logger not almost full (default)
+1 - Logger almost full (section >= 80%) ";
+CM_ SG_ 2571108352 BATT_tempModuleUnderWar "0 - Battery temperature okay (default)
+1 - Battery under temperature warning";
+CM_ SG_ 2571108352 BATT_tempModuleUnderSev "0 - Battery temperature okay (default)
+1 - Battery under temperature severe";
+CM_ SG_ 2571108352 BATT_tempModuleUnderMod "0 - Battery temperature okay (default)
+1 - Battery under temperature moderate";
+CM_ SG_ 2571108352 BATT_tempModuleOverWar "0 - Battery temperature okay (default)
+1 - Battery over temperature warning";
+CM_ SG_ 2571108352 BATT_tempModuleOverSev "0 - Battery temperature okay (default)
+1 - Battery over temperature severe";
+CM_ SG_ 2571108352 BATT_tempModuleOverMod "0 - Battery temperature okay (default)
+1 - Battery over temperature moderate";
+CM_ SG_ 2571108352 BATT_tempBrickImbalance "0 - Brick temperatures are balanced (default)
+1 - Brick temperatures are imbalanced";
+CM_ SG_ 2571108352 BATT_taskLockupError "0 - Tasks okay (default)
+1 - Task lockup error";
+CM_ SG_ 2571108352 BATT_tempAmbientOverWar "0 - Ambient temperature okay (default)
+1 - Ambient over temperature warning";
+CM_ SG_ 2571108352 BATT_tempAmbientOverSev "0 - Temperature okay (default)
+1 - Ambient over temperature severe";
+CM_ SG_ 2571108352 BATT_tempAmbientOverMod "0 - Ambient temperature okay (default)
+1 - Ambient over temparature moderate";
+CM_ SG_ 2571108352 BATT_sensePackVoltError "0 - Sensor okay (default)
+1 - Sensor for pack voltage error";
+CM_ SG_ 2571108352 BATT_senseLoadVoltError "0 - Sensor okay (default)
+1 - Sensor for load voltage error";
+CM_ SG_ 2571108352 BATT_loggerFull "0 - Logger not full (default)
+1 - Logger full ";
+CM_ SG_ 2571108352 BATT_senseCurrentError "0 - Sensor okay (default)
+1 - Sensor for current error";
+CM_ SG_ 2571108352 BATT_senseBrickTempError "0 - Sensor okay (default)
+1 - Brick temperature sensor error";
+CM_ SG_ 2571108352 BATT_resPackHigh "0 - Battery pack resistance okay (default)
+1 - Battery pack resistance high (High SOH-R)";
+CM_ SG_ 2571108352 BATT_ramOverUtilError "0 - RAM okay (default)
+1 - RAM over utilization";
+CM_ SG_ 2571108352 BATT_powerPackInsufficient "0 - Battery pack power okay (default)
+1 - Battery pack power insufficient";
+CM_ SG_ 2571108352 BATT_packCellSoftShort "0 - Battery back cells are okay (default)
+1 - Battery pack cell soft short";
+CM_ SG_ 2571108352 BATT_iOverHardware "0 - Hardware current okay (default)
+1 - Overcurrent in hardware";
+CM_ SG_ 2571108352 BATT_fetOverTemp "0 - FET temperature okay (default)
+1 - Overtemp at FETs";
+CM_ SG_ 2571108352 BATT_iOverDischarge "0 - Discharge okay (default)
+1 - Overcurrent during discharge";
+CM_ SG_ 2571108352 BATT_iOverCharge "0 - Charging okay (default)
+1 - Overcurrent during charging";
+CM_ SG_ 2571108352 BATT_inverterDriveMIA "0 - Inverter drive present (default)
+1 - Inverter drive MIA";
+CM_ SG_ 2571108352 BATT_iUnderCharge "0 - Normal charging (default)
+1 -  Charging undercurrent (discharging)";
+CM_ SG_ 2571108352 BATT_hostMIA "0 - host communication open (default)
+1 - host MIA";
+CM_ SG_ 2571108352 BATT_fetDsgShorted "0 - FETs are operational (default)
+1 - FET is shorted";
+CM_ SG_ 2571108352 BATT_fetDsgFailToClose "0 - FETs are operational (default)
+1 -  FET fail to close";
+CM_ SG_ 2571108352 BATT_capLow "0 - Battery capacity normal (SOH-C) (default)
+1 - Low battery capacity (Low SOH-C)";
+CM_ SG_ 2571108352 BATT_brickOverDischarge "0 - Battery brick charge is normal (default)
+1 - Battery brick is overdischarged";
+CM_ SG_ 2571108352 BATT_brickOverCharge "0 - Battery brick charge is normal (default)
+1 - Battery brick is overcharged";
+CM_ SG_ 2571108352 BATT_bmsProcessorError "0 - No BMS processor failure (default)
+1 - BMS processor failure";
+CM_ SG_ 2571108352 BATT_bmsMemoryError "0 - No BMS memory error
+1 - BMS memory error";
+CM_ SG_ 2571108352 BATT_afeError "0 - No BMS AFE error (default)
+1 - BMS AFE error";
+CM_ BO_ 2630615040 "State of charge of bricks 9-12";
+CM_ SG_ 2630615040 BATT_socBrick12 "State of charge of brick 12";
+CM_ SG_ 2630615040 BATT_socBrick11 "State of charge of brick 11";
+CM_ SG_ 2630615040 BATT_socBrick09 "State of charge of brick 9";
+CM_ SG_ 2630615040 BATT_socBrick10 "State of charge of brick 10";
+CM_ BO_ 2630352896 "State of charge of bricks 5-8";
+CM_ SG_ 2630352896 BATT_socBrick08 "State of charge of brick 8";
+CM_ SG_ 2630352896 BATT_socBrick07 "State of charge of brick 7";
+CM_ SG_ 2630352896 BATT_socBrick06 "State of charge of brick 6";
+CM_ SG_ 2630352896 BATT_socBrick05 "State of charge of brick 5";
+CM_ BO_ 2630090752 "State of charge of bricks 1-4";
+CM_ SG_ 2630090752 BATT_socBrick04 "State of charge of brick 4";
+CM_ SG_ 2630090752 BATT_socBrick03 "State of charge of brick 3";
+CM_ SG_ 2630090752 BATT_socBrick02 "State of charge of brick 2";
+CM_ SG_ 2630090752 BATT_socBrick01 "State of charge of brick 1";
+CM_ BO_ 2622226432 "Capacity of bricks 9-12";
+CM_ SG_ 2622226432 BATT_capBrick12 "Capacity of brick 12";
+CM_ SG_ 2622226432 BATT_capBrick11 "Capacity of brick 11";
+CM_ SG_ 2622226432 BATT_capBrick09 "Capacity of brick 9";
+CM_ SG_ 2622226432 BATT_capBrick10 "Capacity of brick 10";
+CM_ BO_ 2621964288 "Capacity of bricks 5-8";
+CM_ SG_ 2621964288 BATT_capBrick08 "Capacity of brick 8";
+CM_ SG_ 2621964288 BATT_capBrick07 "Capacity of brick 7";
+CM_ SG_ 2621964288 BATT_capBrick06 "Capacity of brick 6";
+CM_ SG_ 2621964288 BATT_capBrick05 "Capacity of brick 5";
+CM_ BO_ 2621702144 "Capacity of bricks 1-4";
+CM_ SG_ 2621702144 BATT_capBrick04 "Capacity of brick 4";
+CM_ SG_ 2621702144 BATT_capBrick03 "Capacity of brick 3";
+CM_ SG_ 2621702144 BATT_capBrick02 "Capacity of brick 2";
+CM_ SG_ 2621702144 BATT_capBrick01 "Capacity of brick 1";
+CM_ BO_ 2619604992 "Impedance of bricks 9-12";
+CM_ SG_ 2619604992 BATT_resBrick12 "Impedance of brick 12";
+CM_ SG_ 2619604992 BATT_resBrick11 "Impedance of brick 11";
+CM_ SG_ 2619604992 BATT_resBrick09 "Impedance of brick 9";
+CM_ SG_ 2619604992 BATT_resBrick10 "Impedance of brick 10";
+CM_ BO_ 2619342848 "Impedance of bricks 5-8";
+CM_ SG_ 2619342848 BATT_resBrick08 "Impedance of brick 8";
+CM_ SG_ 2619342848 BATT_resBrick07 "Impedance of brick 7";
+CM_ SG_ 2619342848 BATT_resBrick06 "Impedance of brick 6";
+CM_ SG_ 2619342848 BATT_resBrick05 "Impedance of brick 5";
+CM_ BO_ 2619080704 "Impedance of bricks 1-4";
+CM_ SG_ 2619080704 BATT_resBrick04 "Impedance of brick 4";
+CM_ SG_ 2619080704 BATT_resBrick03 "Impedance of brick 3";
+CM_ SG_ 2619080704 BATT_resBrick02 "Impedance of brick 2";
+CM_ SG_ 2619080704 BATT_resBrick01 "Impedance of brick 1";
+CM_ BO_ 2232680448 "BMS application firmware versions
+0 - 2 bytes = Application version
+3 - 5 bytes = Bootloader version
+6 - 7 bytes =  Build revision";
+CM_ SG_ 2232680448 BATT_bootTotalFaultCnt "Total Boot fault cnt ";
+CM_ SG_ 2232680448 BATT_bootFaultCnt "Boot fault cnt (block app jump from bootloader if cnt >=3)";
+CM_ SG_ 2232680448 BATT_bootloaderRevision "Revision bootloader version for BMS";
+CM_ SG_ 2232680448 BATT_bootloaderMinor "Minor bootloader version for BMS";
+CM_ SG_ 2232680448 BATT_bootloaderMajor "Major bootloader version for BMS";
+CM_ SG_ 2232680448 BATT_appRevision "Revision app version for BMS";
+CM_ SG_ 2232680448 BATT_appMinor "Minor app version for BMS";
+CM_ SG_ 2232680448 BATT_appMajor "Major app version for BMS";
+CM_ SG_ 277 INV_voltage "Voltage measured by motor";
+CM_ SG_ 277 INV_current "Current measured by motor";
+CM_ BO_ 2224029696 "Battery load status";
+CM_ SG_ 2224029696 BATT_resMod "Impedance of module";
+CM_ SG_ 2224029696 BATT_voirMod "Battery Voir Voltage";
+CM_ SG_ 2224029696 BATT_vModLoad "Voltage measured across load";
+CM_ SG_ 2617245696 BATT_totalRunTime "Total time FETs have been closed measured in seconds";
+CM_ BO_ 1282 "HOST battery request";
+CM_ SG_ 1282 HOST_standbyModConnectRequest "Multi-module request standby module to join bus";
+CM_ SG_ 1282 HOST_dbgInhibitContDrivePower "Debug Force Inhibit Allow Continuous Drive Power";
+CM_ SG_ 1282 HOST_dbgInhibitRegen "Debug Force Inhibit Allow Regen";
+CM_ SG_ 1282 HOST_dbgInhibitFullPower "Debug Force Inhibit Allow Full Power";
+CM_ SG_ 1282 HOST_dbgResetEep "Debug reset EEPROM (1 = reset)";
+CM_ SG_ 1282 HOST_stateRequest "State to be requested from battery by host";
+CM_ BO_ 2483290112 "Battery status";
+CM_ SG_ 2483290112 BATT_modNumModsDataValid "Number of parallel modules with valid data";
+CM_ SG_ 2483290112 BATT_modNumModsOnNetwork "Number of modules on the network";
+CM_ SG_ 2483290112 BATT_modNumModsOnHvBus "Number of modules on the HV bus";
+CM_ SG_ 2483290112 BATT_modNumModsConfigured "Number of parallel modules configured for the Module";
+CM_ SG_ 2483290112 BATT_ArbitrationComplete "1 - Node ID Arbitration Completed (default)
+0 - Node ID Arbitration Active";
+CM_ SG_ 2483290112 BATT_modStateRequested "Reports the requested battery state ";
+CM_ SG_ 2483290112 BATT_modDataValid "Module data valid";
+CM_ SG_ 2483290112 BATT_prechargeState "Precharge state";
+CM_ SG_ 2483290112 BATT_fetPchgCommand "PCHG FET commanded state";
+CM_ SG_ 2483290112 BATT_fetDsgCommand "DSG FETs commanded state";
+CM_ SG_ 2483290112 BATT_fetChgCommand "CHG FETs commanded state";
+CM_ SG_ 2483290112 BATT_fetDsgStatus "DSG FETs status";
+CM_ SG_ 2483290112 BATT_fetChgStatus "CHG FETs status";
+CM_ SG_ 2483290112 BATT_timeRampdown "Ramp down time";
+CM_ SG_ 2483290112 BATT_inhRegen "Inhibit Regen";
+CM_ SG_ 2483290112 BATT_inhFullPower "Inhibit Full Power";
+CM_ SG_ 2483290112 BATT_inhDriveEntry "Inhibit Drive Entry";
+CM_ SG_ 2483290112 BATT_inhDrive "Inhibit Drive";
+CM_ SG_ 2483290112 BATT_inhContPower "Inhibit Continuous Power";
+CM_ SG_ 2483290112 BATT_inhChargeEntry "Inhibit Charge Entry";
+CM_ SG_ 2483290112 BATT_inhCharge "Inhibit Charge";
+CM_ SG_ 2483290112 BATT_modPackState "Module reported pack state";
+CM_ SG_ 2483290112 BATT_modPchgChargeID "ID of module calculated to do pre-charge";
+CM_ SG_ 2483290112 BATT_modChildState "Reports the current state of the battery";
+CM_ SG_ 2483290112 BATT_modPchgDriveID "ID of module calculated to do pre-charge";
+CM_ SG_ 2483290112 BATT_modParentState "Reports the current state of the battery";
+CM_ BO_ 2219376640 "Battery limits";
+CM_ SG_ 2219376640 BATT_vModChgLimit "Voltage recharge limit sent to inverter";
+CM_ SG_ 2219376640 BATT_iModChgLimitInst "Current recharge limit in A";
+CM_ SG_ 2219376640 BATT_iModChgLimit_User_Def "Current recharge limit in A";
+CM_ SG_ 2219376640 BATT_iModChgLimitCont "Current recharge limit in A";
+CM_ SG_ 273 CHRG_chargerEnabled "0 - Charger is disabled
+1 - Charger is enabled";
+CM_ SG_ 273 CHRG_chargingVoltage "Output voltage from charger";
+CM_ SG_ 273 CHRG_chargingCurrent "Output current from charger";
+CM_ BO_ 2626420736 "Voltages of bricks 9-12";
+CM_ SG_ 2626420736 BATT_vBrick12 "Voltage of brick 12";
+CM_ SG_ 2626420736 BATT_vBrick11 "Voltage of brick 11";
+CM_ SG_ 2626420736 BATT_vBrick10 "Voltage of brick 10";
+CM_ SG_ 2626420736 BATT_vBrick09 "Voltage of brick 9";
+CM_ BO_ 2626158592 "Voltages of bricks 5-8";
+CM_ SG_ 2626158592 BATT_vBrick06 "Voltage of brick 6";
+CM_ SG_ 2626158592 BATT_vBrick07 "Voltage of brick 7";
+CM_ SG_ 2626158592 BATT_vBrick05 "Voltage of brick 5";
+CM_ SG_ 2626158592 BATT_vBrick08 "Voltage of brick 8";
+CM_ BO_ 2625896448 "Voltages of bricks 1-4";
+CM_ SG_ 2625896448 BATT_vBrick02 "Voltage of brick 2";
+CM_ SG_ 2625896448 BATT_vBrick03 "Voltage of brick 3";
+CM_ SG_ 2625896448 BATT_vBrick01 "Voltage of brick 1";
+CM_ SG_ 2625896448 BATT_vBrick04 "Voltage of brick 4";
+CM_ SG_ 2221146112 BATT_tModule2 "Battery temperature as measured by thermistor two";
+CM_ SG_ 2221146112 BATT_tModule1 "Battery temperature as measured by thermistor one";
+CM_ SG_ 2221146112 BATT_tAmbient "Ambient/Board temperature measured";
+CM_ BO_ 2215903232 "Battery SOC";
+CM_ SG_ 2215903232 BATT_sohcMod "State of Charge for the battery pack";
+CM_ SG_ 2215903232 BATT_socMod "State of Charge for the battery pack";
+CM_ SG_ 2215903232 BATT_socLimiting "State of charge of battery brick which is the limiting";
+CM_ SG_ 2215903232 BATT_idSOCLimiting "ID of limiting brick";
+CM_ SG_ 2222981120 BATT_tShunt "Temperature of current shunt";
+CM_ SG_ 2222981120 BATT_tFET "Temperature of FETs";
+CM_ SG_ 2215378944 BATT_vMod "Battery terminal voltage";
+CM_ SG_ 2215378944 BATT_vModSumOfCells "Battery pack voltage in volts, sum of brick voltages";
+CM_ SG_ 2215378944 BATT_iMod "Charge/discharge rate in ampere - positive for charge, negative for discharge.";
+CM_ SG_ 2215378944 BATT_iModFiltered "Filtered charge/discharge rate in ampere - positive for charge, negative for discharge.";
+CM_ SG_ 2550661120 BATT_IGNLO_Status "0 - Unkown
+1 - Standby
+2 - Drive
+3 - Arbitration
+";
+CM_ SG_ 2550661120 BATT_serialNumber "Unique serial number";
+CM_ SG_ 2550661120 BATT_expectedModule "Expected number of modules";
+CM_ SG_ 2550661120 BATT_deviceChemistry "Device chemistry.  Note strict SMBus handles this with a character string";
+CM_ BO_ 2215116800 "Battery capacity";
+CM_ SG_ 2215116800 BATT_modFullChargeCap_Ah "Estimated full charge capacity";
+CM_ SG_ 2215116800 BATT_modRemainingCap_Ah "Remaining charge";
+CM_ SG_ 2550398976 BATT_manufacturerName "Manufacturer name string. Length prefixed strings will work for strict SMBus and SPI, how to handle for CAN?";
+CM_ SG_ 2550398976 BATT_manufacturerAccess "Content determined by the Smart Battery's manufacturer";
+CM_ SG_ 2550398976 BATT_manufactureYear "Manufacture year biased by 1980";
+CM_ SG_ 2550398976 BATT_manufactureMonth "Manufacture month";
+CM_ SG_ 2550398976 BATT_manufactureDay "Manufacture day";
+CM_ SG_ 257 BATT_chargeError "0 - NO Charge Error
+1 - Charge Error";
+CM_ SG_ 257 BATT_chargerMode "Charge Mode (CC-CV)";
+CM_ SG_ 257 BATT_chargerConnected "Charger connected status";
+CM_ SG_ 257 BATT_chargeMode "Charge Mode (CC-CV)";
+CM_ SG_ 257 BATT_chargeStatus "Charge Status";
+CM_ SG_ 257 BATT_chargeEnable "0 - Request to disable charger if enabled
+1 - Request to enable charger if disabled";
+CM_ SG_ 257 BATT_chargingVoltage "Charger output voltage as measured by battery";
+CM_ SG_ 257 BATT_chargingCurrent "Maximum charger output current as requested by battery";
+BA_DEF_ BO_  "GenMsgDiag" ENUM  "No","Yes";
+BA_DEF_ BU_  "GenNodeInstanceBitWidth" INT 0 0;
+BA_DEF_ BO_  "GenMsgInstanced" STRING ;
+BA_DEF_ SG_  "GenSigType" ENUM  "Extended","Diagnostic","Standard","Modified";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 0;
+BA_DEF_ SG_  "GenSigSNA" INT 0 65535;
+BA_DEF_ SG_  "Access" ENUM  "r","rw";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "GenMsgDiag" "No";
+BA_DEF_DEF_  "GenNodeInstanceBitWidth" 0;
+BA_DEF_DEF_  "GenMsgInstanced" "No";
+BA_DEF_DEF_  "GenSigType" "Standard";
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenSigSNA" 0;
+BA_DEF_DEF_  "Access" "r";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "GenNodeInstanceBitWidth" BU_ Battery 4;
+BA_ "GenMsgInstanced" BO_ 2176909312 "Yes";
+BA_ "GenMsgDiag" BO_ 2626813952 1;
+BA_ "GenMsgInstanced" BO_ 2626813952 "Yes";
+BA_ "GenMsgDiag" BO_ 2626826240 1;
+BA_ "GenMsgInstanced" BO_ 2626826240 "Yes";
+BA_ "GenMsgDiag" BO_ 2626818048 1;
+BA_ "GenMsgInstanced" BO_ 2626818048 "Yes";
+BA_ "GenMsgDiag" BO_ 2626822144 1;
+BA_ "GenMsgInstanced" BO_ 2626822144 "Yes";
+BA_ "GenMsgDiag" BO_ 2626748416 1;
+BA_ "GenMsgInstanced" BO_ 2626748416 "Yes";
+BA_ "GenMsgInstanced" BO_ 2642411520 "Yes";
+BA_ "GenMsgInstanced" BO_ 2625634304 "Yes";
+BA_ "GenMsgInstanced" BO_ 2642935808 "Yes";
+BA_ "GenMsgDiag" BO_ 1808 1;
+BA_ "GenMsgInstanced" BO_ 2572156928 "Yes";
+BA_ "GenMsgDiag" BO_ 2618556416 1;
+BA_ "GenMsgInstanced" BO_ 2618556416 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2618556416 1000;
+BA_ "GenMsgDiag" BO_ 2618818560 1;
+BA_ "GenMsgInstanced" BO_ 2618818560 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2618818560 1000;
+BA_ "GenMsgInstanced" BO_ 2508193792 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2219835392 100;
+BA_ "GenMsgInstanced" BO_ 2219835392 "Yes";
+BA_ "GenMsgInstanced" BO_ 1632 "Yes";
+BA_ "GenMsgInstanced" BO_ 1600 "Yes";
+BA_ "GenMsgInstanced" BO_ 1616 "Yes";
+BA_ "GenMsgInstanced" BO_ 2219573248 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2219573248 100;
+BA_ "GenMsgInstanced" BO_ 1904 "Yes";
+BA_ "GenMsgDiag" BO_ 2629828608 1;
+BA_ "GenMsgInstanced" BO_ 2629828608 "Yes";
+BA_ "GenMsgInstanced" BO_ 2224291840 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2224291840 100;
+BA_ "GenMsgCycleTime" BO_ 1952 1000;
+BA_ "GenMsgInstanced" BO_ 2626945024 "Yes";
+BA_ "GenMsgInstanced" BO_ 2551447552 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2551447552 1000;
+BA_ "GenMsgDiag" BO_ 2620915712 1;
+BA_ "GenMsgInstanced" BO_ 2620915712 "Yes";
+BA_ "GenMsgDiag" BO_ 2620653568 1;
+BA_ "GenMsgInstanced" BO_ 2620653568 "Yes";
+BA_ "GenMsgInstanced" BO_ 2487484416 "Yes";
+BA_ "GenMsgDiag" BO_ 2672295936 1;
+BA_ "GenMsgInstanced" BO_ 2672295936 "Yes";
+BA_ "GenMsgDiag" BO_ 2672033792 1;
+BA_ "GenMsgInstanced" BO_ 2672033792 "Yes";
+BA_ "GenMsgDiag" BO_ 2671771648 1;
+BA_ "GenMsgInstanced" BO_ 2671771648 "Yes";
+BA_ "GenMsgCycleTime" BO_ 1296 1000;
+BA_ "GenMsgInstanced" BO_ 2626682880 "Yes";
+BA_ "GenMsgDiag" BO_ 2626682880 1;
+BA_ "GenMsgDiag" BO_ 2630877184 1;
+BA_ "GenMsgInstanced" BO_ 2630877184 "Yes";
+BA_ "GenMsgDiag" BO_ 2621440000 1;
+BA_ "GenMsgInstanced" BO_ 2621440000 "Yes";
+BA_ "GenMsgDiag" BO_ 2622488576 1;
+BA_ "GenMsgInstanced" BO_ 2622488576 "Yes";
+BA_ "GenMsgInstanced" BO_ 2236874752 "Yes";
+BA_ "GenMsgInstanced" BO_ 2571108352 "Yes";
+BA_ "GenMsgDiag" BO_ 2630615040 1;
+BA_ "GenMsgInstanced" BO_ 2630615040 "Yes";
+BA_ "GenMsgDiag" BO_ 2630352896 1;
+BA_ "GenMsgInstanced" BO_ 2630352896 "Yes";
+BA_ "GenMsgDiag" BO_ 2630090752 1;
+BA_ "GenMsgInstanced" BO_ 2630090752 "Yes";
+BA_ "GenMsgDiag" BO_ 2622226432 1;
+BA_ "GenMsgInstanced" BO_ 2622226432 "Yes";
+BA_ "GenMsgDiag" BO_ 2621964288 1;
+BA_ "GenMsgInstanced" BO_ 2621964288 "Yes";
+BA_ "GenMsgDiag" BO_ 2621702144 1;
+BA_ "GenMsgInstanced" BO_ 2621702144 "Yes";
+BA_ "GenMsgDiag" BO_ 2619604992 1;
+BA_ "GenMsgInstanced" BO_ 2619604992 "Yes";
+BA_ "GenMsgDiag" BO_ 2619342848 1;
+BA_ "GenMsgInstanced" BO_ 2619342848 "Yes";
+BA_ "GenMsgDiag" BO_ 2619080704 1;
+BA_ "GenMsgInstanced" BO_ 2619080704 "Yes";
+BA_ "GenMsgInstanced" BO_ 2232680448 "Yes";
+BA_ "GenMsgCycleTime" BO_ 277 1000;
+BA_ "GenMsgInstanced" BO_ 2224029696 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2224029696 100;
+BA_ "GenMsgDiag" BO_ 2617245696 1;
+BA_ "GenMsgInstanced" BO_ 2617245696 "Yes";
+BA_ "GenMsgCycleTime" BO_ 1282 1000;
+BA_ "GenMsgInstanced" BO_ 2483290112 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2483290112 100;
+BA_ "GenMsgInstanced" BO_ 2219376640 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2219376640 100;
+BA_ "GenMsgCycleTime" BO_ 273 2000;
+BA_ "GenMsgInstanced" BO_ 2626420736 "Yes";
+BA_ "GenMsgDiag" BO_ 2626420736 1;
+BA_ "GenMsgInstanced" BO_ 2626158592 "Yes";
+BA_ "GenMsgDiag" BO_ 2626158592 1;
+BA_ "GenMsgInstanced" BO_ 2625896448 "Yes";
+BA_ "GenMsgDiag" BO_ 2625896448 1;
+BA_ "GenMsgCycleTime" BO_ 2221146112 1000;
+BA_ "GenMsgInstanced" BO_ 2221146112 "Yes";
+BA_ "GenMsgInstanced" BO_ 2215903232 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2215903232 1000;
+BA_ "GenMsgCycleTime" BO_ 2222981120 1000;
+BA_ "GenMsgInstanced" BO_ 2222981120 "Yes";
+BA_ "GenMsgInstanced" BO_ 2215378944 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2215378944 100;
+BA_ "GenMsgInstanced" BO_ 2550661120 "Yes";
+BA_ "GenMsgCycleTime" BO_ 2215116800 1000;
+BA_ "GenMsgInstanced" BO_ 2215116800 "Yes";
+BA_ "GenMsgDiag" BO_ 2550398976 1;
+BA_ "GenMsgInstanced" BO_ 2550398976 "Yes";
+BA_ "GenSigType" SG_ 294 BATT_iPackFiltered_2 0;
+BA_ "GenSigSNA" SG_ 294 BATT_iPackFiltered_2 32767;
+BA_ "Access" SG_ 294 BATT_iPackFiltered_2 0;
+BA_ "GenSigType" SG_ 294 BATT_vPack_2 0;
+BA_ "GenSigSNA" SG_ 294 BATT_vPack_2 65535;
+BA_ "GenSigSNA" SG_ 294 BATT_iPack_2 32767;
+BA_ "GenSigType" SG_ 294 BATT_vPackLoad_2 0;
+BA_ "GenSigSNA" SG_ 294 BATT_vPackLoad_2 65535;
+BA_ "GenSigSNA" SG_ 2626813952 BATT_HrnsImpDelta_3 65535;
+BA_ "GenSigType" SG_ 2626813952 BATT_HrnsImpDelta_3 1;
+BA_ "GenSigSNA" SG_ 2626813952 BATT_HrnsImpDelta_2 65535;
+BA_ "GenSigType" SG_ 2626813952 BATT_HrnsImpDelta_2 1;
+BA_ "GenSigSNA" SG_ 2626813952 BATT_HrnsImpDelta_1 65535;
+BA_ "GenSigType" SG_ 2626813952 BATT_HrnsImpDelta_1 1;
+BA_ "GenSigSNA" SG_ 2626813952 BATT_HrnsImpDelta_0 65535;
+BA_ "GenSigType" SG_ 2626813952 BATT_HrnsImpDelta_0 1;
+BA_ "GenSigSNA" SG_ 2626826240 BATT_HrnsImpDelta_14 65535;
+BA_ "GenSigType" SG_ 2626826240 BATT_HrnsImpDelta_14 1;
+BA_ "GenSigSNA" SG_ 2626826240 BATT_HrnsImpDelta_13 65535;
+BA_ "GenSigType" SG_ 2626826240 BATT_HrnsImpDelta_13 1;
+BA_ "GenSigSNA" SG_ 2626826240 BATT_HrnsImpDelta_12 65535;
+BA_ "GenSigType" SG_ 2626826240 BATT_HrnsImpDelta_12 1;
+BA_ "GenSigSNA" SG_ 2626818048 BATT_HrnsImpDelta_7 65535;
+BA_ "GenSigType" SG_ 2626818048 BATT_HrnsImpDelta_7 1;
+BA_ "GenSigSNA" SG_ 2626818048 BATT_HrnsImpDelta_6 65535;
+BA_ "GenSigType" SG_ 2626818048 BATT_HrnsImpDelta_6 1;
+BA_ "GenSigSNA" SG_ 2626818048 BATT_HrnsImpDelta_5 65535;
+BA_ "GenSigType" SG_ 2626818048 BATT_HrnsImpDelta_5 1;
+BA_ "GenSigSNA" SG_ 2626818048 BATT_HrnsImpDelta_4 65535;
+BA_ "GenSigType" SG_ 2626818048 BATT_HrnsImpDelta_4 1;
+BA_ "GenSigSNA" SG_ 2626822144 BATT_HrnsImpDelta_11 65535;
+BA_ "GenSigType" SG_ 2626822144 BATT_HrnsImpDelta_11 1;
+BA_ "GenSigSNA" SG_ 2626822144 BATT_HrnsImpDelta_10 65535;
+BA_ "GenSigType" SG_ 2626822144 BATT_HrnsImpDelta_10 1;
+BA_ "GenSigSNA" SG_ 2626822144 BATT_HrnsImpDelta_9 65535;
+BA_ "GenSigType" SG_ 2626822144 BATT_HrnsImpDelta_9 1;
+BA_ "GenSigSNA" SG_ 2626822144 BATT_HrnsImpDelta_8 65535;
+BA_ "GenSigType" SG_ 2626822144 BATT_HrnsImpDelta_8 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_14 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_14 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_13 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_13 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_12 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_12 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_11 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_11 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_10 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_10 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_9 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_9 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_8 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_8 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_7 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_7 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_6 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_6 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_5 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_5 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_4 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_4 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_3 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_3 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_2 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_2 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_1 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_1 1;
+BA_ "GenSigSNA" SG_ 2626748416 BATT_HarnessImpedance_0 65535;
+BA_ "GenSigType" SG_ 2626748416 BATT_HarnessImpedance_0 1;
+BA_ "GenSigType" SG_ 2147549184 BATT_isIgnLo_Requested 0;
+BA_ "GenSigType" SG_ 2147549184 BATT_modReqCntr 0;
+BA_ "Access" SG_ 2147549184 BATT_nodeIdSerialNumber 1;
+BA_ "GenSigType" SG_ 2147549184 BATT_startNodeId 0;
+BA_ "GenSigType" SG_ 2147549184 BATT_stateRequest 0;
+BA_ "GenSigType" SG_ 1809 BATT_vPackConnBusBrickMin 1;
+BA_ "GenSigSNA" SG_ 1809 BATT_vPackConnBusBrickMin 4095;
+BA_ "GenSigType" SG_ 1809 BATT_vPackConnBusBrickMax 1;
+BA_ "GenSigSNA" SG_ 1809 BATT_vPackConnBusBrickMax 4095;
+BA_ "Access" SG_ 1809 BATT_packConnBusSOC 0;
+BA_ "GenSigSNA" SG_ 1809 BATT_packConnBusSOC 65535;
+BA_ "GenSigType" SG_ 2147516416 HOST_securityKey 0;
+BA_ "GenSigType" SG_ 2147516416 HOST_startNodeId 0;
+BA_ "Access" SG_ 2147500032 NODE_ID_CLAIM_RND 1;
+BA_ "Access" SG_ 2147500032 NODE_ID_CLAIM_SN 1;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQTaskOsTimeDelta 0;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQTaskOsTime 0;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQFifoWaterMark 0;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQFifoSizeUsed 0;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQEvent 0;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQError 0;
+BA_ "GenSigType" SG_ 2643001344 BATT_deltaQState 0;
+BA_ "GenSigType" SG_ 2642935808 BATT_canTXFifoSizeUsed 1;
+BA_ "GenSigType" SG_ 2642935808 BATT_canRXFifoSizeUsed 1;
+BA_ "GenSigType" SG_ 2642935808 BATT_canTXFifoWaterMark 1;
+BA_ "GenSigType" SG_ 2642935808 BATT_canRXFifoWaterMark 1;
+BA_ "GenSigSNA" SG_ 2572156928 BATT_harnessImpedanceFault 65535;
+BA_ "GenSigType" SG_ 2572156928 BATT_harnessImpedanceFault 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_packLevelArbitrationFault 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_multiIgnLoFault 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_modThermistorShorted 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_modThermistorOpenWire 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_chargeNotNeeded 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_packModTempImbalance 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_packModCurrImbalance 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_flashBootCRCError 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_flashAppCRCError 1;
+BA_ "GenSigType" SG_ 2572156928 BATT_cellOpenWire 1;
+BA_ "Access" SG_ 260 BATT_packRemainingCap_Ah 0;
+BA_ "GenSigSNA" SG_ 260 BATT_packRemainingCap_Ah 65535;
+BA_ "GenSigSNA" SG_ 260 BATT_packFullChargeCap_Ah 65535;
+BA_ "Access" SG_ 260 BATT_packFullChargeCap_Ah 0;
+BA_ "GenSigType" SG_ 2618556416 BATT_fetChgDiagState 0;
+BA_ "GenSigType" SG_ 2618556416 BATT_fetChgDiagIMeas 0;
+BA_ "GenSigType" SG_ 2618556416 BATT_fetChgDiagVMeasPrime 0;
+BA_ "GenSigType" SG_ 2618556416 BATT_fetChgDiagVMeas 0;
+BA_ "GenSigType" SG_ 2618556416 BATT_fetChgDiagOpenResult 0;
+BA_ "GenSigType" SG_ 2618556416 BATT_fetChgDiagClosedResult 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_SOC 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_UVP_WAR 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_UVP_MOD 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_OVP_WAR 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_OVP_MOD 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_OTP_SEV 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_OTP_MOD 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_OCP 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_FLT_HW 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_CON_MOD 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_CHG_STAT 0;
+BA_ "Access" SG_ 1062 BATT_MTR_1_BATT_STAT 0;
+BA_ "GenSigType" SG_ 2618818560 BATT_fetDsgDiagState 0;
+BA_ "GenSigType" SG_ 2618818560 BATT_fetDsgDiagIMeas 0;
+BA_ "GenSigType" SG_ 2618818560 BATT_fetDsgDiagVMeas 0;
+BA_ "GenSigType" SG_ 2618818560 BATT_fetDsgDiagVMeasPrime 0;
+BA_ "GenSigType" SG_ 2618818560 BATT_fetDsgDiagOpenResult 0;
+BA_ "GenSigType" SG_ 2618818560 BATT_fetDsgDiagClosedResult 0;
+BA_ "Access" SG_ 261 BATT_packUserSOC 0;
+BA_ "GenSigSNA" SG_ 261 BATT_packUserSOC 65535;
+BA_ "GenSigSNA" SG_ 261 BATT_packSOC 65535;
+BA_ "Access" SG_ 261 BATT_packSOC 0;
+BA_ "GenSigType" SG_ 2508193792 BATT_bootloaderRevision_bootup 0;
+BA_ "GenSigType" SG_ 2508193792 BATT_bootloaderMinor_bootup 0;
+BA_ "GenSigType" SG_ 2508193792 BATT_bootloaderMajor_bootup 0;
+BA_ "GenSigType" SG_ 2508193792 BATT_appRevision_bootup 0;
+BA_ "GenSigType" SG_ 2508193792 BATT_appMinor_bootup 0;
+BA_ "GenSigType" SG_ 2508193792 BATT_appMajor_bootup 0;
+BA_ "GenSigSNA" SG_ 276 BATT_iPackDchLimit30s 32767;
+BA_ "GenSigSNA" SG_ 276 BATT_pwrPackDchLimit 65535;
+BA_ "GenSigSNA" SG_ 276 BATT_pwrPackChgLimit 65535;
+BA_ "GenSigSNA" SG_ 2219835392 BATT_iModDchLimit30s 32767;
+BA_ "GenSigType" SG_ 2219835392 BATT_iModDchLimit30s 0;
+BA_ "GenSigSNA" SG_ 2219835392 BATT_pwrModDchLimit 32767;
+BA_ "GenSigType" SG_ 2219835392 BATT_pwrModDchLimit 0;
+BA_ "GenSigSNA" SG_ 2219835392 BATT_pwrModChgLimit 65535;
+BA_ "GenSigType" SG_ 2219835392 BATT_pwrModChgLimit 0;
+BA_ "GenSigSNA" SG_ 275 BATT_vBusMin 65535;
+BA_ "GenSigSNA" SG_ 275 BATT_iPackDchLimitInst 32767;
+BA_ "GenSigSNA" SG_ 275 BATT_iPackDchLimit_User_Def 32767;
+BA_ "GenSigSNA" SG_ 275 BATT_iPackDchLimitCont 32767;
+BA_ "GenSigSNA" SG_ 274 BATT_vBusMax 65535;
+BA_ "GenSigSNA" SG_ 274 BATT_iPackChgLimitInst 65535;
+BA_ "GenSigSNA" SG_ 274 BATT_iPackChgLimit_User_Def 65535;
+BA_ "GenSigSNA" SG_ 274 BATT_iPackChgLimitCont 65535;
+BA_ "GenSigType" SG_ 2219573248 BATT_vModDchLimit 0;
+BA_ "GenSigSNA" SG_ 2219573248 BATT_vModDchLimit 65535;
+BA_ "GenSigType" SG_ 2219573248 BATT_iModDchLimitInst 0;
+BA_ "GenSigSNA" SG_ 2219573248 BATT_iModDchLimitInst 32767;
+BA_ "GenSigType" SG_ 2219573248 BATT_iModDchLimit_User_Def 0;
+BA_ "GenSigSNA" SG_ 2219573248 BATT_iModDchLimit_User_Def 32767;
+BA_ "GenSigType" SG_ 2219573248 BATT_iModDchLimitCont 0;
+BA_ "GenSigSNA" SG_ 2219573248 BATT_iModDchLimitCont 32767;
+BA_ "Access" SG_ 259 BATT_packAliveCntr 0;
+BA_ "Access" SG_ 259 BATT_packSpeakerInstanceID 0;
+BA_ "GenSigType" SG_ 259 BATT_fetPackDsgWelded 0;
+BA_ "GenSigType" SG_ 259 BATT_fetPackChgWelded 0;
+BA_ "GenSigType" SG_ 259 BATT_packState 0;
+BA_ "GenSigSNA" SG_ 293 BATT_vPackModuleMinID 15;
+BA_ "GenSigSNA" SG_ 293 BATT_vPackBrickMin 4095;
+BA_ "GenSigSNA" SG_ 293 BATT_vPackModuleMaxID 15;
+BA_ "GenSigSNA" SG_ 293 BATT_vPackBrickMax 4095;
+BA_ "GenSigSNA" SG_ 293 BATT_tPackModuleMinID 15;
+BA_ "GenSigSNA" SG_ 293 BATT_tPackModuleMin 2047;
+BA_ "Access" SG_ 293 BATT_tPackModuleMin 0;
+BA_ "GenSigType" SG_ 293 BATT_tPackModuleMin 1;
+BA_ "GenSigSNA" SG_ 293 BATT_tPackModuleMaxID 15;
+BA_ "GenSigSNA" SG_ 293 BATT_tPackModuleMax 2047;
+BA_ "Access" SG_ 293 BATT_tPackModuleMax 0;
+BA_ "GenSigType" SG_ 293 BATT_tPackModuleMax 1;
+BA_ "GenSigType" SG_ 292 BATT_iPackFiltered 0;
+BA_ "GenSigSNA" SG_ 292 BATT_iPackFiltered 32767;
+BA_ "Access" SG_ 292 BATT_iPackFiltered 0;
+BA_ "GenSigType" SG_ 292 BATT_vPack 0;
+BA_ "GenSigSNA" SG_ 292 BATT_vPack 65535;
+BA_ "GenSigType" SG_ 292 BATT_vPackLoad 0;
+BA_ "GenSigSNA" SG_ 292 BATT_vPackLoad 65535;
+BA_ "GenSigSNA" SG_ 292 BATT_iPack 32767;
+BA_ "GenSigType" SG_ 2629828608 BATT_ahDchTotal 1;
+BA_ "GenSigType" SG_ 2629828608 BATT_ahChgTotal 1;
+BA_ "GenSigType" SG_ 2224291840 BATT_tModuleMaxID 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_tModuleMaxID 15;
+BA_ "GenSigType" SG_ 2224291840 BATT_tModuleMinID 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_tModuleMinID 15;
+BA_ "GenSigType" SG_ 2224291840 BATT_vBrickMaxID 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_vBrickMaxID 15;
+BA_ "GenSigType" SG_ 2224291840 BATT_vBrickMinID 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_vBrickMinID 15;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_tModuleMax 2047;
+BA_ "Access" SG_ 2224291840 BATT_tModuleMax 0;
+BA_ "GenSigType" SG_ 2224291840 BATT_tModuleMax 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_tModuleMin 2047;
+BA_ "Access" SG_ 2224291840 BATT_tModuleMin 0;
+BA_ "GenSigType" SG_ 2224291840 BATT_tModuleMin 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_vBrickMin 4095;
+BA_ "GenSigType" SG_ 2224291840 BATT_vBrickMin 0;
+BA_ "GenSigSNA" SG_ 2224291840 BATT_vBrickMax 4095;
+BA_ "GenSigType" SG_ 2224291840 BATT_vBrickMax 0;
+BA_ "GenSigType" SG_ 2672295936 BATT_boardADC_SHUNT_TEMP 0;
+BA_ "GenSigType" SG_ 2672295936 BATT_boardADC_FET_TEMP 0;
+BA_ "GenSigType" SG_ 2672295936 BATT_boardADC_AMB_TEMP 0;
+BA_ "GenSigType" SG_ 2672033792 BATT_boardADC_12V 0;
+BA_ "GenSigType" SG_ 2672033792 BATT_boardADC_5V 0;
+BA_ "GenSigType" SG_ 2672033792 BATT_boardADC_3V3 0;
+BA_ "GenSigType" SG_ 2671771648 BATT_boardADC_LOAD 0;
+BA_ "GenSigType" SG_ 2671771648 BATT_boardADC_COMMON_DRAIN 0;
+BA_ "GenSigType" SG_ 2671771648 BATT_boardADC_PACK 0;
+BA_ "GenSigSNA" SG_ 2626682880 BATT_vBrick14 65535;
+BA_ "GenSigType" SG_ 2626682880 BATT_vBrick14 1;
+BA_ "GenSigSNA" SG_ 2626682880 BATT_vBrick13 65535;
+BA_ "GenSigType" SG_ 2626682880 BATT_vBrick13 1;
+BA_ "GenSigType" SG_ 2630877184 BATT_socState 1;
+BA_ "GenSigType" SG_ 2630877184 BATT_socLoLimit 1;
+BA_ "GenSigType" SG_ 2630877184 BATT_socHiLimit 1;
+BA_ "GenSigSNA" SG_ 2630877184 BATT_socBrick14 1023;
+BA_ "GenSigType" SG_ 2630877184 BATT_socBrick14 1;
+BA_ "GenSigSNA" SG_ 2630877184 BATT_socBrick13 1023;
+BA_ "GenSigType" SG_ 2630877184 BATT_socBrick13 1;
+BA_ "GenSigType" SG_ 2621440000 BATT_resBrick14 1;
+BA_ "GenSigSNA" SG_ 2621440000 BATT_resBrick14 65535;
+BA_ "GenSigType" SG_ 2621440000 BATT_resBrick13 1;
+BA_ "GenSigSNA" SG_ 2621440000 BATT_resBrick13 65535;
+BA_ "GenSigType" SG_ 2622488576 BATT_sohcUpdated 1;
+BA_ "GenSigType" SG_ 2622488576 BATT_sohcPrimed 1;
+BA_ "GenSigType" SG_ 2622488576 BATT_capBrick14 1;
+BA_ "GenSigSNA" SG_ 2622488576 BATT_capBrick14 65535;
+BA_ "GenSigType" SG_ 2622488576 BATT_capBrick13 1;
+BA_ "GenSigSNA" SG_ 2622488576 BATT_capBrick13 65535;
+BA_ "GenSigType" SG_ 2236874752 BATT_hardwareVersion 0;
+BA_ "GenSigType" SG_ 2571108352 BATT_packModIdFault 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packModExitedFromBus 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packFetChgWelded 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packFetDsgWelded 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetDsgShortedAux 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetChgShortedAux 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_prechargeFetFail 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_abnormalResetReason 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_prechargeTooSlow 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_prechargeTooFast 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_prechargeTimeout 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetChgShorted 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetChgFailToClose 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packModSelectFault 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packModConnectFault 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packModMIA 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packModImbalance 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_afeFault 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_chargerMIA 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_chargerError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickUnderWar 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickUnderSev 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickUnderMod 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickOverWar 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickOverSev 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickOverMod 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_vBrickImbalance 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_loggerAlmostFull 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempModuleUnderWar 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempModuleUnderSev 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempModuleUnderMod 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempModuleOverWar 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempModuleOverSev 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempModuleOverMod 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempBrickImbalance 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_taskLockupError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempAmbientOverWar 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempAmbientOverSev 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_tempAmbientOverMod 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_sensePackVoltError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_senseLoadVoltError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_loggerFull 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_senseCurrentError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_senseBrickTempError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_resPackHigh 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_ramOverUtilError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_powerPackInsufficient 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_packCellSoftShort 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_iOverHardware 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetOverTemp 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_iOverDischarge 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_iOverCharge 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_inverterDriveMIA 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_iUnderCharge 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_hostMIA 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetDsgShorted 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_fetDsgFailToClose 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_capLow 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_brickOverDischarge 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_brickOverCharge 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_bmsProcessorError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_bmsMemoryError 1;
+BA_ "GenSigType" SG_ 2571108352 BATT_afeError 1;
+BA_ "GenSigType" SG_ 2630615040 BATT_socBrick12 1;
+BA_ "GenSigSNA" SG_ 2630615040 BATT_socBrick12 1023;
+BA_ "GenSigSNA" SG_ 2630615040 BATT_socBrick11 1023;
+BA_ "GenSigType" SG_ 2630615040 BATT_socBrick11 1;
+BA_ "GenSigSNA" SG_ 2630615040 BATT_socBrick09 1023;
+BA_ "GenSigType" SG_ 2630615040 BATT_socBrick09 1;
+BA_ "GenSigSNA" SG_ 2630615040 BATT_socBrick10 1023;
+BA_ "GenSigType" SG_ 2630615040 BATT_socBrick10 1;
+BA_ "GenSigSNA" SG_ 2630352896 BATT_socBrick08 1023;
+BA_ "GenSigType" SG_ 2630352896 BATT_socBrick08 1;
+BA_ "GenSigSNA" SG_ 2630352896 BATT_socBrick07 1023;
+BA_ "GenSigType" SG_ 2630352896 BATT_socBrick07 1;
+BA_ "GenSigSNA" SG_ 2630352896 BATT_socBrick06 1023;
+BA_ "GenSigType" SG_ 2630352896 BATT_socBrick06 1;
+BA_ "GenSigSNA" SG_ 2630352896 BATT_socBrick05 1023;
+BA_ "GenSigType" SG_ 2630352896 BATT_socBrick05 1;
+BA_ "GenSigSNA" SG_ 2630090752 BATT_socBrick04 1023;
+BA_ "GenSigType" SG_ 2630090752 BATT_socBrick04 1;
+BA_ "GenSigSNA" SG_ 2630090752 BATT_socBrick03 1023;
+BA_ "GenSigType" SG_ 2630090752 BATT_socBrick03 1;
+BA_ "GenSigSNA" SG_ 2630090752 BATT_socBrick02 1023;
+BA_ "GenSigType" SG_ 2630090752 BATT_socBrick02 1;
+BA_ "GenSigSNA" SG_ 2630090752 BATT_socBrick01 1023;
+BA_ "GenSigType" SG_ 2630090752 BATT_socBrick01 1;
+BA_ "GenSigType" SG_ 2622226432 BATT_capBrick12 1;
+BA_ "GenSigSNA" SG_ 2622226432 BATT_capBrick12 65535;
+BA_ "GenSigType" SG_ 2622226432 BATT_capBrick11 1;
+BA_ "GenSigSNA" SG_ 2622226432 BATT_capBrick11 65535;
+BA_ "GenSigType" SG_ 2622226432 BATT_capBrick09 1;
+BA_ "GenSigSNA" SG_ 2622226432 BATT_capBrick09 65535;
+BA_ "GenSigType" SG_ 2622226432 BATT_capBrick10 1;
+BA_ "GenSigSNA" SG_ 2622226432 BATT_capBrick10 65535;
+BA_ "GenSigType" SG_ 2621964288 BATT_capBrick08 1;
+BA_ "GenSigSNA" SG_ 2621964288 BATT_capBrick08 65535;
+BA_ "GenSigType" SG_ 2621964288 BATT_capBrick07 1;
+BA_ "GenSigSNA" SG_ 2621964288 BATT_capBrick07 65535;
+BA_ "GenSigType" SG_ 2621964288 BATT_capBrick06 1;
+BA_ "GenSigSNA" SG_ 2621964288 BATT_capBrick06 65535;
+BA_ "GenSigType" SG_ 2621964288 BATT_capBrick05 1;
+BA_ "GenSigSNA" SG_ 2621964288 BATT_capBrick05 65535;
+BA_ "GenSigType" SG_ 2621702144 BATT_capBrick04 1;
+BA_ "GenSigSNA" SG_ 2621702144 BATT_capBrick04 65535;
+BA_ "GenSigType" SG_ 2621702144 BATT_capBrick03 1;
+BA_ "GenSigSNA" SG_ 2621702144 BATT_capBrick03 65535;
+BA_ "GenSigType" SG_ 2621702144 BATT_capBrick02 1;
+BA_ "GenSigSNA" SG_ 2621702144 BATT_capBrick02 65535;
+BA_ "GenSigSNA" SG_ 2621702144 BATT_capBrick01 65535;
+BA_ "GenSigType" SG_ 2621702144 BATT_capBrick01 1;
+BA_ "GenSigType" SG_ 2619604992 BATT_resBrick12 1;
+BA_ "GenSigSNA" SG_ 2619604992 BATT_resBrick12 65535;
+BA_ "GenSigType" SG_ 2619604992 BATT_resBrick11 1;
+BA_ "GenSigSNA" SG_ 2619604992 BATT_resBrick11 65535;
+BA_ "GenSigType" SG_ 2619604992 BATT_resBrick09 1;
+BA_ "GenSigSNA" SG_ 2619604992 BATT_resBrick09 65535;
+BA_ "GenSigType" SG_ 2619604992 BATT_resBrick10 1;
+BA_ "GenSigSNA" SG_ 2619604992 BATT_resBrick10 65535;
+BA_ "GenSigType" SG_ 2619342848 BATT_resBrick08 1;
+BA_ "GenSigSNA" SG_ 2619342848 BATT_resBrick08 65535;
+BA_ "GenSigType" SG_ 2619342848 BATT_resBrick07 1;
+BA_ "GenSigSNA" SG_ 2619342848 BATT_resBrick07 65535;
+BA_ "GenSigType" SG_ 2619342848 BATT_resBrick06 1;
+BA_ "GenSigSNA" SG_ 2619342848 BATT_resBrick06 65535;
+BA_ "GenSigType" SG_ 2619342848 BATT_resBrick05 1;
+BA_ "GenSigSNA" SG_ 2619342848 BATT_resBrick05 65535;
+BA_ "GenSigType" SG_ 2619080704 BATT_resBrick04 1;
+BA_ "GenSigSNA" SG_ 2619080704 BATT_resBrick04 65535;
+BA_ "GenSigType" SG_ 2619080704 BATT_resBrick03 1;
+BA_ "GenSigSNA" SG_ 2619080704 BATT_resBrick03 65535;
+BA_ "GenSigType" SG_ 2619080704 BATT_resBrick02 1;
+BA_ "GenSigSNA" SG_ 2619080704 BATT_resBrick02 65535;
+BA_ "GenSigType" SG_ 2619080704 BATT_resBrick01 1;
+BA_ "GenSigSNA" SG_ 2619080704 BATT_resBrick01 65535;
+BA_ "GenSigType" SG_ 2232680448 BATT_bootTotalFaultCnt 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_bootFaultCnt 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_bootloaderRevision 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_bootloaderMinor 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_bootloaderMajor 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_appRevision 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_appMinor 0;
+BA_ "GenSigType" SG_ 2232680448 BATT_appMajor 0;
+BA_ "GenSigType" SG_ 277 INV_voltage 0;
+BA_ "GenSigType" SG_ 277 INV_current 0;
+BA_ "GenSigType" SG_ 2224029696 BATT_resMod 0;
+BA_ "GenSigSNA" SG_ 2224029696 BATT_resMod 65535;
+BA_ "GenSigSNA" SG_ 2224029696 BATT_voirMod 65535;
+BA_ "Access" SG_ 2224029696 BATT_voirMod 0;
+BA_ "GenSigType" SG_ 2224029696 BATT_voirMod 0;
+BA_ "GenSigSNA" SG_ 2224029696 BATT_vModLoad 65535;
+BA_ "GenSigType" SG_ 2224029696 BATT_vModLoad 0;
+BA_ "GenSigType" SG_ 2617245696 BATT_totalRunTime 1;
+BA_ "GenSigType" SG_ 1282 HOST_standbyModConnectRequest 0;
+BA_ "GenSigType" SG_ 1282 HOST_dbgInhibitContDrivePower 0;
+BA_ "GenSigType" SG_ 1282 HOST_dbgInhibitRegen 0;
+BA_ "GenSigType" SG_ 1282 HOST_dbgInhibitFullPower 0;
+BA_ "GenSigType" SG_ 1282 HOST_dbgResetEep 0;
+BA_ "GenSigType" SG_ 1282 HOST_stateRequest 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_ArbitrationComplete 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_modStateRequested 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_prechargeState 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_fetPchgCommand 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_fetDsgCommand 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_fetChgCommand 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_fetDsgStatus 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_fetChgStatus 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhRegen 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhFullPower 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhDriveEntry 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhDrive 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhContPower 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhChargeEntry 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_inhCharge 1;
+BA_ "GenSigType" SG_ 2483290112 BATT_modPackState 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_modChildState 0;
+BA_ "GenSigType" SG_ 2483290112 BATT_modParentState 0;
+BA_ "GenSigSNA" SG_ 2219376640 BATT_vModChgLimit 65535;
+BA_ "GenSigType" SG_ 2219376640 BATT_vModChgLimit 0;
+BA_ "GenSigSNA" SG_ 2219376640 BATT_iModChgLimitInst 65535;
+BA_ "GenSigType" SG_ 2219376640 BATT_iModChgLimitInst 0;
+BA_ "GenSigSNA" SG_ 2219376640 BATT_iModChgLimit_User_Def 65535;
+BA_ "GenSigType" SG_ 2219376640 BATT_iModChgLimit_User_Def 0;
+BA_ "GenSigSNA" SG_ 2219376640 BATT_iModChgLimitCont 65535;
+BA_ "GenSigType" SG_ 2219376640 BATT_iModChgLimitCont 0;
+BA_ "GenSigType" SG_ 273 CHRG_chargerEnabled 0;
+BA_ "GenSigType" SG_ 273 CHRG_chargingVoltage 0;
+BA_ "GenSigType" SG_ 273 CHRG_chargingCurrent 0;
+BA_ "GenSigSNA" SG_ 2626420736 BATT_vBrick12 65535;
+BA_ "GenSigType" SG_ 2626420736 BATT_vBrick12 1;
+BA_ "GenSigSNA" SG_ 2626420736 BATT_vBrick11 65535;
+BA_ "GenSigType" SG_ 2626420736 BATT_vBrick11 1;
+BA_ "GenSigSNA" SG_ 2626420736 BATT_vBrick10 65535;
+BA_ "GenSigType" SG_ 2626420736 BATT_vBrick10 1;
+BA_ "GenSigSNA" SG_ 2626420736 BATT_vBrick09 65535;
+BA_ "GenSigType" SG_ 2626420736 BATT_vBrick09 1;
+BA_ "GenSigSNA" SG_ 2626158592 BATT_vBrick06 65535;
+BA_ "GenSigType" SG_ 2626158592 BATT_vBrick06 1;
+BA_ "GenSigSNA" SG_ 2626158592 BATT_vBrick07 65535;
+BA_ "GenSigType" SG_ 2626158592 BATT_vBrick07 1;
+BA_ "GenSigSNA" SG_ 2626158592 BATT_vBrick05 65535;
+BA_ "GenSigType" SG_ 2626158592 BATT_vBrick05 1;
+BA_ "GenSigSNA" SG_ 2626158592 BATT_vBrick08 65535;
+BA_ "GenSigType" SG_ 2626158592 BATT_vBrick08 1;
+BA_ "GenSigSNA" SG_ 2625896448 BATT_vBrick02 65535;
+BA_ "GenSigType" SG_ 2625896448 BATT_vBrick02 1;
+BA_ "GenSigSNA" SG_ 2625896448 BATT_vBrick03 65535;
+BA_ "GenSigType" SG_ 2625896448 BATT_vBrick03 1;
+BA_ "GenSigType" SG_ 2625896448 BATT_vBrick01 1;
+BA_ "GenSigSNA" SG_ 2625896448 BATT_vBrick01 65535;
+BA_ "GenSigSNA" SG_ 2625896448 BATT_vBrick04 65535;
+BA_ "GenSigType" SG_ 2625896448 BATT_vBrick04 1;
+BA_ "GenSigSNA" SG_ 2221146112 BATT_tModule2 32767;
+BA_ "GenSigType" SG_ 2221146112 BATT_tModule2 0;
+BA_ "GenSigSNA" SG_ 2221146112 BATT_tModule1 32767;
+BA_ "GenSigType" SG_ 2221146112 BATT_tModule1 0;
+BA_ "GenSigSNA" SG_ 2221146112 BATT_tAmbient 65535;
+BA_ "GenSigType" SG_ 2221146112 BATT_tAmbient 0;
+BA_ "GenSigSNA" SG_ 2215903232 BATT_sohcMod 65535;
+BA_ "GenSigType" SG_ 2215903232 BATT_sohcMod 0;
+BA_ "Access" SG_ 2215903232 BATT_sohcMod 0;
+BA_ "GenSigSNA" SG_ 2215903232 BATT_socMod 65535;
+BA_ "GenSigType" SG_ 2215903232 BATT_socMod 0;
+BA_ "Access" SG_ 2215903232 BATT_socMod 0;
+BA_ "GenSigSNA" SG_ 2215903232 BATT_socLimiting 65535;
+BA_ "GenSigType" SG_ 2215903232 BATT_socLimiting 0;
+BA_ "GenSigSNA" SG_ 2215903232 BATT_idSOCLimiting 15;
+BA_ "GenSigType" SG_ 2215903232 BATT_idSOCLimiting 0;
+BA_ "GenSigSNA" SG_ 2222981120 BATT_tShunt 65535;
+BA_ "GenSigType" SG_ 2222981120 BATT_tShunt 0;
+BA_ "GenSigSNA" SG_ 2222981120 BATT_tFET 65535;
+BA_ "GenSigType" SG_ 2222981120 BATT_tFET 0;
+BA_ "GenSigSNA" SG_ 2215378944 BATT_vMod 65535;
+BA_ "GenSigType" SG_ 2215378944 BATT_vMod 0;
+BA_ "Access" SG_ 2215378944 BATT_vMod 0;
+BA_ "GenSigSNA" SG_ 2215378944 BATT_vModSumOfCells 65535;
+BA_ "Access" SG_ 2215378944 BATT_vModSumOfCells 0;
+BA_ "GenSigType" SG_ 2215378944 BATT_vModSumOfCells 0;
+BA_ "GenSigSNA" SG_ 2215378944 BATT_iMod 32767;
+BA_ "Access" SG_ 2215378944 BATT_iMod 0;
+BA_ "GenSigType" SG_ 2215378944 BATT_iMod 0;
+BA_ "GenSigSNA" SG_ 2215378944 BATT_iModFiltered 32767;
+BA_ "Access" SG_ 2215378944 BATT_iModFiltered 0;
+BA_ "GenSigType" SG_ 2215378944 BATT_iModFiltered 0;
+BA_ "GenSigType" SG_ 2550661120 BATT_IGNLO_Status 1;
+BA_ "Access" SG_ 2550661120 BATT_serialNumber 1;
+BA_ "Access" SG_ 2550661120 BATT_expectedModule 0;
+BA_ "Access" SG_ 2550661120 BATT_deviceChemistry 0;
+BA_ "GenSigSNA" SG_ 2215116800 BATT_modFullChargeCap_Ah 65535;
+BA_ "Access" SG_ 2215116800 BATT_modFullChargeCap_Ah 0;
+BA_ "GenSigSNA" SG_ 2215116800 BATT_modRemainingCap_Ah 65535;
+BA_ "Access" SG_ 2215116800 BATT_modRemainingCap_Ah 0;
+BA_ "Access" SG_ 2550398976 BATT_manufacturerName 0;
+BA_ "Access" SG_ 2550398976 BATT_manufacturerAccess 1;
+BA_ "Access" SG_ 2550398976 BATT_manufactureYear 0;
+BA_ "Access" SG_ 2550398976 BATT_manufactureMonth 0;
+BA_ "Access" SG_ 2550398976 BATT_manufactureDay 0;
+BA_ "GenSigType" SG_ 257 BATT_chargeError 0;
+BA_ "GenSigType" SG_ 257 BATT_chargerMode 0;
+BA_ "GenSigType" SG_ 257 BATT_chargeMode 0;
+BA_ "GenSigType" SG_ 257 BATT_chargeStatus 0;
+BA_ "GenSigType" SG_ 257 BATT_chargeEnable 0;
+BA_ "Access" SG_ 257 BATT_chargingVoltage 1;
+BA_ "Access" SG_ 257 BATT_chargingCurrent 1;
+VAL_ 294 BATT_iPackFiltered_2 32767 "SNA" ;
+VAL_ 294 BATT_vPack_2 65535 "SNA" ;
+VAL_ 294 BATT_iPack_2 32767 "SNA" ;
+VAL_ 294 BATT_vPackLoad_2 65535 "SNA" ;
+VAL_ 2147549184 BATT_stateRequest 0 "None" 3 "Sleep" 2 "Charge" 1 "Drive" ;
+VAL_ 1809 BATT_vPackConnBusBrickMin 4095 "SNA" ;
+VAL_ 1809 BATT_vPackConnBusBrickMax 4095 "SNA" ;
+VAL_ 1809 BATT_packConnBusSOC 65535 "SNA" ;
+VAL_ 2643001344 BATT_deltaQEvent 8 "NMT Start TO" 7 "User Data TO" 6 "Heartbeat TO" 5 "RPDO Send Timer" 4 "Precharge Timer" 3 "Stop Request" 0 "CAN Data Received" 2 "Start Request" 1 "User Data Received" ;
+VAL_ 2643001344 BATT_deltaQError 5 "UnexpectedDisconnect" 4 "BadRequest" 3 "RequestTimeout" 0 "None" 2 "Charger" 1 "Comms" ;
+VAL_ 2643001344 BATT_deltaQState 5 "Error" 4 "Stopping" 3 "Charging" 0 "Disconnected" 2 "Connected" 1 "NMTStart" ;
+VAL_ 260 BATT_packRemainingCap_Ah 65535 "SNA" ;
+VAL_ 260 BATT_packFullChargeCap_Ah 65535 "SNA" ;
+VAL_ 2618556416 BATT_fetChgDiagState 4 "Check Closed Result" 3 "Check Open Result" 0 "Idle" 2 "Start Closed Check" 1 "Start Open Check" ;
+VAL_ 2618556416 BATT_fetChgDiagOpenResult 3 "Fail" 0 "Pending" 2 "Pass" 1 "In Progress" ;
+VAL_ 2618556416 BATT_fetChgDiagClosedResult 3 "Fail" 0 "Pending" 2 "Pass" 1 "In Progress" ;
+VAL_ 0 NMT_Command 1 "Start" ;
+VAL_ 1062 BATT_MTR_1_FLT_UVP_WAR 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_UVP_MOD 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_OVP_WAR 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_OVP_MOD 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_OTP_SEV 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_OTP_MOD 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_OCP 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_FLT_HW 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 1062 BATT_MTR_1_CHG_STAT 2 "Connected and Not Charging Error" 1 "Connected and Charging" 0 "Not Connected not in Operation" ;
+VAL_ 1062 BATT_MTR_1_BATT_STAT 1 "Fault ACTIVE" 0 "NO Fault Normal operation" ;
+VAL_ 2618818560 BATT_fetDsgDiagState 4 "Check Closed Result" 3 "Check Open Result" 0 "Idle" 2 "Start Closed Check" 1 "Start Open Check" ;
+VAL_ 2618818560 BATT_fetDsgDiagOpenResult 3 "Fail" 0 "Pending" 2 "Pass" 1 "In Progress" ;
+VAL_ 2618818560 BATT_fetDsgDiagClosedResult 3 "Fail" 0 "Pending" 2 "Pass" 1 "In Progress" ;
+VAL_ 261 BATT_packUserSOC 65535 "SNA" ;
+VAL_ 261 BATT_packSOC 65535 "SNA" ;
+VAL_ 276 BATT_iPackDchLimit30s 32767 "SNA" ;
+VAL_ 276 BATT_pwrPackDchLimit 65535 "SNA" ;
+VAL_ 276 BATT_pwrPackChgLimit 65535 "SNA" ;
+VAL_ 2219835392 BATT_iModDchLimit30s 32767 "SNA" ;
+VAL_ 2219835392 BATT_pwrModDchLimit 32767 "SNA" ;
+VAL_ 2219835392 BATT_pwrModChgLimit 65535 "SNA" ;
+VAL_ 275 BATT_vBusMin 65535 "SNA" ;
+VAL_ 275 BATT_iPackDchLimitInst 32767 "SNA" ;
+VAL_ 275 BATT_iPackDchLimit_User_Def 32767 "SNA" ;
+VAL_ 275 BATT_iPackDchLimitCont 32767 "SNA" ;
+VAL_ 274 BATT_vBusMax 65535 "SNA" ;
+VAL_ 274 BATT_iPackChgLimitInst 65535 "SNA" ;
+VAL_ 274 BATT_iPackChgLimit_User_Def 65535 "SNA" ;
+VAL_ 274 BATT_iPackChgLimitCont 65535 "SNA" ;
+VAL_ 2219573248 BATT_vModDchLimit 65535 "SNA" ;
+VAL_ 2219573248 BATT_iModDchLimitInst 32767 "SNA" ;
+VAL_ 2219573248 BATT_iModDchLimit_User_Def 32767 "SNA" ;
+VAL_ 2219573248 BATT_iModDchLimitCont 32767 "SNA" ;
+VAL_ 259 BATT_packState 10 "Disconnect" 9 "ConnectCharge" 8 "ConnectDrive" 7 "SelectCharge" 6 "SelectDrive" 5 "ChargeStandbyConnect" 4 "Reserved" 0 "StandbyNotReady" 3 "Charge" 2 "Drive" 1 "StandbyReady" ;
+VAL_ 293 BATT_vPackModuleMinID 15 "SNA" ;
+VAL_ 293 BATT_vPackBrickMin 4095 "SNA" ;
+VAL_ 293 BATT_vPackModuleMaxID 15 "SNA" ;
+VAL_ 293 BATT_vPackBrickMax 4095 "SNA" ;
+VAL_ 293 BATT_tPackModuleMinID 15 "SNA" ;
+VAL_ 293 BATT_tPackModuleMin 2047 "SNA" ;
+VAL_ 293 BATT_tPackModuleMaxID 15 "SNA" ;
+VAL_ 293 BATT_tPackModuleMax 2047 "SNA" ;
+VAL_ 292 BATT_iPackFiltered 32767 "SNA" ;
+VAL_ 292 BATT_vPack 65535 "SNA" ;
+VAL_ 292 BATT_vPackLoad 65535 "SNA" ;
+VAL_ 292 BATT_iPack 32767 "SNA" ;
+VAL_ 1904 BATT_debugSeverity 3 "Severity Level Info" 2 "Severity Level Warning" 1 "Severity Level Error" 0 "Severity Level None" ;
+VAL_ 2224291840 BATT_tModuleMaxID 15 "SNA" ;
+VAL_ 2224291840 BATT_tModuleMinID 15 "SNA" ;
+VAL_ 2224291840 BATT_vBrickMaxID 15 "SNA" ;
+VAL_ 2224291840 BATT_vBrickMinID 15 "SNA" ;
+VAL_ 2224291840 BATT_tModuleMax 2047 "SNA" ;
+VAL_ 2224291840 BATT_tModuleMin 2047 "SNA" ;
+VAL_ 2224291840 BATT_vBrickMin 4095 "SNA" ;
+VAL_ 2224291840 BATT_vBrickMax 4095 "SNA" ;
+VAL_ 2620653568 BATT_wakeReason 3 "RTC" 2 "IGN_HI" 1 "IGN_LO" 0 "CAN" ;
+VAL_ 2626682880 BATT_vBrick14 65535 "SNA" ;
+VAL_ 2626682880 BATT_vBrick13 65535 "SNA" ;
+VAL_ 2630877184 BATT_socState 0 "Startup" 3 "Normal" 2 "OCV Correction" 1 "OCV Reset" ;
+VAL_ 2630877184 BATT_socBrick14 1023 "SNA" ;
+VAL_ 2630877184 BATT_socBrick13 1023 "SNA" ;
+VAL_ 2621440000 BATT_resBrick14 65535 "SNA" ;
+VAL_ 2621440000 BATT_resBrick13 65535 "SNA" ;
+VAL_ 2622488576 BATT_capBrick14 65535 "SNA" ;
+VAL_ 2622488576 BATT_capBrick13 65535 "SNA" ;
+VAL_ 2630615040 BATT_socBrick12 1023 "SNA" ;
+VAL_ 2630615040 BATT_socBrick11 1023 "SNA" ;
+VAL_ 2630615040 BATT_socBrick09 1023 "SNA" ;
+VAL_ 2630615040 BATT_socBrick10 1023 "SNA" ;
+VAL_ 2630352896 BATT_socBrick08 1023 "SNA" ;
+VAL_ 2630352896 BATT_socBrick07 1023 "SNA" ;
+VAL_ 2630352896 BATT_socBrick06 1023 "SNA" ;
+VAL_ 2630352896 BATT_socBrick05 1023 "SNA" ;
+VAL_ 2630090752 BATT_socBrick04 1023 "SNA" ;
+VAL_ 2630090752 BATT_socBrick03 1023 "SNA" ;
+VAL_ 2630090752 BATT_socBrick02 1023 "SNA" ;
+VAL_ 2630090752 BATT_socBrick01 1023 "SNA" ;
+VAL_ 2622226432 BATT_capBrick12 65535 "SNA" ;
+VAL_ 2622226432 BATT_capBrick11 65535 "SNA" ;
+VAL_ 2622226432 BATT_capBrick09 65535 "SNA" ;
+VAL_ 2622226432 BATT_capBrick10 65535 "SNA" ;
+VAL_ 2621964288 BATT_capBrick08 65535 "SNA" ;
+VAL_ 2621964288 BATT_capBrick07 65535 "SNA" ;
+VAL_ 2621964288 BATT_capBrick06 65535 "SNA" ;
+VAL_ 2621964288 BATT_capBrick05 65535 "SNA" ;
+VAL_ 2621702144 BATT_capBrick04 65535 "SNA" ;
+VAL_ 2621702144 BATT_capBrick03 65535 "SNA" ;
+VAL_ 2621702144 BATT_capBrick02 65535 "SNA" ;
+VAL_ 2621702144 BATT_capBrick01 65535 "SNA" ;
+VAL_ 2619604992 BATT_resBrick12 65535 "SNA" ;
+VAL_ 2619604992 BATT_resBrick11 65535 "SNA" ;
+VAL_ 2619604992 BATT_resBrick09 65535 "SNA" ;
+VAL_ 2619604992 BATT_resBrick10 65535 "SNA" ;
+VAL_ 2619342848 BATT_resBrick08 65535 "SNA" ;
+VAL_ 2619342848 BATT_resBrick07 65535 "SNA" ;
+VAL_ 2619342848 BATT_resBrick06 65535 "SNA" ;
+VAL_ 2619342848 BATT_resBrick05 65535 "SNA" ;
+VAL_ 2619080704 BATT_resBrick04 65535 "SNA" ;
+VAL_ 2619080704 BATT_resBrick03 65535 "SNA" ;
+VAL_ 2619080704 BATT_resBrick02 65535 "SNA" ;
+VAL_ 2619080704 BATT_resBrick01 65535 "SNA" ;
+VAL_ 2224029696 BATT_resMod 65535 "SNA" ;
+VAL_ 2224029696 BATT_voirMod 65535 "SNA" ;
+VAL_ 2224029696 BATT_vModLoad 65535 "SNA" ;
+VAL_ 1282 HOST_stateRequest 0 "None" 3 "Sleep" 2 "Charge" 1 "Drive" ;
+VAL_ 2483290112 BATT_modStateRequested 4 "Connect" 0 "Standby" 3 "Disconnect" 2 "Charge" 1 "Drive" ;
+VAL_ 2483290112 BATT_modDataValid 0 "Not Valid" 1 "Valid" ;
+VAL_ 2483290112 BATT_prechargeState 6 "Fault" 5 "Complete" 4 "Idle" 3 "P0F1" 0 "P0F0" 2 "P1F1" 1 "P1F0" ;
+VAL_ 2483290112 BATT_fetPchgCommand 0 "Open" 1 "Close" ;
+VAL_ 2483290112 BATT_fetDsgCommand 0 "Open" 1 "Close" ;
+VAL_ 2483290112 BATT_fetChgCommand 0 "Open" 1 "Close" ;
+VAL_ 2483290112 BATT_fetDsgStatus 8 "Welded" 7 "OpenPending" 6 "FailToClose" 5 "FailToOpen" 4 "Closing" 3 "Opening" 0 "Unknown" 2 "Closed" 1 "Open" ;
+VAL_ 2483290112 BATT_fetChgStatus 8 "Welded" 7 "OpenPending" 6 "FailToClose" 5 "FailToOpen" 4 "Closing" 3 "Opening" 0 "Unknown" 2 "Closed" 1 "Open" ;
+VAL_ 2483290112 BATT_modPackState 10 "Disconnect" 9 "ConnectCharge" 8 "ConnectDrive" 7 "SelectCharge" 6 "SelectDrive" 5 "ChargeStandbyConnect" 4 "Reserved" 0 "StandbyNotReady" 3 "Charge" 2 "Drive" 1 "StandbyReady" ;
+VAL_ 2483290112 BATT_modChildState 12 "connectbusjoin" 11 "connectbusprecharge" 10 "softdisconnectbus" 9 "disconnectbus" 8 "chargenormal" 7 "drivenormal" 6 "driverampdown" 5 "drivelimp" 4 "standbyready" 3 "standbyfault" 2 "standbynotready" 1 "standbysleeping" 0 "standbysleep" ;
+VAL_ 2483290112 BATT_modParentState 4 "Connect" 0 "Standby" 3 "Disconnect" 2 "Charge" 1 "Drive" ;
+VAL_ 2219376640 BATT_vModChgLimit 65535 "SNA" ;
+VAL_ 2219376640 BATT_iModChgLimitInst 65535 "SNA" ;
+VAL_ 2219376640 BATT_iModChgLimit_User_Def 65535 "SNA" ;
+VAL_ 2219376640 BATT_iModChgLimitCont 65535 "SNA" ;
+VAL_ 2626420736 BATT_vBrick12 65535 "SNA" ;
+VAL_ 2626420736 BATT_vBrick11 65535 "SNA" ;
+VAL_ 2626420736 BATT_vBrick10 65535 "SNA" ;
+VAL_ 2626420736 BATT_vBrick09 65535 "SNA" ;
+VAL_ 2626158592 BATT_vBrick06 65535 "SNA" ;
+VAL_ 2626158592 BATT_vBrick07 65535 "SNA" ;
+VAL_ 2626158592 BATT_vBrick05 65535 "SNA" ;
+VAL_ 2626158592 BATT_vBrick08 65535 "SNA" ;
+VAL_ 2625896448 BATT_vBrick02 65535 "SNA" ;
+VAL_ 2625896448 BATT_vBrick03 65535 "SNA" ;
+VAL_ 2625896448 BATT_vBrick01 65535 "SNA" ;
+VAL_ 2625896448 BATT_vBrick04 65535 "SNA" ;
+VAL_ 2221146112 BATT_tModule2 32767 "SNA" ;
+VAL_ 2221146112 BATT_tModule1 32767 "SNA" ;
+VAL_ 2221146112 BATT_tAmbient 65535 "SNA" ;
+VAL_ 2215903232 BATT_sohcMod 65535 "SNA" ;
+VAL_ 2215903232 BATT_socMod 65535 "SNA" ;
+VAL_ 2215903232 BATT_socLimiting 65535 "SNA" ;
+VAL_ 2215903232 BATT_idSOCLimiting 15 "SNA" ;
+VAL_ 2222981120 BATT_tShunt 65535 "SNA" ;
+VAL_ 2222981120 BATT_tFET 65535 "SNA" ;
+VAL_ 2215378944 BATT_vMod 65535 "SNA" ;
+VAL_ 2215378944 BATT_vModSumOfCells 65535 "SNA" ;
+VAL_ 2215378944 BATT_iMod 32767 "SNA" ;
+VAL_ 2215378944 BATT_iModFiltered 32767 "SNA" ;
+VAL_ 2550661120 BATT_deviceChemistry 7 "LiP" 6 "ZnAr" 5 "RAM" 4 "NiZn" 3 "NiMH" 2 "NiCd" 1 "LION" 0 "PbAc" ;
+VAL_ 2215116800 BATT_modFullChargeCap_Ah 65535 "SNA" ;
+VAL_ 2215116800 BATT_modRemainingCap_Ah 65535 "SNA" ;
+VAL_ 257 BATT_chargerMode 0 "Delta Q" 1 "Generic" ;
+VAL_ 257 BATT_chargeMode 0 "Not Active" 2 "CV" 1 "CC" ;
+VAL_ 257 BATT_chargeStatus 5 "Error" 4 "Complete" 0 "Unknown" 3 "In Progress" 2 "Charge Needed" 1 "Charge Not Needed" ;
+
