@@ -219,6 +219,7 @@ impl App {
                 biased;
 
                 maybe_frame = self.can_socket_rx.next() => {
+                    cli_log::info!("CAN rx");
                     match maybe_frame {
                         Some(Ok(frame)) => {
                             match self.handle_can_frame(frame) {
@@ -235,6 +236,7 @@ impl App {
                 }
 
                 maybe_event = event_reader.next() => {
+                    cli_log::info!("event");
                     match maybe_event {
                         Some(Ok(crossterm::event::Event::Key(key))) => {
                             match key.code {
@@ -283,6 +285,7 @@ impl App {
                 }
 
                 _ = need_redraw.notified() => {
+                    cli_log::info!("redraw");
                     terminal.draw(|frame| self.render_frame(frame))?;
                 }
 
