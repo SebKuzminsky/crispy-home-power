@@ -221,8 +221,10 @@ impl App {
                 maybe_frame = self.can_socket_rx.next() => {
                     match maybe_frame {
                         Some(Ok(frame)) => {
-                            let _ = self.handle_can_frame(frame);
-                            need_redraw.notify_one();
+                            match self.handle_can_frame(frame) {
+                                Ok(true) => need_redraw.notify_one(),
+                                _ => (),
+                            }
                             if timeout.is_terminated() {
                                 cli_log::info!("wake on packet");
                                 timeout.set(tokio::time::sleep(tokio::time::Duration::from_secs(1)).fuse());
@@ -339,7 +341,7 @@ impl App {
         frame.render_widget(self, frame.area());
     }
 
-    fn handle_can_frame(&mut self, frame: tokio_socketcan::CANFrame) -> Result<(), eyre::Report> {
+    fn handle_can_frame(&mut self, frame: tokio_socketcan::CANFrame) -> Result<bool, eyre::Report> {
         let id: embedded_can::Id = if frame.is_extended() {
             match embedded_can::ExtendedId::new(frame.id()) {
                 Some(id) => embedded_can::Id::Extended(id),
@@ -1099,10 +1101,12 @@ impl App {
                 self.battery_pack.pack_soc.user_soc = m.batt_pack_user_soc_raw();
             }
 
-            _ => (), // ignore all other messages
+            _ => {
+                return Ok(false); // ignore all other messages
+            }
         }
 
-        Ok(())
+        Ok(true)
     }
 
     async fn send_mode_command(&mut self) -> Result<(), eyre::Report> {
