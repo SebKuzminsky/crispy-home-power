@@ -110,6 +110,9 @@ Nathaniel says: I had one pack never shutoff after I turned it on with
 an ignition signal, which is the main reason I no longer want to use
 the pack BMS.
 
+The HV terminals are tin-plated copper, with M8x1.25 thread, and should
+be torqued to no more than 9Nm.
+
 
 # Charger
 
