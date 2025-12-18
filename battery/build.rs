@@ -4,12 +4,14 @@ use anyhow::{Context, Result};
 
 fn main() -> Result<()> {
     let dbc_path = String::from("./powertrain_multimod_v78.00.007.dbc");
-    let dbc_file = std::fs::read(&dbc_path).context("failed to read DBC file {dbc_path}\n")?;
+    let dbc_contents = std::fs::read(&dbc_path).context("failed to read DBC file {dbc_path}\n")?;
+    let dbc_contents = std::str::from_utf8(&dbc_contents)
+        .context("failed to parse DBC file {dbc_path} as utf8\n")?;
     println!("cargo:rerun-if-changed={}", &dbc_path);
 
     let config = Config::builder()
         .dbc_name(&dbc_path)
-        .dbc_content(&dbc_file)
+        .dbc_content(dbc_contents)
         .allow_dead_code(true) // Don't emit warnings if not all generated code is used
         //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // Optional impls.
         .impl_debug(FeatureConfig::Always) // See rustdoc for more,
