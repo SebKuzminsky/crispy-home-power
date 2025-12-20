@@ -7,6 +7,12 @@ edition = "2021"
 rtic = { version = "2", features = ["thumbv7-backend"] }
 rtic-monotonics = { version = "1", default-features = false, features = ["cortex-m-systick"] }
 
+# teensy4-bsp 0.5 uses embedded-hal 0.2
+# needs the "unproven" feature for TogglableOutputPin
+eh02 = { package = "embedded-hal", version = "0.2", features = ["unproven"] }
+
+imxrt-hal = { path = "./imxrt-hal", features = ["eh02-unproven"] }
+
 # Remove these if you don't want logging.
 imxrt-log = { version = "0.1", default-features = false, features = ["log", "usbd"] }
 log = { version = "0.4", features = ["max_level_debug", "release_max_level_info"] }
@@ -14,7 +20,7 @@ log = { version = "0.4", features = ["max_level_debug", "release_max_level_info"
 teensy4-panic = { version = "0.2", features = ["log"] }
 
 [dependencies.teensy4-bsp]
-version = "0.5"
+path = "./teensy4-rs"
 features = [
     # Use the BSP's runtime.
     "rt",

@@ -1,0 +1,6 @@
+[submodule "teensy-battery-controller/imxrt-hal"]
+	path = teensy-battery-controller/imxrt-hal
+	url = https://github.com/scythe-robotics/imxrt-hal
+[submodule "teensy-battery-controller/teensy4-rs"]
+	path = teensy-battery-controller/teensy4-rs
+	url = https://github.com/scythe-robotics/teensy4-rs

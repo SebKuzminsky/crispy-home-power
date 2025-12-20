@@ -90,6 +90,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "790eea4361631c5e7d22598ecd5723ff611904e3344ce8720784c93e3d83d40b"
 
 [[package]]
+name = "embedded-can"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e9d2e857f87ac832df68fa498d18ddc679175cf3d2e4aa893988e5601baf9438"
+dependencies = [
+ "nb 1.1.0",
+]
+
+[[package]]
 name = "embedded-hal"
 version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -229,12 +238,11 @@ dependencies = [
 
 [[package]]
 name = "imxrt-hal"
-version = "0.5.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da59db24b2f2fb5d232e75893eb2c19730a99c57f61497ea6826bc84a7b5401a"
+version = "0.5.8"
 dependencies = [
  "bitflags",
  "cfg-if",
+ "embedded-can",
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0",
  "embedded-io",
@@ -514,6 +522,8 @@ dependencies = [
 name = "teensy-battery-controller"
 version = "0.1.0"
 dependencies = [
+ "embedded-hal 0.2.7",
+ "imxrt-hal",
  "imxrt-log",
  "log",
  "rtic",
@@ -525,8 +535,6 @@ dependencies = [
 [[package]]
 name = "teensy4-bsp"
 version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "510fde9e2eeddca019259849155905af99e2858bdfd0b6eab4501fe4ec8f041d"
 dependencies = [
  "cortex-m",
  "imxrt-hal",
@@ -539,8 +547,6 @@ dependencies = [
 [[package]]
 name = "teensy4-fcb"
 version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8007b6d680b853afd7aa5a4b2be509efac0b5063698a87f274206955afbf1d0f"
 dependencies = [
  "imxrt-boot-gen",
 ]
@@ -557,8 +563,6 @@ dependencies = [
 [[package]]
 name = "teensy4-pins"
 version = "0.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "631a1f5431b534b083974457a0383875575e483710247e65bc0c508ea3a1d59f"
 dependencies = [
  "imxrt-iomuxc",
 ]
