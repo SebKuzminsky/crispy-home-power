@@ -21,9 +21,15 @@ mod app {
 
     use rtic_monotonics::systick::{Systick, *};
 
+    use embedded_can::Frame;
+
     /// There are no resources shared across tasks.
     #[shared]
-    struct Shared {}
+    struct Shared {
+        /// The CAN1 interface on pins 22 (Tx) and 23 (Rx), connected to the ABS Alliance battery
+        /// pack.
+        can1: board::Flexcan1,
+    }
 
     /// These resources are local to individual tasks.
     #[local]
@@ -36,9 +42,6 @@ mod app {
 
         /// A poller to control USB logging.
         poller: logging::Poller,
-
-        /// The CAN1 interface on pins 22 (Tx) and 23 (Rx)
-        can1: board::Flexcan1,
     }
 
     #[init]
@@ -72,16 +75,16 @@ mod app {
         );
 
         blink::spawn().unwrap();
-        battery_task::spawn().unwrap();
+        battery_can_rx_task::spawn().unwrap();
+        battery_can_tx_task::spawn().unwrap();
         power_button_task::spawn().unwrap();
 
         (
-            Shared {},
+            Shared { can1 },
             Local {
                 led,
                 power_button_gpio,
                 poller,
-                can1,
             },
         )
     }
@@ -119,49 +122,89 @@ mod app {
         }
     }
 
-    #[task(local = [can1])]
-    async fn battery_task(context: battery_task::Context) {
-        let can = context.local.can1;
+    #[task(shared = [can1])]
+    async fn battery_can_rx_task(context: battery_can_rx_task::Context) {
+        let mut can = context.shared.can1;
 
         loop {
-            // read all available mailboxes for any available frames
-            if let Some(data) = can.read_mailboxes() {
-                // TODO: get rid of this and make it a "real" message
-                let frame_id = data.frame.id();
-                let id = match frame_id {
-                    imxrt_hal::can::Id::Standard(v) => v.as_raw().into(),
-                    imxrt_hal::can::Id::Extended(v) => v.as_raw(),
-                };
-
-                if id == 292 || id == 261 {
-                    // Decode the CAN message
-                    if let Some(payload) = data.frame.data() {
-                        match crate::abs_alliance_can_messages::Messages::from_can_message(
-                            data.frame.id(),
-                            payload,
-                        ) {
-                            Ok(msg) => {
-                                // log::info!("{:#?}", msg);
-                                match msg {
-                                    crate::abs_alliance_can_messages::Messages::BattPackSoc(m) => {
-                                        log::info!("SoC={:?}%", m.batt_pack_user_soc());
-                                    }
-                                    crate::abs_alliance_can_messages::Messages::BattPackHvStatus(m) => {
-                                        log::info!("Vpack={:?} V", m.batt_v_pack());
-                                        log::info!("Ipack={:?} A", m.batt_i_pack_filtered());
-                                    }
-                                    _ => {
-                                        // unknown/unhandled message
+            // Process any incoming CAN packets that have arrived.
+            match can.lock(|can| can.read_mailboxes()) {
+                Some(data) => {
+                    // TODO: get rid of this and make it a "real" message
+                    let frame_id = data.frame.id();
+                    let id = match frame_id {
+                        imxrt_hal::can::Id::Standard(v) => v.as_raw().into(),
+                        imxrt_hal::can::Id::Extended(v) => v.as_raw(),
+                    };
+                    if id == 292 || id == 261 {
+                        // Decode the CAN message
+                        if let Some(payload) = data.frame.data() {
+                            match crate::abs_alliance_can_messages::Messages::from_can_message(
+                                data.frame.id(),
+                                payload,
+                            ) {
+                                Ok(msg) => {
+                                    // log::info!("{:#?}", msg);
+                                    match msg {
+                                        crate::abs_alliance_can_messages::Messages::BattPackSoc(m) => {
+                                            log::info!("SoC={:?}%", m.batt_pack_user_soc());
+                                        }
+                                        crate::abs_alliance_can_messages::Messages::BattPackHvStatus(m) => {
+                                            log::info!("Vpack={:?} V", m.batt_v_pack());
+                                            log::info!("Ipack={:?} A", m.batt_i_pack_filtered());
+                                        }
+                                        _ => {
+                                            // unknown/unhandled message
+                                        }
                                     }
                                 }
+                                Err(e) => log::error!("{e:?}"),
                             }
-                            Err(e) => log::error!("{e:?}"),
                         }
                     }
                 }
+                None => {
+                    // No CAN packets to read, sleep and poll again.
+                    // FIXME: switch to nonblocking interrupt-driven mode
+                    Systick::delay(5.millis()).await;
+                }
+            }
+        }
+    }
+
+    #[task(shared = [can1])]
+    async fn battery_can_tx_task(context: battery_can_tx_task::Context) {
+        let mut can = context.shared.can1;
+
+        // During normal operation: Once per second, send the "Drive" command to the battery pack.
+        loop {
+            let mode = crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive;
+
+            let host_battery_request = crate::abs_alliance_can_messages::HostBatteryRequest::new(
+                false,
+                false,
+                false,
+                false,
+                false,
+                mode.into(),
+            )
+            .unwrap();
+            log::info!("sending {:#?}", host_battery_request);
+
+            match &embedded_can::Frame::new(host_battery_request.id(), host_battery_request.data())
+            {
+                Some(frame) => match can.lock(|can| can.transmit(frame)) {
+                    Ok(_) => (),
+                    Err(e) => {
+                        log::error!("error sending CAN Frame: {:#?}", e);
+                    }
+                },
+                None => {
+                    log::error!("error making CAN Frame from {:#?}", host_battery_request);
+                }
             }
 
-            Systick::delay(5.millis()).await;
+            Systick::delay(1000.millis()).await;
         }
     }
 
