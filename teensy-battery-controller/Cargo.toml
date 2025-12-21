@@ -3,6 +3,10 @@ name = "teensy-battery-controller"
 version = "0.1.0"
 edition = "2021"
 
+[build-dependencies]
+anyhow = "1.0"
+dbc-codegen = { git = "https://github.com/technocreatives/dbc-codegen.git" }
+
 [dependencies]
 rtic = { version = "2", features = ["thumbv7-backend"] }
 rtic-monotonics = { version = "1", default-features = false, features = ["cortex-m-systick"] }
@@ -18,6 +22,8 @@ imxrt-log = { version = "0.1", default-features = false, features = ["log", "usb
 log = { version = "0.4", features = ["max_level_debug", "release_max_level_info"] }
 
 teensy4-panic = { version = "0.2", features = ["log"] }
+bitvec = { version = "1.0.1", default-features = false }
+embedded-can = "0.4.1"
 
 [dependencies.teensy4-bsp]
 path = "./teensy4-rs"

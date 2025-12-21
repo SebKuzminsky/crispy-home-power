@@ -4,6 +4,8 @@
 #![no_std]
 #![no_main]
 
+mod abs_alliance_can_messages;
+
 use teensy4_panic as _;
 
 #[rtic::app(device = teensy4_bsp, peripherals = true, dispatchers = [KPP])]
@@ -131,9 +133,31 @@ mod app {
                     imxrt_hal::can::Id::Extended(v) => v.as_raw(),
                 };
 
-                // Decode the CAN message
-                if let Some(payload) = data.frame.data() {
-                    log::info!("{:?} {:?}", id, payload);
+                if id == 292 || id == 261 {
+                    // Decode the CAN message
+                    if let Some(payload) = data.frame.data() {
+                        match crate::abs_alliance_can_messages::Messages::from_can_message(
+                            data.frame.id(),
+                            payload,
+                        ) {
+                            Ok(msg) => {
+                                // log::info!("{:#?}", msg);
+                                match msg {
+                                    crate::abs_alliance_can_messages::Messages::BattPackSoc(m) => {
+                                        log::info!("SoC={:?}%", m.batt_pack_user_soc());
+                                    }
+                                    crate::abs_alliance_can_messages::Messages::BattPackHvStatus(m) => {
+                                        log::info!("Vpack={:?} V", m.batt_v_pack());
+                                        log::info!("Ipack={:?} A", m.batt_i_pack_filtered());
+                                    }
+                                    _ => {
+                                        // unknown/unhandled message
+                                    }
+                                }
+                            }
+                            Err(e) => log::error!("{e:?}"),
+                        }
+                    }
                 }
             }
 
