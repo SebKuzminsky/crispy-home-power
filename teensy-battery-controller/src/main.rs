@@ -28,8 +28,13 @@ mod app {
     struct Local {
         /// The LED on pin 13.
         led: board::Led,
+
+        /// Power button, pulls down when pressed.
+        power_button_gpio: teensy4_bsp::hal::gpio::Input<teensy4_bsp::pins::t40::P2>,
+
         /// A poller to control USB logging.
         poller: logging::Poller,
+
         /// The CAN1 interface on pins 22 (Tx) and 23 (Rx)
         can1: board::Flexcan1,
     }
@@ -38,7 +43,8 @@ mod app {
     fn init(cx: init::Context) -> (Shared, Local) {
         let board::Resources {
             mut gpio2,
-            pins,
+            mut gpio4,
+            mut pins,
             usb,
             flexcan1,
             ..
@@ -52,6 +58,11 @@ mod app {
         can1.set_max_mailbox(16);
         can1.disable_fifo();
 
+        const PIN_CONFIG: bsp::hal::iomuxc::Config = bsp::hal::iomuxc::Config::zero()
+            .set_pull_keeper(Some(bsp::hal::iomuxc::PullKeeper::Pullup100k));
+        bsp::hal::iomuxc::configure(&mut pins.p2, PIN_CONFIG);
+        let power_button_gpio = gpio4.input(pins.p2);
+
         Systick::start(
             cx.core.SYST,
             board::ARM_FREQUENCY,
@@ -60,8 +71,17 @@ mod app {
 
         blink::spawn().unwrap();
         battery_task::spawn().unwrap();
+        power_button_task::spawn().unwrap();
 
-        (Shared {}, Local { led, poller, can1 })
+        (
+            Shared {},
+            Local {
+                led,
+                power_button_gpio,
+                poller,
+                can1,
+            },
+        )
     }
 
     #[task(local = [led])]
@@ -80,6 +100,20 @@ mod app {
             }
 
             count = count.wrapping_add(1);
+        }
+    }
+
+    #[task(local = [power_button_gpio])]
+    async fn power_button_task(context: power_button_task::Context) {
+        let power_button_gpio = context.local.power_button_gpio;
+        let mut old_state = !power_button_gpio.is_set();
+        loop {
+            let new_state = power_button_gpio.is_set();
+            if new_state != old_state {
+                log::info!("power button: {}", new_state);
+            }
+            old_state = new_state;
+            Systick::delay(1.millis()).await;
         }
     }
 
