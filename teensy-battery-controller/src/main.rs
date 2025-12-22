@@ -9,7 +9,7 @@ mod debounced_input_pin;
 
 use teensy4_panic as _;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ControllerMode {
     /// The controller is booting, wait for the user to release the power button then go to
     /// Discharge mode.
@@ -261,6 +261,13 @@ mod app {
             };
 
             can.lock(|can| battery_send_host_state_request(can, state));
+
+            if mode == crate::ControllerMode::Sleep {
+                // The ABS Alliance batteries only tolerate one Sleep
+                // command, a second packet wakes them back up.
+                break;
+            }
+
             Systick::delay(1000.millis()).await;
         }
     }
