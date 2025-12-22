@@ -5,6 +5,7 @@
 #![no_main]
 
 mod abs_alliance_can_messages;
+mod debounced_input_pin;
 
 use teensy4_panic as _;
 
@@ -35,6 +36,7 @@ mod app {
     use rtic_monotonics::systick::{Systick, *};
 
     use embedded_can::Frame;
+    use embedded_hal::digital::InputPin;
 
     /// There are no resources shared across tasks.
     #[shared]
@@ -54,7 +56,9 @@ mod app {
         led: board::Led,
 
         /// Power button, pulls down when pressed.
-        power_button_gpio: teensy4_bsp::hal::gpio::Input<teensy4_bsp::pins::t40::P2>,
+        power_button_gpio: crate::debounced_input_pin::DebouncedInputPin<
+            teensy4_bsp::hal::gpio::Input<teensy4_bsp::pins::t40::P2>,
+        >,
 
         /// A poller to control USB logging.
         poller: logging::Poller,
@@ -82,7 +86,8 @@ mod app {
         const PIN_CONFIG: bsp::hal::iomuxc::Config = bsp::hal::iomuxc::Config::zero()
             .set_pull_keeper(Some(bsp::hal::iomuxc::PullKeeper::Pullup100k));
         bsp::hal::iomuxc::configure(&mut pins.p2, PIN_CONFIG);
-        let power_button_gpio = gpio4.input(pins.p2);
+        let power_button_gpio =
+            crate::debounced_input_pin::DebouncedInputPin::new(gpio4.input(pins.p2), 10);
 
         let controller_mode = crate::ControllerMode::Booting;
 
@@ -130,30 +135,26 @@ mod app {
     async fn power_button_task(context: power_button_task::Context) {
         let power_button_gpio = context.local.power_button_gpio;
         let mut controller_mode = context.shared.controller_mode;
-        let mut debounce_count: u8 = 0;
 
         loop {
-            let button_state = power_button_gpio.is_set();
-            match controller_mode.lock(|mode| mode.clone()) {
-                crate::ControllerMode::Booting => {
-                    if button_state {
-                        // Button released & GPIO pulled up.
-                        controller_mode.lock(|mode| *mode = crate::ControllerMode::Discharge);
-                    }
-                }
-                crate::ControllerMode::Discharge => {
-                    if !button_state {
-                        debounce_count += 1;
-                        if debounce_count > 25 {
-                            // Button pressed & GPIO pulled down.
-                            controller_mode.lock(|mode| *mode = crate::ControllerMode::Sleep);
+            let button_state = power_button_gpio.is_high().unwrap();
+            controller_mode.lock(|mode| {
+                match mode {
+                    crate::ControllerMode::Booting => {
+                        if button_state {
+                            // Button released & GPIO pulled up.
+                            *mode = crate::ControllerMode::Discharge;
                         }
-                    } else {
-                        debounce_count = 0;
                     }
+                    crate::ControllerMode::Discharge => {
+                        if !button_state {
+                            // Button pressed & GPIO pulled down.
+                            *mode = crate::ControllerMode::Sleep;
+                        }
+                    }
+                    crate::ControllerMode::Sleep => (),
                 }
-                crate::ControllerMode::Sleep => (),
-            }
+            });
             // FIXME: lame polling loop, switch to interrupts
             Systick::delay(10.millis()).await;
         }

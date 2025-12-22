@@ -14,6 +14,7 @@ rtic-monotonics = { version = "1", default-features = false, features = ["cortex
 # teensy4-bsp 0.5 uses embedded-hal 0.2
 # needs the "unproven" feature for TogglableOutputPin
 eh02 = { package = "embedded-hal", version = "0.2", features = ["unproven"] }
+embedded-hal = { version = "1.0" }
 
 imxrt-hal = { path = "./imxrt-hal", features = ["eh02-unproven"] }
 
