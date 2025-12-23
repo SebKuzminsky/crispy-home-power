@@ -148,26 +148,38 @@ mod app {
     async fn power_button_task(context: power_button_task::Context) {
         let power_button_gpio = context.local.power_button_gpio;
         let mut controller_mode = context.shared.controller_mode;
+        let mut prev_button_state = power_button_gpio.is_high().unwrap();
 
         loop {
             let button_state = power_button_gpio.is_high().unwrap();
+            let button_was_pressed = prev_button_state && !button_state;
+            let button_was_released = !prev_button_state && button_state;
+
             controller_mode.lock(|mode| {
                 match mode {
                     crate::ControllerMode::Booting => {
-                        if button_state {
-                            // Button released & GPIO pulled up.
+                        // The Booting state is the only one that cares
+                        // about the rising edge of the gpio (the release
+                        // of the button).
+                        if button_was_released {
                             *mode = crate::ControllerMode::Discharge;
                         }
                     }
                     crate::ControllerMode::Discharge => {
-                        if !button_state {
-                            // Button pressed & GPIO pulled down.
+                        if button_was_pressed {
                             *mode = crate::ControllerMode::Sleep;
                         }
                     }
-                    crate::ControllerMode::Sleep => (),
+                    crate::ControllerMode::Sleep => {
+                        if button_was_pressed {
+                            *mode = crate::ControllerMode::Discharge;
+                        }
+                    }
                 }
             });
+
+            prev_button_state = button_state;
+
             // FIXME: lame polling loop, switch to interrupts
             Systick::delay(10.millis()).await;
         }
@@ -258,28 +270,31 @@ mod app {
         let mut can = context.shared.can1;
         let mut controller_mode = context.shared.controller_mode;
 
+        let mut battery_is_sleeping = false;
+
         // During normal operation: Once per second, send the "Drive" command to the battery pack.
         loop {
             let mode = controller_mode.lock(|mode| mode.clone());
-            let state = match mode {
+            match mode {
                 crate::ControllerMode::Booting => {
-                    crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive
+                    battery_is_sleeping = false;
+                    can.lock(|can| battery_send_host_state_request(can, crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive));
                 }
                 crate::ControllerMode::Discharge => {
-                    crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive
+                    battery_is_sleeping = false;
+                    can.lock(|can| battery_send_host_state_request(can, crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive));
                 }
                 crate::ControllerMode::Sleep => {
-                    crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep
+                    // The ABS Alliance batteries only tolerate one
+                    // Sleep command, a second packet wakes them back up.
+                    if !battery_is_sleeping {
+                        can.lock(|can| battery_send_host_state_request(can, crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep));
+                        battery_is_sleeping = true;
+                        log::info!("putting battery to sleep");
+                    }
                 }
             };
 
-            can.lock(|can| battery_send_host_state_request(can, state));
-
-            if mode == crate::ControllerMode::Sleep {
-                // The ABS Alliance batteries only tolerate one Sleep
-                // command, a second packet wakes them back up.
-                break;
-            }
 
             Systick::delay(1000.millis()).await;
         }
