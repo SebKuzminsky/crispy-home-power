@@ -1,5 +1,5 @@
 /target
 **/*.rs.bk
 /out
-hello-world.hex
+teensy-battery-controller.hex
 src/abs_alliance_can_messages.rs
