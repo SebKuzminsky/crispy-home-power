@@ -6,6 +6,7 @@
 
 mod abs_alliance_can_messages;
 mod debounced_input_pin;
+mod delta_q_can_messages;
 
 use teensy4_panic as _;
 
@@ -41,9 +42,13 @@ mod app {
     /// There are no resources shared across tasks.
     #[shared]
     struct Shared {
-        /// The CAN1 interface on pins 22 (Tx) and 23 (Rx), connected to the ABS Alliance battery
-        /// pack.
+        /// The CAN1 interface on pins 22 (Tx) and 23 (Rx), connected
+        /// to the ABS Alliance battery pack.
         can1: board::Flexcan1,
+
+        /// The CAN2 interface on pins 1 (Tx) and 0 (Rx), connected to
+        /// the Delta-Q charger.
+        can2: board::Flexcan2,
 
         /// The current mode.
         controller_mode: crate::ControllerMode,
@@ -72,6 +77,7 @@ mod app {
             mut pins,
             usb,
             flexcan1,
+            flexcan2,
             ..
         } = my_board(cx.device);
 
@@ -82,6 +88,11 @@ mod app {
         can1.set_baud_rate(500_000);
         can1.set_max_mailbox(16);
         can1.disable_fifo();
+
+        let mut can2 = board::flexcan(flexcan2, pins.p1, pins.p0);
+        can2.set_baud_rate(500_000);
+        can2.set_max_mailbox(16);
+        can2.disable_fifo();
 
         const PIN_CONFIG: bsp::hal::iomuxc::Config = bsp::hal::iomuxc::Config::zero()
             .set_pull_keeper(Some(bsp::hal::iomuxc::PullKeeper::Pullup100k));
@@ -100,11 +111,13 @@ mod app {
         blink::spawn().unwrap();
         battery_can_rx_task::spawn().unwrap();
         battery_can_tx_task::spawn().unwrap();
+        charger_task::spawn().unwrap();
         power_button_task::spawn().unwrap();
 
         (
             Shared {
                 can1,
+                can2,
                 controller_mode,
             },
             Local {
@@ -269,6 +282,43 @@ mod app {
             }
 
             Systick::delay(1000.millis()).await;
+        }
+    }
+
+    #[task(shared = [can2])]
+    async fn charger_task(context: charger_task::Context) {
+        let mut can = context.shared.can2;
+
+        loop {
+            // Process any incoming CAN packets that have arrived.
+            match can.lock(|can| can.read_mailboxes()) {
+                Some(data) => {
+                    // TODO: get rid of this and make it a "real" message
+                    let frame_id = data.frame.id();
+                    let id = match frame_id {
+                        imxrt_hal::can::Id::Standard(v) => v.as_raw().into(),
+                        imxrt_hal::can::Id::Extended(v) => v.as_raw(),
+                    };
+
+                    // Decode the CAN message
+                    if let Some(payload) = data.frame.data() {
+                        match crate::delta_q_can_messages::Messages::from_can_message(
+                            data.frame.id(),
+                            payload,
+                        ) {
+                            Ok(msg) => {
+                                log::info!("{:#?}", msg);
+                            }
+                            Err(e) => log::error!("{e:?}"),
+                        }
+                    }
+                }
+                None => {
+                    // No CAN packets to read, sleep and poll again.
+                    // FIXME: switch to nonblocking interrupt-driven mode
+                    Systick::delay(5.millis()).await;
+                }
+            }
         }
     }
 

@@ -2,15 +2,15 @@ use dbc_codegen::{Config, FeatureConfig};
 
 use anyhow::{Context, Result};
 
-fn main() -> Result<()> {
-    let dbc_path = String::from("../battery/powertrain_multimod_v78.00.007.dbc");
-    let dbc_contents = std::fs::read(&dbc_path).context("failed to read DBC file {dbc_path}\n")?;
+fn dbc_codegen(dbc_path: &str, rs_path: &str) -> Result<()> {
+    println!("cargo:rerun-if-changed={}", dbc_path);
+
+    let dbc_contents = std::fs::read(dbc_path).context("failed to read DBC file {dbc_path}\n")?;
     let dbc_contents = std::str::from_utf8(&dbc_contents)
         .context("failed to parse DBC file {dbc_path} as utf8\n")?;
-    println!("cargo:rerun-if-changed={}", &dbc_path);
 
     let config = Config::builder()
-        .dbc_name(&dbc_path)
+        .dbc_name(dbc_path)
         .dbc_content(dbc_contents)
         .allow_dead_code(true) // Don't emit warnings if not all generated code is used
         //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // Optional impls.
@@ -19,12 +19,20 @@ fn main() -> Result<()> {
         //.check_ranges(FeatureConfig::Never)                // or look below for an example.
         .build();
 
-    let messages_path = String::from("src/abs_alliance_can_messages.rs");
-    if let Err(e) = std::fs::remove_file(&messages_path) {
-        println!("Failed to remove {messages_path}: {e:?}");
+    if let Err(e) = std::fs::remove_file(&rs_path) {
+        println!("Failed to remove {rs_path}: {e:?}");
         println!("oh well");
     }
-    let mut out = std::io::BufWriter::new(std::fs::File::create(&messages_path).unwrap());
+    let mut out = std::io::BufWriter::new(std::fs::File::create(rs_path)?);
     dbc_codegen::codegen(config, &mut out).context("dbc-codegen failed")?;
+    Ok(())
+}
+
+fn main() -> Result<()> {
+    dbc_codegen(
+        "../battery/powertrain_multimod_v78.00.007.dbc",
+        "src/abs_alliance_can_messages.rs",
+    )?;
+    dbc_codegen("../charger/delta_q.dbc", "src/delta_q_can_messages.rs")?;
     Ok(())
 }
