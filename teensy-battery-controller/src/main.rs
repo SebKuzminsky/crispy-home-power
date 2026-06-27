@@ -210,7 +210,8 @@ mod app {
                                     // log::info!("{:#?}", msg);
                                     match msg {
                                         crate::abs_alliance_can_messages::Messages::BattPackSoc(m) => {
-                                            log::info!("SoC={:?}%", m.batt_pack_user_soc());
+                                            log::info!("User SoC={:?}%", m.batt_pack_user_soc_raw());
+                                            log::info!("SoC={:?}%", m.batt_pack_soc_raw());
                                         }
                                         crate::abs_alliance_can_messages::Messages::BattPackHvStatus(m) => {
                                             log::info!("Vpack={:?} V", m.batt_v_pack());
