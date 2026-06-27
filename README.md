@@ -143,9 +143,14 @@ the fan comes on and cools it down.
 # Inverters
 
 I want a programmable inverter so I can tell it how much power to push
-from the batteries to the home grid
+from the batteries to the home grid.
 
 48V in, 240V split phase out
+
+Bought a Victron inverter, model name "Phoenix". 48 V DC input, 120 VAC
+output. 850 W continuous at 40°C, 2200W peak.
+
+<https://www.victronenergy.com/inverters/phoenix-inverter-vedirect-250va-800va>
 
 
 ## Grid-forming
@@ -159,6 +164,7 @@ virtual synchronous machine, hierachichal control, etc.
 - Sunny Island from SMA Solar Technology
 - PowerStore from ABB
 - GridMaster from Ideal Power
+- Victron Inverter Smart 48/2000, 230 VAC output
 
 
 ## Grid-following
