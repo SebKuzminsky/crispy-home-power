@@ -296,6 +296,73 @@ mod app {
                 }
             };
 
+            // match mode {
+            //         crate::ControllerMode::Booting => {
+            //             battery_send_host_state_request(
+            //                 can,
+            //                 crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive
+            //             ).await;
+            //         }
+            //         crate::ControllerMode::Discharge => {
+            //             battery_send_host_state_request(
+            //                 can,
+            //                 crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Drive
+            //             ).await;
+            //         }
+            //         crate::ControllerMode::Sleep => {
+            //             battery_send_host_state_request(
+            //                 can,
+            //                 crate::abs_alliance_can_messages::HostBatteryRequestHostStateRequest::Sleep
+            //             ).await;
+            //         }
+            //     };
+            // });
+
+            // let abs_packet = crate::abs_alliance_can_messages::Messages::HostBatteryRequest(
+            //     host_battery_request,
+            // );
+
+            // let id: u32 = match frame.id() {
+            //     embedded_can::Id::Standard(standard_id) => standard_id.as_raw() as u32,
+            //     embedded_can::Id::Extended(extended_id) => extended_id.as_raw(),
+            // };
+
+            // let raw_frame: () = tokio_socketcan::CANFrame::new(id, frame.raw(), false, false)?;
+            // match self.can_socket_tx.write_frame(raw_frame) {
+            //     Ok(can_write_fut) => match can_write_fut.await {
+            //         Ok(_) => return Ok(()),
+            //         Err(_e) => return Ok(()),
+            //     },
+            //     Err(e) => {
+            //         return Err(e.into());
+            //     }
+            // }
+
+            // let frame: Option<Frame> = match msg {
+            //     Messages::BmsTpdoMbTelem(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoModeTelem(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoMuxedThermTelem1(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoAdbmsTelem1(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoAdbmsTelem2(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoAdbmsTelem3(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoBalance0x343(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::BmsTpdoSelftestBalancingResult0x345(msg) => {
+            //         Frame::new(msg.id(), msg.data())
+            //     }
+            //     Messages::DeltaqRpdo0x30A(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::DeltaqRpdo0x40A(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::DeltaQSwitchAlgorithm0x664(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::TlpStatusTpdo0x18ff50e5(msg) => Frame::new(msg.id(), msg.data()),
+            //     Messages::TlpControlRpdo0x1806e5f4(msg) => Frame::new(msg.id(), msg.data()),
+            //     _ => {
+            //         log::error!("dropping unknown can message {:?}", msg);
+            //         None
+            //     }
+            // };
+
+            // if let Err(e) = self.can.transmit(&frame) {
+            // log::error!("{e:?}");
+            // }
 
             Systick::delay(1000.millis()).await;
         }
@@ -324,6 +391,19 @@ mod app {
                         ) {
                             Ok(msg) => {
                                 log::info!("{:#?}", msg);
+                                // match msg {
+                                //     crate::abs_alliance_can_messages::Messages::BattPackSoc(m) => {
+                                //         log::info!("User SoC={:?}%", m.batt_pack_user_soc_raw());
+                                //         log::info!("SoC={:?}%", m.batt_pack_soc_raw());
+                                //     }
+                                //     crate::abs_alliance_can_messages::Messages::BattPackHvStatus(m) => {
+                                //         log::info!("Vpack={:?} V", m.batt_v_pack());
+                                //         log::info!("Ipack={:?} A", m.batt_i_pack_filtered());
+                                //     }
+                                //     _ => {
+                                //         // unknown/unhandled message
+                                //     }
+                                // }
                             }
                             Err(e) => log::error!("{e:?}"),
                         }
