@@ -1235,7 +1235,7 @@ impl ratatui::widgets::Widget for &BatteryPack {
                 ratatui::widgets::Block::new()
                     .title("Battery Pack")
                     .borders(ratatui::widgets::Borders::ALL)
-                    .padding(ratatui::widgets::block::Padding::ZERO),
+                    .padding(ratatui::widgets::Padding::ZERO),
             )
             .render(area, buf);
     }

@@ -1,7 +1,7 @@
 [package]
 name = "battery"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [features]
 default = [ "std" ]
@@ -9,7 +9,7 @@ std = []
 
 [build-dependencies]
 anyhow = "1.0"
-dbc-codegen = { git = "https://github.com/technocreatives/dbc-codegen.git" }
+dbc-codegen = { git = "https://github.com/oxibus/dbc-codegen.git" }
 
 [dependencies]
 bitvec = "1.0.1"
@@ -19,6 +19,6 @@ embedded-can = "0.4.1"
 eyre = "0.6.12"
 futures = "0.3.31"
 futures-util = { version = "0.3.31", features = ["tokio-io"] }
-ratatui = "0.29.0"
+ratatui = "0.30"
 tokio = { version = "1.44.2", features = ["macros", "rt", "rt-multi-thread", "sync", "time"] }
 tokio-socketcan = "0.3.1"
