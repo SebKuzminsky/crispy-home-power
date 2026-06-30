@@ -1,0 +1,10 @@
+[package]
+name = "abs-battery"
+version = "0.1.0"
+edition = "2024"
+
+[build-dependencies]
+anyhow = "1.0"
+dbc-codegen = { git = "https://github.com/oxibus/dbc-codegen.git" }
+
+[dependencies]
