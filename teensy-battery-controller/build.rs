@@ -33,6 +33,9 @@ fn main() -> Result<()> {
         "../battery/powertrain_multimod_v78.00.007.dbc",
         "src/abs_alliance_can_messages.rs",
     )?;
-    dbc_codegen("../charger/delta_q.dbc", "src/delta_q_can_messages.rs")?;
+    dbc_codegen(
+        "../deltaq-charger/delta_q.dbc",
+        "src/delta_q_can_messages.rs",
+    )?;
     Ok(())
 }

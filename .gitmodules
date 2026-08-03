@@ -4,3 +4,6 @@
 [submodule "teensy-battery-controller/teensy4-rs"]
 	path = teensy-battery-controller/teensy4-rs
 	url = https://github.com/scythe-robotics/teensy4-rs
+[submodule "deltaq-charger"]
+	path = deltaq-charger
+	url = seb@highlab.com:deltaq-charger.git
