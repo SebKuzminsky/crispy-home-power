@@ -7,3 +7,6 @@
 [submodule "deltaq-charger"]
 	path = deltaq-charger
 	url = seb@highlab.com:deltaq-charger.git
+[submodule "varta-rs"]
+	path = varta-rs
+	url = seb@highlab.com:varta-rs.git
