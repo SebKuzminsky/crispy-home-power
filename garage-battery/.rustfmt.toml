@@ -1,0 +1,12 @@
+max_width = 100
+hard_tabs = false
+tab_spaces = 4
+newline_style = "Unix"
+use_small_heuristics = "Max"
+reorder_imports = true
+reorder_modules = true
+match_block_trailing_comma = true
+chain_width = 60
+single_line_if_else_max_width = 50
+struct_lit_width = 40
+fn_call_width = 60

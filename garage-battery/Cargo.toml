@@ -1,0 +1,22 @@
+[package]
+name = "garage-battery"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+charger = { path = "../deltaq-charger" }
+varta-easyblade = { path = "../varta-rs/varta-easyblade" }
+
+tokio = { version = "1.44", features = ["macros", "rt", "rt-multi-thread", "sync", "time", "signal"] }
+tokio-util = "0.7"
+
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+
+clap = { version = "4.5", features = ["derive"] }
+thiserror = "2.0"
+
+enphase-local = "0.1"
+reqwest = { version = "0.12", features = ["rustls-tls"] }
+tokio-socketcan = "0.3"
+chrono = "0.4.45"

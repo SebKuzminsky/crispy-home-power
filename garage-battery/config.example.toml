@@ -1,0 +1,21 @@
+varta_can_interface = "can0"
+charger_can_interface = "can1"
+envoy_url = "https://envoy.local/"
+envoy_auth_token_path = "/home/seb/crispy-home-power/garage-battery/enphase-auth-token.uu"
+pv_poll_interval_secs = 2.0
+charger_command_interval_secs = 1.0
+
+[control]
+excess_pv_min_soc = 75.0
+excess_pv_max_soc = 80.0
+
+no_export_min_soc = 15.0
+no_export_max_soc = 20.0
+
+default_charge_current = 5.0
+
+# 12A is fine on the DeltaQ ICL 1500, it doesn't get too hot.
+charger_max_dc_current = 12.0
+
+# Try to export at least this much power to the grid.
+export_margin_w = 500.0
