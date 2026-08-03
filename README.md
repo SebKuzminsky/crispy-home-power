@@ -152,6 +152,9 @@ output. 850 W continuous at 40°C, 2200W peak.
 
 <https://www.victronenergy.com/inverters/phoenix-inverter-vedirect-250va-800va>
 
+Works with an app on my phone, or you can get basic telemetry from a serial port.
+`$ tio -b 19200 /dev/serial/by-id/usb-VictronEnergy_BV_VE_Direct_cable_VEAD75OS-if00-port0`
+
 
 ## Grid-forming
 
