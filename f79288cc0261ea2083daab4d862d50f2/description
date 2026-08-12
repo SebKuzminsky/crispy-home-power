@@ -1,0 +1,24 @@
+refactor CAN bus
+
+- Connect DeltaQ to Varta CAN bus
+- Modulate DeltaQ by writing to AC current limit register
+
+
+Using zencan-cli:
+```
+can0>help write
+Write an object via SDO
+
+Usage: write <NODE_ID> <INDEX> <SUB> <DATA_TYPE> <VALUE>
+
+Arguments:
+  <NODE_ID>    The ID of the node to read from
+  <INDEX>      The object index to read
+  <SUB>        The sub object to read
+  <DATA_TYPE>  How to interpret the value [possible values: u32, u16, u8, i32, i16, i8, f32, utf8]
+  <VALUE>      The value to write
+
+can0>write 100 0x2202 0x00 u16 0x0100
+```
+
+Value (0x0100) is AC amps * 256.
