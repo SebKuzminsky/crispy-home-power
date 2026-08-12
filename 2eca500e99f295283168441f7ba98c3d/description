@@ -1,1 +1,5 @@
-garage-battery: deltaq dbc is wrong, it's on node id 0x64
+garage-battery: deltaq dbc is wrong-ish
+
+The current dbc describes the old ICL-1500 CAN profile (500 kbps, node 0x0a).
+
+The newer XV-3300 needs a different DBC (250 kbps, node 0x64).
