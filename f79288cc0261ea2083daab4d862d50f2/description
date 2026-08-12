@@ -3,6 +3,7 @@ refactor CAN bus
 - Connect DeltaQ to Varta CAN bus
 - Modulate DeltaQ by writing to AC current limit register
 
+Needs newer XV-3300 firmware.
 
 Using zencan-cli:
 ```
