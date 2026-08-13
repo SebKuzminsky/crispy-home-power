@@ -1,0 +1,9 @@
+add garage-battery-tui
+
+- show control variables clearly
+    - varta
+    - deltaq
+    - enphase
+    - config
+- simple text plots (like btop, dont rewrite grafana)
+- human override of control algorithm
