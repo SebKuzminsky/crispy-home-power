@@ -7,3 +7,16 @@ add garage-battery-tui
     - config
 - simple text plots (like btop, dont rewrite grafana)
 - human override of control algorithm
+    ```
+    enum ControlMode {
+        // Use a P-controller to modulate the charger to bring the
+        // battery to the specified V or Soc.
+        HoldV { voltage: f32 },
+        HoldSoc { soc: f32 },
+
+        // Like HoldV but with hysteresis.
+        // If BattV < min_v { state = Charge }
+        // If BattV > max_v { state = Discharge }
+        MinMaxV { min_v: f32, max_v: f32 },
+    }
+    ```
