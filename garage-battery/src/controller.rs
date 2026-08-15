@@ -1,10 +1,9 @@
 use crate::config::ControlConfig;
 use crate::types::{ChargerCommand, PvState};
-use crate::varta::VartaState;
 
 pub async fn run(
     config: ControlConfig,
-    mut varta_rx: tokio::sync::watch::Receiver<Option<VartaState>>,
+    mut varta_rx: tokio::sync::broadcast::Receiver<crate::varta::Message>,
     mut pv_rx: tokio::sync::watch::Receiver<Option<PvState>>,
     command_tx: tokio::sync::watch::Sender<Option<ChargerCommand>>,
 ) {
@@ -20,45 +19,52 @@ pub async fn run(
     // we're generating. If we're on grid power it's infinity.
     let mut max_charge_current: f32 = 0.0;
 
+    let mut varta_state: Option<crate::varta::VartaState> = None;
+
     loop {
         tokio::select! {
-            _ = varta_rx.changed() => {
+            varta_msg = varta_rx.recv() => {
                 // println!("new varta state: {:#?}", varta_rx.borrow());
+                let Ok(varta_msg) = varta_msg else {
+                    continue;
+                };
+                let crate::varta::Message::VartaState(new_state) = varta_msg else {
+                    continue;
+                };
+                varta_state = Some(new_state);
             }
             _ = pv_rx.changed() => {
                 // println!("new pv state: {:#?}", pv_rx.borrow());
             }
         }
 
-        let varta_state = varta_rx.borrow().clone();
         let pv_state = pv_rx.borrow().clone();
 
-        let (varta_state, pv_state) = match (varta_state, pv_state) {
-            (Some(v), Some(p)) => (v, p),
-            _ => continue,
+        let (Some(current_varta_state), Some(current_pv_state)) = (&varta_state, &pv_state) else {
+            continue;
         };
 
         //
         // Update the charger command.
         //
 
-        let exporting = pv_state.grid_export_watts > 0.0;
+        let exporting = current_pv_state.grid_export_watts > 0.0;
 
         println!("desired charge current: {desired_charge_current:.1} A");
 
         let (min_soc, max_soc, available_current) = if exporting {
-            println!("exporting {} W", pv_state.grid_export_watts);
+            println!("exporting {} W", current_pv_state.grid_export_watts);
             (
                 config.excess_pv_min_soc,
                 config.excess_pv_max_soc,
-                if varta_state.voltage > 0.0 {
-                    (pv_state.grid_export_watts - config.export_margin_w) / varta_state.voltage
+                if current_varta_state.voltage > 0.0 {
+                    (current_pv_state.grid_export_watts - config.export_margin_w) / current_varta_state.voltage
                 } else {
                     config.default_charge_current
                 },
             )
         } else {
-            println!("not exporting enough ({} W)", pv_state.grid_export_watts);
+            println!("not exporting enough ({} W)", current_pv_state.grid_export_watts);
             (
                 config.no_export_min_soc,
                 config.no_export_max_soc,
@@ -81,23 +87,23 @@ pub async fn run(
         max_charge_current = max_charge_current.clamp(0.0, config.charger_max_dc_current);
         println!("max charge current: {:.1} A", max_charge_current);
 
-        if varta_state.soc >= max_soc {
+        if current_varta_state.soc >= max_soc {
             command.on = false;
             command.voltage = 0.0;
             command.current = 0.0;
             desired_charge_current = 0.0;
             max_charge_current = 0.0;
-        } else if varta_state.soc <= min_soc {
+        } else if current_varta_state.soc <= min_soc {
             command.on = true;
         }
 
-        command.voltage = varta_state.charge_voltage_request;
+        command.voltage = current_varta_state.charge_voltage_request;
 
         if command.on {
-            let current_error = varta_state.current - varta_state.charge_current_request;
+            let current_error = current_varta_state.current - current_varta_state.charge_current_request;
             desired_charge_current -= current_error * 0.1;
             desired_charge_current =
-                desired_charge_current.clamp(0.0, varta_state.charge_current_request);
+                desired_charge_current.clamp(0.0, current_varta_state.charge_current_request);
             command.current = desired_charge_current.clamp(0.0, max_charge_current);
         } else {
             command.current = 0.0;

@@ -30,9 +30,10 @@ async fn main() {
         },
     };
 
-    let (varta_tx, varta_rx) = tokio::sync::watch::channel::<Option<varta::VartaState>>(None);
+    let (varta_tx, mut varta_rx) = tokio::sync::broadcast::channel::<varta::Message>(100);
     let varta_task = {
         let varta_can = cfg.varta_can_interface.clone();
+        let varta_tx = varta_tx.clone();
         tokio::spawn(async move {
             varta::run(&varta_can, varta_tx).await;
         })
@@ -62,16 +63,35 @@ async fn main() {
 
     let controller_task = {
         let control_config = cfg.control.clone();
+        let varta_rx = varta_tx.subscribe();
         tokio::spawn(async move {
             controller::run(control_config, varta_rx, pv_rx, charger_cmd_tx).await;
         })
     };
 
-    // Wait for the user to hit Ctrl-C
-    tokio::signal::ctrl_c()
-        .await
-        .expect("failed to listen for ctrl-c");
-    println!("\nshutdown: received Ctrl-C");
+    loop {
+        tokio::select! {
+            // Wait for the user to hit Ctrl-C
+            r = tokio::signal::ctrl_c() => {
+                if let Err(e) = r {
+                    panic!("failed to listen for ctrl-c: {e:?}");
+                }
+                println!("received Ctrl-C, shutting down");
+                break;
+            }
+
+            varta_msg = varta_rx.recv() => {
+                let Ok(varta_msg) = varta_msg else {
+                    println!("error reading varta msg: {varta_msg:?}");
+                    continue;
+                };
+                match varta_msg {
+                    crate::varta::Message::Msg(msg) => println!("varta: {}", msg),
+                    _ => {},
+                }
+            }
+        }
+    }
 
     varta_task.abort();
     pv_task.abort();

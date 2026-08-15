@@ -10,6 +10,12 @@ pub struct VartaState {
     pub current: f32,
 }
 
+#[derive(Clone, Debug)]
+pub enum Message {
+    VartaState(VartaState),
+    Msg(String),
+}
+
 impl PartialEq for VartaState {
     fn eq(&self, other: &Self) -> bool {
         (self.soc - other.soc).abs() < 0.01
@@ -21,15 +27,15 @@ impl PartialEq for VartaState {
 
 impl Eq for VartaState {}
 
-pub async fn run(can_interface: &str, state_tx: tokio::sync::watch::Sender<Option<VartaState>>) {
+pub async fn run(can_interface: &str, msg_tx: tokio::sync::broadcast::Sender<Message>) {
     let mut varta: Varta = loop {
         match Varta::new(can_interface).await {
             Ok(v) => break v,
             Err(e) => {
-                println!(
-                    "varta: cannot open CAN interface '{}': {}, retrying in 5s...",
+                let _ = msg_tx.send(Message::Msg(format!(
+                    "cannot open CAN interface '{}': {}, retrying in 5s...",
                     can_interface, e
-                );
+                )));
                 tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
             },
         }
@@ -42,20 +48,25 @@ pub async fn run(can_interface: &str, state_tx: tokio::sync::watch::Sender<Optio
     loop {
         // FIXME: deal with varta nodes dropping off
         match varta.process_socketcan_msg().await {
-            Ok(Some(_node_id)) => {
-                println!("varta: discovered module {}", _node_id);
+            Ok(Some(node_id)) => {
+                let _ = msg_tx.send(Message::Msg(format!(
+                    "discovered module {}",
+                    node_id,
+                )));
                 num_modules += 1;
             },
             Ok(None) => {},
             Err(e) => {
-                println!("varta: error reading CAN frame: {}", e);
+                let _ = msg_tx.send(Message::Msg(format!(
+                    "error reading CAN frame: {}",
+                    e,
+                )));
                 tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
                 continue;
             },
         }
 
         let master = &varta.master;
-        // println!("master: {master:#?}");
 
         // if let (Some(soc), Some(charge_current_request), Some(voltage)) =
         //     (master.soc, master.charge_current_request, master.voltage)
@@ -76,9 +87,8 @@ pub async fn run(can_interface: &str, state_tx: tokio::sync::watch::Sender<Optio
             };
 
             if is_new {
-                // println!("varta: {state:#?}");
                 last_state = Some(state.clone());
-                let _ = state_tx.send(Some(state));
+                let _ = msg_tx.send(Message::VartaState(state));
             }
         }
     }
