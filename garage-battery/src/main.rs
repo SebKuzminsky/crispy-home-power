@@ -31,42 +31,54 @@ async fn main() {
     };
 
     let (varta_tx, varta_rx) = tokio::sync::watch::channel::<Option<types::VartaState>>(None);
+    let varta_task = {
+        let varta_can = cfg.varta_can_interface.clone();
+        tokio::spawn(async move {
+            varta_monitor::run(&varta_can, varta_tx).await;
+        })
+    };
+
     let (pv_tx, pv_rx) = tokio::sync::watch::channel::<Option<types::PvState>>(None);
-    let (cmd_tx, cmd_rx) = tokio::sync::watch::channel::<Option<types::ChargerCommand>>(None);
+    let pv_task = {
+        let envoy_url = cfg.envoy_url.clone();
+        tokio::spawn(async move {
+            pv_monitor::run(&envoy_url, &auth_token, cfg.pv_poll_interval_secs, pv_tx).await;
+        })
+    };
 
-    let varta_can = cfg.varta_can_interface.clone();
-    let varta_handle = tokio::spawn(async move {
-        varta_monitor::run(&varta_can, varta_tx).await;
-    });
+    let (charger_cmd_tx, charger_cmd_rx) =
+        tokio::sync::watch::channel::<Option<types::ChargerCommand>>(None);
+    let charger_task = {
+        let charger_can = cfg.charger_can_interface.clone();
+        tokio::spawn(async move {
+            charger::run(
+                &charger_can,
+                cfg.charger_command_interval_secs,
+                charger_cmd_rx,
+            )
+            .await;
+        })
+    };
 
-    let envoy_url = cfg.envoy_url.clone();
-    let pv_handle = tokio::spawn(async move {
-        pv_monitor::run(&envoy_url, &auth_token, cfg.pv_poll_interval_secs, pv_tx).await;
-    });
+    let controller_task = {
+        let control_config = cfg.control.clone();
+        tokio::spawn(async move {
+            controller::run(control_config, varta_rx, pv_rx, charger_cmd_tx).await;
+        })
+    };
 
-    let control_config = cfg.control.clone();
-    let controller_handle = tokio::spawn(async move {
-        controller::run(control_config, varta_rx, pv_rx, cmd_tx).await;
-    });
-
-    let charger_can = cfg.charger_can_interface.clone();
-    let charger_handle = tokio::spawn(async move {
-        charger::run(&charger_can, cfg.charger_command_interval_secs, cmd_rx).await;
-    });
-
-    let charger_can_shutdown = cfg.charger_can_interface.clone();
+    // Wait for the user to hit Ctrl-C
     tokio::signal::ctrl_c()
         .await
         .expect("failed to listen for ctrl-c");
-
     println!("\nshutdown: received Ctrl-C");
 
-    charger::shutdown(&charger_can_shutdown).await;
+    varta_task.abort();
+    pv_task.abort();
+    controller_task.abort();
 
-    varta_handle.abort();
-    pv_handle.abort();
-    controller_handle.abort();
-    charger_handle.abort();
+    charger_task.abort();
+    charger::shutdown(&cfg.charger_can_interface.clone()).await;
 
     println!("shutdown: complete");
 }
