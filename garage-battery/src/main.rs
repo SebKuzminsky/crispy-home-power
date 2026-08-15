@@ -3,7 +3,7 @@ mod config;
 mod controller;
 mod pv_monitor;
 mod types;
-mod varta_monitor;
+mod varta;
 
 use clap::Parser;
 
@@ -30,11 +30,11 @@ async fn main() {
         },
     };
 
-    let (varta_tx, varta_rx) = tokio::sync::watch::channel::<Option<types::VartaState>>(None);
+    let (varta_tx, varta_rx) = tokio::sync::watch::channel::<Option<varta::VartaState>>(None);
     let varta_task = {
         let varta_can = cfg.varta_can_interface.clone();
         tokio::spawn(async move {
-            varta_monitor::run(&varta_can, varta_tx).await;
+            varta::run(&varta_can, varta_tx).await;
         })
     };
 

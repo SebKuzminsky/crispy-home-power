@@ -1,5 +1,6 @@
 use crate::config::ControlConfig;
-use crate::types::{ChargerCommand, PvState, VartaState};
+use crate::types::{ChargerCommand, PvState};
+use crate::varta::VartaState;
 
 pub async fn run(
     config: ControlConfig,
