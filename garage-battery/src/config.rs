@@ -12,13 +12,18 @@ pub struct Config {
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct ControlConfig {
+pub struct ControlConfigSolar {
+    pub charger_max_dc_current: f32,
     pub excess_pv_min_soc: f32,
     pub excess_pv_max_soc: f32,
-    pub no_export_min_soc: f32,
-    pub no_export_max_soc: f32,
-    pub charger_max_dc_current: f32,
+    pub no_excess_min_soc: f32,
+    pub no_excess_max_soc: f32,
     pub export_margin_w: f32,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub enum ControlConfig {
+    Solar(ControlConfigSolar),
 }
 
 pub fn load(config_path: &str) -> Config {
