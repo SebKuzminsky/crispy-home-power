@@ -38,9 +38,12 @@ pub async fn run(
             }
         }
 
-        let pv_state = pv_rx.borrow().clone();
+        // If we get here then one of our inputs changed and we should
+        // re-evaluate the control decision.
 
-        let (Some(current_varta_state), Some(current_pv_state)) = (&varta_state, &pv_state) else {
+        let (Some(current_varta_state), Some(current_pv_state)) =
+            (&varta_state, pv_rx.borrow().clone())
+        else {
             continue;
         };
 
