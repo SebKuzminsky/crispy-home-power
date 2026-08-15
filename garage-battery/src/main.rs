@@ -1,4 +1,4 @@
-mod charge_controller;
+mod charger;
 mod config;
 mod controller;
 mod pv_monitor;
@@ -51,7 +51,7 @@ async fn main() {
 
     let charger_can = cfg.charger_can_interface.clone();
     let charger_handle = tokio::spawn(async move {
-        charge_controller::run(&charger_can, cfg.charger_command_interval_secs, cmd_rx).await;
+        charger::run(&charger_can, cfg.charger_command_interval_secs, cmd_rx).await;
     });
 
     let charger_can_shutdown = cfg.charger_can_interface.clone();
@@ -61,7 +61,7 @@ async fn main() {
 
     println!("\nshutdown: received Ctrl-C");
 
-    charge_controller::shutdown(&charger_can_shutdown).await;
+    charger::shutdown(&charger_can_shutdown).await;
 
     varta_handle.abort();
     pv_handle.abort();

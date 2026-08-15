@@ -10,7 +10,7 @@ pub async fn run(
             Ok(s) => break s,
             Err(e) => {
                 println!(
-                    "charge_controller: cannot open CAN interface '{}': {}, retrying in 5s...",
+                    "charger: cannot open CAN interface '{}': {}, retrying in 5s...",
                     can_interface, e
                 );
                 tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
@@ -36,15 +36,15 @@ pub async fn run(
                 Ok(()) => {
                     if cmd.on {
                         println!(
-                            "charge_controller: charging voltage={:.3}V current={:.3}A",
+                            "charger: charging voltage={:.3}V current={:.3}A",
                             cmd.voltage, cmd.current
                         );
                     } else {
-                        println!("charge_controller: OFF");
+                        println!("charger: OFF");
                     }
                 },
                 Err(e) => {
-                    println!("charge_controller: send_command error: {}", e);
+                    println!("charger: send_command error: {}", e);
                 },
             }
         }
@@ -57,10 +57,10 @@ pub async fn shutdown(can_interface: &str) {
     match tokio_socketcan::CANSocket::open(can_interface) {
         Ok(socket) => {
             let _ = charger::send_command(&socket, 0.0, 0.0, 20.0, 0).await;
-            println!("charge_controller: shutdown command sent");
+            println!("charger: shutdown command sent");
         },
         Err(e) => {
-            println!("charge_controller: cannot open CAN for shutdown: {}", e);
+            println!("charger: cannot open CAN for shutdown: {}", e);
         },
     }
 }
