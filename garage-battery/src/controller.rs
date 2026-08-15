@@ -60,7 +60,10 @@ pub async fn run(
                 if current_varta_state.voltage > 0.0 {
                     (current_pv_state.grid_export_watts - config.export_margin_w) / current_varta_state.voltage
                 } else {
-                    config.default_charge_current
+                    // Something's wrong and the Vartas aren't telling
+                    // us their terminal voltage, don't charge until
+                    // they figure it out.
+                    0.0
                 },
             )
         } else {

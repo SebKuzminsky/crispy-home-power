@@ -17,7 +17,6 @@ pub struct ControlConfig {
     pub excess_pv_max_soc: f32,
     pub no_export_min_soc: f32,
     pub no_export_max_soc: f32,
-    pub default_charge_current: f32,
     pub charger_max_dc_current: f32,
     pub export_margin_w: f32,
 }

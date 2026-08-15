@@ -12,8 +12,6 @@ excess_pv_max_soc = 80.0
 no_export_min_soc = 15.0
 no_export_max_soc = 20.0
 
-default_charge_current = 5.0
-
 # 12A is fine on the DeltaQ ICL 1500, it doesn't get too hot.
 charger_max_dc_current = 12.0
 
