@@ -52,13 +52,17 @@ pub async fn run(
 
         println!("desired charge current: {desired_charge_current:.1} A");
 
+        // These are the main parameters of the battery controller. Their
+        // values depend on whether we're exporting surplus PV power
+        // or not.
         let (min_soc, max_soc, available_current) = if exporting {
             println!("exporting {} W", current_pv_state.grid_export_watts);
             (
                 config.excess_pv_min_soc,
                 config.excess_pv_max_soc,
                 if current_varta_state.voltage > 0.0 {
-                    (current_pv_state.grid_export_watts - config.export_margin_w) / current_varta_state.voltage
+                    (current_pv_state.grid_export_watts - config.export_margin_w)
+                        / current_varta_state.voltage
                 } else {
                     // Something's wrong and the Vartas aren't telling
                     // us their terminal voltage, don't charge until
@@ -67,7 +71,10 @@ pub async fn run(
                 },
             )
         } else {
-            println!("not exporting enough ({} W)", current_pv_state.grid_export_watts);
+            println!(
+                "not exporting enough ({} W)",
+                current_pv_state.grid_export_watts
+            );
             (
                 config.no_export_min_soc,
                 config.no_export_max_soc,
@@ -103,7 +110,8 @@ pub async fn run(
         command.voltage = current_varta_state.charge_voltage_request;
 
         if command.on {
-            let current_error = current_varta_state.current - current_varta_state.charge_current_request;
+            let current_error =
+                current_varta_state.current - current_varta_state.charge_current_request;
             desired_charge_current -= current_error * 0.1;
             desired_charge_current =
                 desired_charge_current.clamp(0.0, current_varta_state.charge_current_request);

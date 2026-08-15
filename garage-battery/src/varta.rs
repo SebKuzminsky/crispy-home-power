@@ -49,18 +49,12 @@ pub async fn run(can_interface: &str, msg_tx: tokio::sync::broadcast::Sender<Mes
         // FIXME: deal with varta nodes dropping off
         match varta.process_socketcan_msg().await {
             Ok(Some(node_id)) => {
-                let _ = msg_tx.send(Message::Msg(format!(
-                    "discovered module {}",
-                    node_id,
-                )));
+                let _ = msg_tx.send(Message::Msg(format!("discovered module {}", node_id,)));
                 num_modules += 1;
             },
             Ok(None) => {},
             Err(e) => {
-                let _ = msg_tx.send(Message::Msg(format!(
-                    "error reading CAN frame: {}",
-                    e,
-                )));
+                let _ = msg_tx.send(Message::Msg(format!("error reading CAN frame: {}", e,)));
                 tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
                 continue;
             },
