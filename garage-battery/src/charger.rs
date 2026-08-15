@@ -1,4 +1,18 @@
-use crate::types::ChargerCommand;
+/// Command to the Delta-Q charger.
+#[derive(Debug, Clone)]
+pub struct ChargerCommand {
+    pub on: bool,
+    pub voltage: f32,
+    pub current: f32,
+}
+
+impl PartialEq for ChargerCommand {
+    fn eq(&self, other: &Self) -> bool {
+        self.on == other.on
+            && (self.voltage - other.voltage).abs() < 0.01
+            && (self.current - other.current).abs() < 0.01
+    }
+}
 
 pub async fn run(
     can_interface: &str,

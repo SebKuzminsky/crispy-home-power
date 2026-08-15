@@ -48,7 +48,7 @@ async fn main() {
     };
 
     let (charger_cmd_tx, charger_cmd_rx) =
-        tokio::sync::watch::channel::<Option<types::ChargerCommand>>(None);
+        tokio::sync::watch::channel::<Option<charger::ChargerCommand>>(None);
     let charger_task = {
         let charger_can = cfg.charger_can_interface.clone();
         tokio::spawn(async move {
@@ -98,7 +98,7 @@ async fn main() {
     controller_task.abort();
 
     charger_task.abort();
-    charger::shutdown(&cfg.charger_can_interface.clone()).await;
+    charger::shutdown(&cfg.charger_can_interface).await;
 
     println!("shutdown: complete");
 }

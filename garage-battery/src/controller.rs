@@ -1,14 +1,14 @@
 use crate::config::ControlConfig;
-use crate::types::{ChargerCommand, PvState};
+use crate::types::PvState;
 
 pub async fn run(
     config: ControlConfig,
     mut varta_rx: tokio::sync::broadcast::Receiver<crate::varta::Message>,
     mut pv_rx: tokio::sync::watch::Receiver<Option<PvState>>,
-    command_tx: tokio::sync::watch::Sender<Option<ChargerCommand>>,
+    command_tx: tokio::sync::watch::Sender<Option<crate::charger::ChargerCommand>>,
 ) {
-    let mut last_command: Option<ChargerCommand> = None;
-    let mut command = ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
+    let mut last_command: Option<crate::charger::ChargerCommand> = None;
+    let mut command = crate::charger::ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
 
     // This is how much the batteries are asking for. This gets clipped
     // by the available current before getting sent to the charger.
@@ -116,7 +116,7 @@ pub async fn run(
         // );
 
         let is_new = match &last_command {
-            Some(prev) => !command.eq_approx(prev),
+            Some(prev) => &command != prev,
             None => true,
         };
 
