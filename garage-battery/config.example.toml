@@ -5,15 +5,21 @@ envoy_auth_token_path = "/home/seb/crispy-home-power/garage-battery/enphase-auth
 pv_poll_interval_secs = 2.0
 charger_command_interval_secs = 1.0
 
-[control.Solar]
-excess_pv_min_soc = 75.0
-excess_pv_max_soc = 80.0
+# [control.Solar]
+# excess_pv_min_soc = 75.0
+# excess_pv_max_soc = 80.0
+#
+# no_excess_min_soc = 15.0
+# no_excess_max_soc = 20.0
+#
+# # Try to export at least this much power to the grid.
+# export_margin_w = 500.0
+#
+# # 12A is fine on the DeltaQ ICL 1500, it doesn't get too hot.
+# charger_max_dc_current = 12.0
 
-no_excess_min_soc = 15.0
-no_excess_max_soc = 20.0
-
-# Try to export at least this much power to the grid.
-export_margin_w = 500.0
+[control.Hold]
+soc = 40.000
 
 # 12A is fine on the DeltaQ ICL 1500, it doesn't get too hot.
 charger_max_dc_current = 12.0

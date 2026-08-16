@@ -62,6 +62,30 @@ fn do_control_solar(
     }
 }
 
+fn do_control_hold(
+    config: &crate::config::ControlConfigHold,
+    varta_state: &crate::varta::VartaState,
+    charger_command: &mut crate::charger::ChargerCommand,
+) {
+    println!("SoC={:.3} (target={:.3})", varta_state.soc, config.soc);
+
+    charger_command.on = true;
+    charger_command.voltage = varta_state.charge_voltage_request;
+
+    let soc_error = varta_state.soc - config.soc;
+    let target_current = (soc_error * -250.0).min(varta_state.charge_current_request);
+    let current_error = varta_state.current - target_current;
+
+    println!(
+        "soc_error={:.3}, target_current={:.3}, varta_current={:.3}, current_error={:.3}",
+        soc_error, target_current, varta_state.current, current_error
+    );
+
+    charger_command.current -= current_error * 0.1;
+    charger_command.current = charger_command.current.max(0.0);
+    charger_command.current = charger_command.current.min(config.charger_max_dc_current);
+}
+
 pub async fn run(
     config: ControlConfig,
     mut varta_rx: tokio::sync::broadcast::Receiver<crate::varta::Message>,
@@ -113,6 +137,11 @@ pub async fn run(
                 control_config_solar,
                 current_varta_state,
                 &current_pv_state,
+                &mut charger_command,
+            ),
+            ControlConfig::Hold(control_config_hold) => do_control_hold(
+                control_config_hold,
+                current_varta_state,
                 &mut charger_command,
             ),
         }

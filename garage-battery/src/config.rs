@@ -22,8 +22,15 @@ pub struct ControlConfigSolar {
 }
 
 #[derive(Debug, Clone, Deserialize)]
+pub struct ControlConfigHold {
+    pub charger_max_dc_current: f32,
+    pub soc: f32,
+}
+
+#[derive(Debug, Clone, Deserialize)]
 pub enum ControlConfig {
     Solar(ControlConfigSolar),
+    Hold(ControlConfigHold),
 }
 
 pub fn load(config_path: &str) -> Config {
