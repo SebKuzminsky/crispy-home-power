@@ -1,0 +1,1 @@
+SUBSYSTEM=="net", ACTION=="add", ATTRS{serial}=="002600235230501820333159", NAME="can-varta"

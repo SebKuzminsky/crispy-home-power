@@ -1,0 +1,8 @@
+[Match]
+Name=can-varta
+
+[Link]
+ActivationPolicy=up
+
+[CAN]
+BitRate=250000

@@ -1,0 +1,8 @@
+[Match]
+Name=can-deltaq
+
+[Link]
+ActivationPolicy=up
+
+[CAN]
+BitRate=500000

@@ -1,5 +1,5 @@
-varta_can_interface = "can0"
-charger_can_interface = "can1"
+varta_can_interface = "can-varta"
+charger_can_interface = "can-deltaq"
 envoy_url = "https://envoy.local/"
 envoy_auth_token_path = "/home/seb/crispy-home-power/garage-battery/enphase-auth-token.uu"
 pv_poll_interval_secs = 2.0

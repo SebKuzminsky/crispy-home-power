@@ -1,0 +1,1 @@
+SUBSYSTEM=="net", ACTION=="add", ATTRS{serial}=="0057002A3630501120353355", NAME="can-deltaq"
