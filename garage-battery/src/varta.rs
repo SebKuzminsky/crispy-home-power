@@ -70,7 +70,7 @@ pub async fn run(can_interface: &str, msg_tx: tokio::sync::broadcast::Sender<Mes
             let state = VartaState {
                 soc,
                 charge_current_request: num_modules as f32 * 9.0, // 9.0 A per module
-                charge_voltage_request: 59.5,
+                charge_voltage_request: 14.0 * 4.1,
                 voltage,
                 current,
             };
