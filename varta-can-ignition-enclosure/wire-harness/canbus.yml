@@ -1,0 +1,127 @@
+connectors:
+  X1:
+    type: M12-5
+    subtype: female
+    pinlabels: [Wake-up, On/Off, Gnd, CAN High, CAN Low]
+    image:
+      src: m12-5.png
+      #caption: Tip, Ring, and Sleeve
+
+  X2:
+    type: M12-5
+    subtype: female
+    pinlabels: [Wake-up, On/Off, Gnd, CAN High, CAN Low]
+    image:
+      src: m12-5.png
+      #caption: Tip, Ring, and Sleeve
+
+  X3:
+    type: M12-5
+    subtype: female
+    pinlabels: [Wake-up, On/Off, Gnd, CAN High, CAN Low]
+    image:
+      src: m12-5.png
+      #caption: Tip, Ring, and Sleeve
+
+  WagoOnOff:
+    type: Wago
+    subtype: female
+    pincount: 4
+
+  WagoGround:
+    type: Wago
+    subtype: female
+    pincount: 5
+
+  WagoCanHigh:
+    type: Wago
+    subtype: female
+    pincount: 3
+
+  WagoCanLow:
+    type: Wago
+    subtype: female
+    pincount: 3
+
+cables:
+
+  W1:
+    colors: [BN, YE, BK, GN, WH]
+    wirecount: 5 # need to specify number of wires explicitly when using a color code
+    gauge: 0.25 mm2 # also accepts AWG as unit
+    show_equiv: true # auto-calculate AWG equivalent from metric gauge
+    length: 0.2 # length in m
+    shield: false
+    #type: Serial
+
+  W2:
+    colors: [BN, YE, BK, GN, WH]
+    wirecount: 5 # need to specify number of wires explicitly when using a color code
+    gauge: 0.25 mm2 # also accepts AWG as unit
+    show_equiv: true # auto-calculate AWG equivalent from metric gauge
+    length: 0.2 # length in m
+    shield: false
+    #type: Serial
+
+  W3:
+    colors: [BN, YE, BK, GN, WH]
+    wirecount: 5 # need to specify number of wires explicitly when using a color code
+    gauge: 0.25 mm2 # also accepts AWG as unit
+    show_equiv: true # auto-calculate AWG equivalent from metric gauge
+    length: 0.2 # length in m
+    shield: false
+    #type: Serial
+
+connections:
+
+  -
+    - X1: On/Off
+    - W1: 2
+    - WagoOnOff: 1
+  -
+    - X2: 2
+    - W2: 2
+    - WagoOnOff: 2
+  -
+    - X3: 2
+    - W3: 2
+    - WagoOnOff: 3
+
+  -
+    - X1: 3
+    - W1: 3
+    - WagoGround: 1
+  -
+    - X2: 3
+    - W2: 3
+    - WagoGround: 2
+  -
+    - X3: 3
+    - W3: 3
+    - WagoGround: 3
+
+  -
+    - X1: 4
+    - W1: 4
+    - WagoCanHigh: 1
+  -
+    - X2: 4
+    - W2: 4
+    - WagoCanHigh: 2
+  -
+    - X3: 4
+    - W3: 4
+    - WagoCanHigh: 3
+
+  -
+    - X1: 5
+    - W1: 5
+    - WagoCanLow: 1
+  -
+    - X2: 5
+    - W2: 5
+    - WagoCanLow: 2
+  -
+    - X3: 5
+    - W3: 5
+    - WagoCanLow: 3
