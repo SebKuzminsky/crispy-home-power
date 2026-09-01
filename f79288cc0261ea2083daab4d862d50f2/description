@@ -1,9 +1,11 @@
 refactor CAN bus
 
 - Connect DeltaQ to Varta CAN bus
-- Modulate DeltaQ by writing to AC current limit register
+- Disable charging by writing DeltaQ "CAN listen-only" SDO 0x2032.00=1_u8
+- Enable charging by writing DeltaQ "CAN listen-only" SDO 0x2032.00=0_u8
+- Modulate DeltaQ by writing DeltaQ "AC Current Limit" 0x2202.00 = (AC amp * 256.0) as u16
 
-Needs newer XV-3300 firmware.
+Needs XV-3300 "Varta" firmware.
 
 Using zencan-cli:
 ```
