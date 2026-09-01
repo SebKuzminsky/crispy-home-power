@@ -1,4 +1,4 @@
-mod charger;
+mod charger_deltaq_icl1500;
 mod config;
 mod controller;
 mod pv_monitor;
@@ -48,11 +48,11 @@ async fn main() {
     };
 
     let (charger_cmd_tx, charger_cmd_rx) =
-        tokio::sync::watch::channel::<Option<charger::ChargerCommand>>(None);
+        tokio::sync::watch::channel::<Option<charger_deltaq_icl1500::ChargerCommand>>(None);
     let charger_task = {
         let charger_can = cfg.charger_can_interface.clone();
         tokio::spawn(async move {
-            charger::run(
+            charger_deltaq_icl1500::run(
                 &charger_can,
                 cfg.charger_command_interval_secs,
                 charger_cmd_rx,
@@ -98,7 +98,7 @@ async fn main() {
     controller_task.abort();
 
     charger_task.abort();
-    charger::shutdown(&cfg.charger_can_interface).await;
+    charger_deltaq_icl1500::shutdown(&cfg.charger_can_interface).await;
 
     println!("shutdown: complete");
 }

@@ -5,7 +5,7 @@ fn do_control_solar(
     config: &crate::config::ControlConfigSolar,
     varta_state: &crate::varta::VartaState,
     pv_state: &PvState,
-    charger_command: &mut crate::charger::ChargerCommand,
+    charger_command: &mut crate::charger_deltaq_icl1500::ChargerCommand,
 ) {
     // These are the main parameters of the battery controller. Their
     // values depend on whether we're exporting surplus PV power
@@ -65,7 +65,7 @@ fn do_control_solar(
 fn do_control_hold(
     config: &crate::config::ControlConfigHold,
     varta_state: &crate::varta::VartaState,
-    charger_command: &mut crate::charger::ChargerCommand,
+    charger_command: &mut crate::charger_deltaq_icl1500::ChargerCommand,
 ) {
     println!("SoC={:.3} (target={:.3})", varta_state.soc, config.soc);
 
@@ -90,10 +90,10 @@ pub async fn run(
     config: ControlConfig,
     mut varta_rx: tokio::sync::broadcast::Receiver<crate::varta::Message>,
     mut pv_rx: tokio::sync::watch::Receiver<Option<PvState>>,
-    command_tx: tokio::sync::watch::Sender<Option<crate::charger::ChargerCommand>>,
+    command_tx: tokio::sync::watch::Sender<Option<crate::charger_deltaq_icl1500::ChargerCommand>>,
 ) {
     let mut charger_command =
-        crate::charger::ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
+        crate::charger_deltaq_icl1500::ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
 
     // This is how much the batteries are asking for. This gets clipped
     // by the available current before getting sent to the charger.
