@@ -14,6 +14,7 @@ pub struct Config {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ControlConfigSolar {
     pub charger_max_dc_current: f32,
+    pub charger_max_ac_current: f32,
     pub excess_pv_min_soc: f32,
     pub excess_pv_max_soc: f32,
     pub no_excess_min_soc: f32,
@@ -24,6 +25,7 @@ pub struct ControlConfigSolar {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ControlConfigHold {
     pub charger_max_dc_current: f32,
+    pub charger_max_ac_current: f32,
     pub soc: f32,
 }
 

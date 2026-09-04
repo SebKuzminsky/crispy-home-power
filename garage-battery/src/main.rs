@@ -1,9 +1,14 @@
-mod charger_deltaq_icl1500;
 mod config;
 mod controller;
 mod pv_monitor;
 mod types;
 mod varta;
+
+#[cfg(feature = "icl1500")]
+mod charger_deltaq_icl1500;
+
+#[cfg(feature = "xv3300")]
+mod charger_deltaq_xv3300;
 
 use clap::Parser;
 
@@ -47,18 +52,40 @@ async fn main() {
         })
     };
 
-    let (charger_cmd_tx, charger_cmd_rx) =
-        tokio::sync::watch::channel::<Option<charger_deltaq_icl1500::ChargerCommand>>(None);
-    let charger_task = {
-        let charger_can = cfg.charger_can_interface.clone();
-        tokio::spawn(async move {
-            charger_deltaq_icl1500::run(
-                &charger_can,
-                cfg.charger_command_interval_secs,
-                charger_cmd_rx,
-            )
-            .await;
-        })
+    #[cfg(feature = "icl1500")]
+    let (charger_task, charger_cmd_tx) = {
+        let (charger_cmd_tx, charger_cmd_rx) =
+            tokio::sync::watch::channel::<Option<charger_deltaq_icl1500::ChargerCommand>>(None);
+        let charger_task = {
+            let charger_can = cfg.charger_can_interface.clone();
+            tokio::spawn(async move {
+                charger_deltaq_icl1500::run(
+                    &charger_can,
+                    cfg.charger_command_interval_secs,
+                    charger_cmd_rx,
+                )
+                .await;
+            })
+        };
+        (charger_task, charger_cmd_tx)
+    };
+
+    #[cfg(feature = "xv3300")]
+    let (charger_task, charger_cmd_tx) = {
+        let (charger_cmd_tx, charger_cmd_rx) =
+            tokio::sync::watch::channel::<Option<charger_deltaq_xv3300::ChargerCommand>>(None);
+        let charger_task = {
+            let charger_can = cfg.charger_can_interface.clone();
+            tokio::spawn(async move {
+                charger_deltaq_xv3300::run(
+                    &charger_can,
+                    cfg.charger_command_interval_secs,
+                    charger_cmd_rx,
+                )
+                .await;
+            })
+        };
+        (charger_task, charger_cmd_tx)
     };
 
     let controller_task = {
@@ -98,7 +125,12 @@ async fn main() {
     controller_task.abort();
 
     charger_task.abort();
+
+    #[cfg(feature = "icl1500")]
     charger_deltaq_icl1500::shutdown(&cfg.charger_can_interface).await;
+
+    #[cfg(feature = "xv3300")]
+    charger_deltaq_xv3300::shutdown(&cfg.charger_can_interface).await;
 
     println!("shutdown: complete");
 }
