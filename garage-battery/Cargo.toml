@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-charger = { path = "../deltaq-charger" }
+deltaq-icl1500 = { path = "../deltaq-charger/deltaq-icl1500" }
 varta-easyblade = { path = "../varta-rs/varta-easyblade" }
 
 tokio = { version = "1.44", features = ["macros", "rt", "rt-multi-thread", "sync", "time", "signal"] }

@@ -24,7 +24,7 @@ pub async fn run(
             Ok(s) => break s,
             Err(e) => {
                 println!(
-                    "charger: cannot open CAN interface '{}': {}, retrying in 5s...",
+                    "deltaq-icl1500 charger: cannot open CAN interface '{}': {}, retrying in 5s...",
                     can_interface, e
                 );
                 tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
@@ -46,19 +46,20 @@ pub async fn run(
         // println!("charge command: {command:#?}");
 
         if let Some(cmd) = command {
-            match charger::send_command(&can_socket, cmd.voltage, cmd.current, 20.0, 0).await {
+            match deltaq_icl1500::send_command(&can_socket, cmd.voltage, cmd.current, 20.0, 0).await
+            {
                 Ok(()) => {
                     if cmd.on {
                         println!(
-                            "charger: charging voltage={:.3}V current={:.3}A",
+                            "deltaq-icl1500charger: charging voltage={:.3}V current={:.3}A",
                             cmd.voltage, cmd.current
                         );
                     } else {
-                        println!("charger: OFF");
+                        println!("deltaq-icl1500 charger: OFF");
                     }
                 },
                 Err(e) => {
-                    println!("charger: send_command error: {}", e);
+                    println!("deltaq-icl1500 charger: send_command error: {}", e);
                 },
             }
         }
@@ -70,11 +71,14 @@ pub async fn run(
 pub async fn shutdown(can_interface: &str) {
     match tokio_socketcan::CANSocket::open(can_interface) {
         Ok(socket) => {
-            let _ = charger::send_command(&socket, 0.0, 0.0, 20.0, 0).await;
-            println!("charger: shutdown command sent");
+            let _ = deltaq_icl1500::send_command(&socket, 0.0, 0.0, 20.0, 0).await;
+            println!("deltaq-icl1500 charger: shutdown command sent");
         },
         Err(e) => {
-            println!("charger: cannot open CAN for shutdown: {}", e);
+            println!(
+                "deltaq-icl1500 charger: cannot open CAN for shutdown: {}",
+                e
+            );
         },
     }
 }
