@@ -258,6 +258,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d07550c9036bf2ae0c684c4297d503f838287c83c53686d05370d0e139ae570"
 
 [[package]]
+name = "configparser"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fe1d7dcda7d1da79e444bdfba1465f2f849a58b07774e1df473ee77030cb47a7"
+
+[[package]]
 name = "core-foundation"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -352,6 +358,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "deltaq-xv3300"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bitvec",
+ "dbc-codegen",
+ "eds-codegen",
+ "embedded-can",
+ "tokio-socketcan",
+ "zencan-client 0.0.4 (git+https://github.com/mcbridejc/zencan.git?branch=main)",
+]
+
+[[package]]
 name = "displaydoc"
 version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -360,6 +379,18 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 3.0.5",
+]
+
+[[package]]
+name = "eds-codegen"
+version = "0.1.0"
+source = "git+https://codeberg.org/SebKuzminsky/eds-codegen.git#ae5bc9c2d044d4a217b32455473ab6a90b2506c4"
+dependencies = [
+ "anyhow",
+ "ini",
+ "num_enum",
+ "parse_int",
+ "thiserror 2.0.20",
 ]
 
 [[package]]
@@ -559,6 +590,7 @@ dependencies = [
  "chrono",
  "clap",
  "deltaq-icl1500",
+ "deltaq-xv3300",
  "enphase-local",
  "reqwest",
  "serde",
@@ -568,6 +600,7 @@ dependencies = [
  "tokio-util",
  "toml",
  "varta-easyblade",
+ "zencan-client 0.0.4 (git+https://github.com/mcbridejc/zencan.git?branch=main)",
 ]
 
 [[package]]
@@ -896,6 +929,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ini"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0a9271a5dfd4228fa56a78d7508a35c321639cc71f783bb7a5723552add87bce"
+dependencies = [
+ "configparser",
+]
+
+[[package]]
 name = "int-enum"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1181,6 +1223,15 @@ dependencies = [
  "libc",
  "pkg-config",
  "vcpkg",
+]
+
+[[package]]
+name = "parse_int"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1c464266693329dd5a8715098c7f86e6c5fd5d985018b8318f53d9c6c2b21a31"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
@@ -2260,7 +2311,7 @@ dependencies = [
  "strum",
  "thiserror 2.0.20",
  "tokio",
- "zencan-client",
+ "zencan-client 0.0.4 (git+https://github.com/mcbridejc/zencan.git)",
 ]
 
 [[package]]
@@ -2651,6 +2702,24 @@ dependencies = [
 [[package]]
 name = "zencan-client"
 version = "0.0.4"
+source = "git+https://github.com/mcbridejc/zencan.git?branch=main#28d0895c5539b8851fcd9ab7f548ee45d2796516"
+dependencies = [
+ "crc16",
+ "futures",
+ "log",
+ "paste",
+ "serde",
+ "snafu",
+ "socketcan 3.6.2",
+ "tokio",
+ "tokio-util",
+ "toml",
+ "zencan-common 0.0.4 (git+https://github.com/mcbridejc/zencan.git?branch=main)",
+]
+
+[[package]]
+name = "zencan-client"
+version = "0.0.4"
 source = "git+https://github.com/mcbridejc/zencan.git#28d0895c5539b8851fcd9ab7f548ee45d2796516"
 dependencies = [
  "crc16",
@@ -2663,7 +2732,25 @@ dependencies = [
  "tokio",
  "tokio-util",
  "toml",
- "zencan-common",
+ "zencan-common 0.0.4 (git+https://github.com/mcbridejc/zencan.git)",
+]
+
+[[package]]
+name = "zencan-common"
+version = "0.0.4"
+source = "git+https://github.com/mcbridejc/zencan.git?branch=main#28d0895c5539b8851fcd9ab7f548ee45d2796516"
+dependencies = [
+ "arbitrary-int",
+ "chrono",
+ "critical-section",
+ "defmt-or-log",
+ "int-enum",
+ "regex",
+ "serde",
+ "snafu",
+ "socketcan 3.6.2",
+ "tokio",
+ "toml",
 ]
 
 [[package]]

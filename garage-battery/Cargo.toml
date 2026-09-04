@@ -3,8 +3,15 @@ name = "garage-battery"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = ["xv3300"]
+icl1500 = ["dep:deltaq-icl1500"]
+xv3300 = ["dep:deltaq-xv3300", "dep:zencan-client"]
+
 [dependencies]
-deltaq-icl1500 = { path = "../deltaq-charger/deltaq-icl1500" }
+deltaq-icl1500 = { path = "../deltaq-charger/deltaq-icl1500", optional = true }
+deltaq-xv3300 = { path = "../deltaq-charger/deltaq-xv3300", optional = true }
+
 varta-easyblade = { path = "../varta-rs/varta-easyblade" }
 
 tokio = { version = "1.44", features = ["macros", "rt", "rt-multi-thread", "sync", "time", "signal"] }
@@ -20,3 +27,6 @@ enphase-local = "0.1"
 reqwest = { version = "0.12", features = ["rustls-tls"] }
 tokio-socketcan = "0.3"
 chrono = "0.4.45"
+
+# This needs to match deltaq-xv3300's zencan-client...
+zencan-client = { git = "https://github.com/mcbridejc/zencan.git", branch = "main", features = ["socketcan"], optional = true }
