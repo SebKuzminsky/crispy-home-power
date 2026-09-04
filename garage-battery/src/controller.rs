@@ -1,11 +1,17 @@
 use crate::config::ControlConfig;
 use crate::types::PvState;
 
+#[cfg(feature = "icl1500")]
+type ChargerCommand = crate::charger_deltaq_icl1500::ChargerCommand;
+
+#[cfg(feature = "xv3300")]
+type ChargerCommand = crate::charger_deltaq_xv3300::ChargerCommand;
+
 fn do_control_solar(
     config: &crate::config::ControlConfigSolar,
     varta_state: &crate::varta::VartaState,
     pv_state: &PvState,
-    charger_command: &mut crate::charger_deltaq_icl1500::ChargerCommand,
+    charger_command: &mut ChargerCommand,
 ) {
     // These are the main parameters of the battery controller. Their
     // values depend on whether we're exporting surplus PV power
@@ -36,64 +42,116 @@ fn do_control_solar(
 
     println!("available current: {:.1} A", available_current);
 
-    if varta_state.soc >= max_soc {
-        // Done charging for now, turn off the charger.
-        charger_command.on = false;
-    } else if varta_state.soc <= min_soc {
-        // Battery too low, turn on the charger.
-        charger_command.on = true;
+    #[cfg(feature = "icl1500")]
+    {
+        if varta_state.soc >= max_soc {
+            // Done charging for now, turn off the charger.
+            charger_command.on = false;
+        } else if varta_state.soc <= min_soc {
+            // Battery too low, turn on the charger.
+            charger_command.on = true;
+        }
+
+        if charger_command.on {
+            charger_command.voltage = varta_state.charge_voltage_request;
+
+            let current_error = varta_state.current - varta_state.charge_current_request;
+            charger_command.current -= current_error * 0.1;
+
+            charger_command.current = charger_command.current.max(0.0);
+            charger_command.current = charger_command
+                .current
+                .min(varta_state.charge_current_request);
+            charger_command.current = charger_command.current.min(available_current);
+            charger_command.current = charger_command.current.min(config.charger_max_dc_current);
+        } else {
+            charger_command.voltage = 0.0;
+            charger_command.current = 0.0;
+        }
     }
 
-    if charger_command.on {
-        charger_command.voltage = varta_state.charge_voltage_request;
+    #[cfg(feature = "xv3300")]
+    {
+        if varta_state.soc >= max_soc {
+            // Done charging for now, turn off the charger.
+            charger_command.can_listen_only = true;
+        } else if varta_state.soc <= min_soc {
+            // Battery too low, turn on the charger.
+            charger_command.can_listen_only = false;
+        }
 
-        let current_error = varta_state.current - varta_state.charge_current_request;
-        charger_command.current -= current_error * 0.1;
-
-        charger_command.current = charger_command.current.max(0.0);
-        charger_command.current = charger_command
-            .current
-            .min(varta_state.charge_current_request);
-        charger_command.current = charger_command.current.min(available_current);
-        charger_command.current = charger_command.current.min(config.charger_max_dc_current);
-    } else {
-        charger_command.voltage = 0.0;
-        charger_command.current = 0.0;
+        if charger_command.can_listen_only == false {
+            charger_command.max_ac_current = available_current * 50.0 / 120.0;
+            charger_command.max_ac_current = charger_command
+                .max_ac_current
+                .min(config.charger_max_ac_current);
+        } else {
+            charger_command.max_ac_current = 10.0;
+        }
     }
 }
 
 fn do_control_hold(
     config: &crate::config::ControlConfigHold,
     varta_state: &crate::varta::VartaState,
-    charger_command: &mut crate::charger_deltaq_icl1500::ChargerCommand,
+    charger_command: &mut ChargerCommand,
 ) {
     println!("SoC={:.3} (target={:.3})", varta_state.soc, config.soc);
 
-    charger_command.on = true;
-    charger_command.voltage = varta_state.charge_voltage_request;
+    #[cfg(feature = "icl1500")]
+    {
+        charger_command.on = true;
+        charger_command.voltage = varta_state.charge_voltage_request;
 
-    let soc_error = varta_state.soc - config.soc;
-    let target_current = (soc_error * -250.0).min(varta_state.charge_current_request);
-    let current_error = varta_state.current - target_current;
+        let soc_error = varta_state.soc - config.soc;
+        let target_current = (soc_error * -250.0).min(varta_state.charge_current_request);
+        let current_error = varta_state.current - target_current;
 
-    println!(
-        "soc_error={:.3}, target_current={:.3}, varta_current={:.3}, current_error={:.3}",
-        soc_error, target_current, varta_state.current, current_error
-    );
+        println!(
+            "soc_error={:.3}, target_current={:.3}, varta_current={:.3}, current_error={:.3}",
+            soc_error, target_current, varta_state.current, current_error
+        );
 
-    charger_command.current -= current_error * 0.1;
-    charger_command.current = charger_command.current.max(0.0);
-    charger_command.current = charger_command.current.min(config.charger_max_dc_current);
+        charger_command.current -= current_error * 0.1;
+        charger_command.current = charger_command.current.max(0.0);
+        charger_command.current = charger_command.current.min(config.charger_max_dc_current);
+    }
+
+    #[cfg(feature = "xv3300")]
+    {
+        let soc_error = varta_state.soc - config.soc;
+        let target_dc_current = (soc_error * -250.0).min(varta_state.charge_current_request);
+        let dc_current_error = varta_state.current - target_dc_current;
+
+        println!(
+            "soc_error={:.3}, target_dc_current={:.3}, varta_current={:.3}, dc_current_error={:.3}",
+            soc_error, target_dc_current, varta_state.current, dc_current_error
+        );
+
+        charger_command.can_listen_only = true;
+        charger_command.max_ac_current -= (dc_current_error * 0.1) * (50.0 / 120.0);
+
+        charger_command.max_ac_current = charger_command.max_ac_current.max(0.0);
+        charger_command.max_ac_current = charger_command
+            .max_ac_current
+            .min(config.charger_max_ac_current);
+    }
 }
 
 pub async fn run(
     config: ControlConfig,
     mut varta_rx: tokio::sync::broadcast::Receiver<crate::varta::Message>,
     mut pv_rx: tokio::sync::watch::Receiver<Option<PvState>>,
-    command_tx: tokio::sync::watch::Sender<Option<crate::charger_deltaq_icl1500::ChargerCommand>>,
+    command_tx: tokio::sync::watch::Sender<Option<ChargerCommand>>,
 ) {
-    let mut charger_command =
-        crate::charger_deltaq_icl1500::ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
+    #[cfg(feature = "icl1500")]
+    let mut charger_command = ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
+
+    #[cfg(feature = "xv3300")]
+    let mut charger_command = ChargerCommand {
+        can_listen_only: false,
+        max_ac_current: 0.0,
+    };
 
     // This is how much the batteries are asking for. This gets clipped
     // by the available current before getting sent to the charger.
