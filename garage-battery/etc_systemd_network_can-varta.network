@@ -1,3 +1,4 @@
+# Copy, do not symlink, this file to `/etc/systemd/network/00-can-varta.network`.
 [Match]
 Name=can-varta
 
