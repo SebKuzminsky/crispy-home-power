@@ -1,27 +1,30 @@
 connectors:
-  X1:
+  Can0:
     type: M12-5
     subtype: female
     pinlabels: [Wake-up, On/Off, Gnd, CAN High, CAN Low]
     image:
       src: m12-5.png
-      #caption: Tip, Ring, and Sleeve
 
-  X2:
+  Can1:
     type: M12-5
     subtype: female
     pinlabels: [Wake-up, On/Off, Gnd, CAN High, CAN Low]
     image:
       src: m12-5.png
-      #caption: Tip, Ring, and Sleeve
 
-  X3:
+  Can2:
     type: M12-5
     subtype: female
     pinlabels: [Wake-up, On/Off, Gnd, CAN High, CAN Low]
     image:
       src: m12-5.png
-      #caption: Tip, Ring, and Sleeve
+
+  IgnitionSwitch:
+    type: rocker
+    pinlabels: [On/Off, Gnd]
+    image:
+      src: rocker-switch.png
 
   WagoOnOff:
     type: Wago
@@ -31,7 +34,7 @@ connectors:
   WagoGround:
     type: Wago
     subtype: female
-    pincount: 5
+    pincount: 4
 
   WagoCanHigh:
     type: Wago
@@ -45,83 +48,99 @@ connectors:
 
 cables:
 
-  W1:
+  Can0Wire:
     colors: [BN, YE, BK, GN, WH]
     wirecount: 5 # need to specify number of wires explicitly when using a color code
-    gauge: 0.25 mm2 # also accepts AWG as unit
+    gauge: 24 awg # accepts AWG or mm2 as unit
     show_equiv: true # auto-calculate AWG equivalent from metric gauge
-    length: 0.2 # length in m
+    length: 10 cm
     shield: false
     #type: Serial
 
-  W2:
+  Can1Wire:
     colors: [BN, YE, BK, GN, WH]
     wirecount: 5 # need to specify number of wires explicitly when using a color code
-    gauge: 0.25 mm2 # also accepts AWG as unit
+    gauge: 24 awg
     show_equiv: true # auto-calculate AWG equivalent from metric gauge
-    length: 0.2 # length in m
+    length: 10 cm
     shield: false
     #type: Serial
 
-  W3:
+  Can2Wire:
     colors: [BN, YE, BK, GN, WH]
     wirecount: 5 # need to specify number of wires explicitly when using a color code
-    gauge: 0.25 mm2 # also accepts AWG as unit
+    gauge: 24 awg
     show_equiv: true # auto-calculate AWG equivalent from metric gauge
-    length: 0.2 # length in m
+    length: 10 cm
+    shield: false
+    #type: Serial
+
+  IgnitionSwitchWire:
+    colors: [YE, BK]
+    gauge: 24 awg
+    show_equiv: true # auto-calculate AWG equivalent from metric gauge
+    length: 10 cm
     shield: false
     #type: Serial
 
 connections:
 
   -
-    - X1: On/Off
-    - W1: 2
+    - Can0: On/Off
+    - Can0Wire: 2
     - WagoOnOff: 1
   -
-    - X2: 2
-    - W2: 2
+    - Can1: On/Off
+    - Can1Wire: 2
     - WagoOnOff: 2
   -
-    - X3: 2
-    - W3: 2
+    - Can2: 2
+    - Can2Wire: 2
     - WagoOnOff: 3
+  -
+    - IgnitionSwitch: On/Off
+    - IgnitionSwitchWire: 1
+    - WagoOnOff: 4
 
   -
-    - X1: 3
-    - W1: 3
+    - Can0: 3
+    - Can0Wire: 3
     - WagoGround: 1
   -
-    - X2: 3
-    - W2: 3
+    - Can1: 3
+    - Can1Wire: 3
     - WagoGround: 2
   -
-    - X3: 3
-    - W3: 3
+    - Can2: 3
+    - Can2Wire: 3
     - WagoGround: 3
+  -
+    - IgnitionSwitch: Gnd
+    - IgnitionSwitchWire: 2
+    - WagoGround: 4
 
   -
-    - X1: 4
-    - W1: 4
+    - Can0: 4
+    - Can0Wire: 4
     - WagoCanHigh: 1
   -
-    - X2: 4
-    - W2: 4
+    - Can1: 4
+    - Can1Wire: 4
     - WagoCanHigh: 2
   -
-    - X3: 4
-    - W3: 4
+    - Can2: 4
+    - Can2Wire: 4
     - WagoCanHigh: 3
 
   -
-    - X1: 5
-    - W1: 5
+    - Can0: 5
+    - Can0Wire: 5
     - WagoCanLow: 1
   -
-    - X2: 5
-    - W2: 5
+    - Can1: 5
+    - Can1Wire: 5
     - WagoCanLow: 2
   -
-    - X3: 5
-    - W3: 5
+    - Can2: 5
+    - Can2Wire: 5
     - WagoCanLow: 3
