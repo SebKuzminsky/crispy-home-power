@@ -17,11 +17,8 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=60
-User=seb
-
 WorkingDirectory=/home/seb
 ExecStart=/home/seb/.cargo/bin/garage-battery --config /home/seb/crispy-home-power/garage-battery/config.example.toml
-
 
 [Install]
 WantedBy=default.target
