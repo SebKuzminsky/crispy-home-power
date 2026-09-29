@@ -83,11 +83,11 @@ fn do_control_solar(
             charger_command.can_listen_only = false;
         }
 
-        if charger_command.can_listen_only == false {
-            charger_command.max_ac_current = available_current * 50.0 / 120.0;
-            charger_command.max_ac_current = charger_command
-                .max_ac_current
-                .min(config.charger_max_ac_current);
+        if !charger_command.can_listen_only {
+            charger_command.max_ac_current = f32::min(
+                available_current * 50.0 / 120.0,
+                config.charger_max_ac_current,
+            );
         } else {
             charger_command.max_ac_current = 10.0;
         }
