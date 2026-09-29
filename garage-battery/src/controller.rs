@@ -145,7 +145,7 @@ pub async fn run(
     config: ControlConfig,
     mut varta_rx: tokio::sync::broadcast::Receiver<crate::varta::Message>,
     mut pv_rx: tokio::sync::watch::Receiver<Option<PvState>>,
-    command_tx: tokio::sync::watch::Sender<Option<ChargerCommand>>,
+    charger_cmd_tx: tokio::sync::watch::Sender<Option<ChargerCommand>>,
 ) {
     #[cfg(feature = "icl1500")]
     let mut charger_command = ChargerCommand { on: false, voltage: 0.0, current: 0.0 };
@@ -207,6 +207,6 @@ pub async fn run(
             ),
         }
 
-        let _ = command_tx.send(Some(charger_command.clone()));
+        let _ = charger_cmd_tx.send(Some(charger_command.clone()));
     }
 }
