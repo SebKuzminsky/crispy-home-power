@@ -40,7 +40,10 @@ fn do_control_solar(
             )
         };
 
-    println!("available current: {:.1} A", available_current);
+    println!(
+        "SoC={:.1}% (charging {:.1}..{:.1}), available current: {:.1} A",
+        varta_state.soc, min_soc, max_soc, available_current
+    );
 
     #[cfg(feature = "icl1500")]
     {
