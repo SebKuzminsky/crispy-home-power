@@ -152,7 +152,7 @@ pub async fn run(
 
     #[cfg(feature = "xv3300")]
     let mut charger_command = ChargerCommand {
-        can_listen_only: false,
+        can_listen_only: true,
         max_ac_current: 0.0,
     };
 
