@@ -31,34 +31,48 @@ pub async fn run(
             _ = &mut timer => {}
         }
 
+        timer.set(tokio::time::sleep(interval));
+
         let command = command_rx.borrow().clone();
         // println!("charge command: {command:#?}");
 
-        if let Some(ChargerCommand { can_listen_only, max_ac_current }) = command {
-            match deltaq_xv3300::set_can_listen_only(&mut sdo_client, can_listen_only).await {
-                Ok(()) => {
-                    if can_listen_only {
-                        println!("deltaq-xv3300 charger: CAN bus is listen-only, no charging");
-                    } else {
-                        println!("deltaq-xv3300 charger: CAN bus is active, charging available");
-                    }
-                },
-                Err(e) => {
-                    println!("deltaq-xv3300 charger: SDO error: {}", e);
-                },
-            }
+        let Some(ChargerCommand { can_listen_only, max_ac_current }) = command else {
+            // No charger command from controller, nothing to do, wait
+            // for an update.
+            continue;
+        };
 
-            match deltaq_xv3300::set_ac_current_limit(&mut sdo_client, max_ac_current).await {
-                Ok(()) => {
-                    println!("deltaq-xv3300 charger: AC current limit {max_ac_current:.3} A");
-                },
-                Err(e) => {
+        match deltaq_xv3300::set_can_listen_only(&mut sdo_client, can_listen_only).await {
+            Ok(()) => {
+                if can_listen_only {
+                    println!("deltaq-xv3300 charger: CAN bus is listen-only, no charging");
+                    continue;
+                } else {
+                    println!("deltaq-xv3300 charger: CAN bus is active, charging available");
+                }
+            },
+            Err(e) => {
+                if can_listen_only && e == zencan_client::SdoClientError::NoResponse {
+                    // We got the timeout we expected.
+                    // Early "return", don't try to set the AC Current limit below.
+                    continue;
+                } else {
                     println!("deltaq-xv3300 charger: SDO error: {}", e);
-                },
-            }
+                }
+            },
         }
 
-        timer.set(tokio::time::sleep(interval));
+        match deltaq_xv3300::set_ac_current_limit(&mut sdo_client, max_ac_current).await {
+            Ok(()) => {
+                println!("deltaq-xv3300 charger: AC current limit {max_ac_current:.3} A");
+            },
+            Err(e) => {
+                println!("deltaq-xv3300 charger: SDO error: {}", e);
+            },
+        }
+
+        // Only update the charger every 10 seconds, it seems to crash if i go at full speed.
+        tokio::time::sleep(std::time::Duration::from_secs(10)).await;
     }
 }
 
