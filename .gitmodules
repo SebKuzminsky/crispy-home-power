@@ -9,4 +9,4 @@
 	url = seb@highlab.com:deltaq-charger.git
 [submodule "varta-rs"]
 	path = varta-rs
-	url = seb@highlab.com:varta-rs.git
+	url = https://github.com/SebKuzminsky/varta-rs.git
