@@ -174,6 +174,11 @@ virtual synchronous machine, hierachichal control, etc.
 
 Grid-following: supplies power, but must receive voltage and frequency from the grid.
 
+EcoFlow STREAM $370
+- max 60V input
+- 3x 450W input
+- 1200W output, 120VAC
+
 
 ## Misc info, open questions
 
